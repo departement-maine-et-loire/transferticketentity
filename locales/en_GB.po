@@ -1,0 +1,122 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yannick Comba <y.comba@maine-et-loire.fr>, 2022
+# Yannick Comba, 2022,2023
+# Département de Maine et Loire
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - admincolor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-24 09:03+0000\n"
+"PO-Revision-Date: 2023-07-26 16:02+0200\n"
+"Last-Translator: Yannick Comba, 2022,2023\n"
+"Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: inc/config.class.php:90
+msgid "Choisissez les profils ayant accès à l'outil de transfert d'entité"
+msgstr "Choose profiles with access to Entity Transfer Tool"
+
+#: inc/config.class.php:96
+msgid "Ajouter"
+msgstr "Add"
+
+#: inc/config.class.php:102
+msgid "Supprimer les profils ayant accès à l'outil de transfert d'entité"
+msgstr "Delete profiles with access to Entity Transfer Tool"
+
+#: inc/config.class.php:108
+msgid "Supprimer"
+msgstr "Delete"
+
+#: inc/profile.class.php:74
+msgid "Modifier les droits"
+msgstr "Change rights"
+
+#: inc/profile.class.php:77
+msgid "Utilisation du transfert d'entité"
+msgstr "Using entity transfer"
+
+#: inc/profile.class.php:89
+msgid "Sauvegarder"
+msgstr "Save"
+
+#: inc/profile.php:50 inc/profile.php:63
+msgid "Élément modifié"
+msgstr "Item successfully updated"
+
+#: inc/ticket.class.php:210
+msgid "Erreur, veuillez recharger la page."
+msgstr "Error, please reload the page."
+
+#: inc/ticket.class.php:211
+msgid "Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5."
+msgstr "If the problem persists, you can try to empty the cache by doing CTRL + F5."
+
+#: inc/ticket.class.php:216
+msgid "Sélectionnez l'entité vers laquelle migrer le ticket"
+msgstr "Select the entity to migrate the ticket to"
+
+#: inc/ticket.class.php:218
+msgid "Choisissez votre entité"
+msgstr "Choose your entity"
+
+#: inc/ticket.class.php:227
+msgid "Sélectionnez le groupe à assigner"
+msgstr "Select the group to assign"
+
+#: inc/ticket.class.php:229
+msgid "Choisissez votre groupe"
+msgstr "Choose your group"
+
+#: inc/ticket.class.php:244
+msgid "Valider"
+msgstr "Confirm"
+
+#: inc/ticket.class.php:250
+msgid "Confirmer le transfert ?"
+msgstr "Confirm transfer ?"
+
+#: inc/ticket.class.php:251
+msgid "Une fois le transfert effectué, le ticket ne restera visible que si vous avez les droits requis."
+msgstr "Once the transfer has been made, the ticket will only remain visible if you have the required rights."
+
+#: inc/ticket.class.php:252
+msgid "Annuler"
+msgstr "Cancel"
+
+#: inc/ticket.class.php:253
+msgid "Confirmer"
+msgstr "Confirm"
+
+#: inc/ticket.php:125
+msgid "Veuillez sélectionner une entité valide"
+msgstr "Please select a valid entity"
+
+#: inc/ticket.php:135
+msgid "Veuillez sélectionner un groupe valide"
+msgstr "Please select a valid group"
+
+#: inc/ticket.php:181
+msgid "Escalade vers"
+msgstr "Escalation to"
+
+#: inc/ticket.php:181
+msgid "dans le groupe"
+msgstr "in the group"
+
+#: inc/ticket.php:185
+msgid "Transfert réussi pour le ticket n° : "
+msgstr "Successful transfer for ticket n° : "
+
+#: inc/ticket.php:197
+msgid "Transfert annulé"
+msgstr "Transfer canceled"

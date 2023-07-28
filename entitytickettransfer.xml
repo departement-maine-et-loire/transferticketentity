@@ -1,0 +1,51 @@
+<root>
+      <name>Entity Ticket Transfer</name>
+      <key>entitytickettransfer</key>
+      <state>stable</state>
+      <!-- <logo>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/logo.png</logo> -->
+      <description>
+         <short>
+            <fr>Ce plugin permet aux profils autorisés d'envoyer les tickets à une entité où ils n'ont aucun droit d'accès.</fr>
+            <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights.</en>
+         </short>
+         <long>
+            <fr>Ce plugin permet aux profils autorisés d'envoyer les tickets à une entité où ils n'ont aucun droits d'accès. Cela peut-être utile pour un technicien qui envoie un ticket à une entité spécialisée dans l'administratif pour qu'aucune infos personelles ne soient dévoilées.</fr>
+            <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights. This can be useful for a technician who sends a ticket to an entity specialized in administration so that no personal information is revealed.</en>
+         </long>
+      </description>
+      <!-- <homepage>https://github.com/departement-maine-et-loire/example</homepage> -->
+      <!-- <download>https://github.com/departement-maine-et-loire/example/releases</download> -->
+      <!-- <issues>https://github.com/departement-maine-et-loire/example/issues</issues> -->
+      <!-- <readme>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/README.md</readme> -->
+      <authors>
+         <author>D&#xE9;partement de Maine-et-Loire</author>
+         <author>Yannick COMBA</author>
+      </authors>
+      <versions>
+         <version>
+            <num>1.0.0</num>
+            <compatibility>~10.0.0</compatibility>
+         </version>
+      </versions>
+      <langs>
+         <lang>fr_FR</lang>
+         <lang>en_GB</lang>
+      </langs>
+      <license></license>
+      <tags>
+         <fr>
+            <tag>Ticket</tag>
+         </fr>
+         <en>
+            <tag>Ticket</tag>
+         </en>
+      </tags>
+      <screenshots>
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_1.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_2.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_3.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_4.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_5.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_6.PNG</screenshot> -->
+      </screenshots>
+</root>

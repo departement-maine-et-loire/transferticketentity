@@ -1,0 +1,162 @@
+<?php
+/**
+ -------------------------------------------------------------------------
+ LICENSE
+
+ This file is part of entitytickettransfer plugin for GLPI.
+
+ entitytickettransfer is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ entitytickettransfer is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with Reports. If not, see <http://www.gnu.org/licenses/>.
+
+ @category  Ticket
+ @package   Entitytickettransfer
+ @author    Yannick Comba <y.comba@maine-et-loire.fr>
+ @copyright 2015-2023 Département de Maine et Loire plugin team
+ @license   AGPL License 3.0 or (at your option) any later version
+            https://www.gnu.org/licenses/gpl-3.0.html
+ @link      https://github.com/departement-maine-et-loire/
+ --------------------------------------------------------------------------
+ */
+
+if (!defined('GLPI_ROOT')) {
+    die("Sorry. You can't access directly to this file");
+}
+
+class PluginEntitytickettransferConfig extends CommonDBTM
+{
+
+    /**
+     * Récupère les profils qui ne sont pas autorisés à utiliser le transfert d'entité
+     *
+     * @return $allProfiles
+     */
+    public static function cantUseProfile()
+    {
+        global $DB;
+
+        $query = "SELECT DISTINCT P.id, P.name
+        FROM glpi_profiles P
+        LEFT JOIN glpi_plugin_entitytickettransfer_profiles PEP ON P.id = PEP.id_profiles
+        WHERE PEP.id_profiles IS NULL
+        ORDER BY name ASC";
+    
+        $result = $DB->query($query);
+    
+        $allProfiles = array();
+    
+        foreach ($result as $data) {
+            array_push($allProfiles, $data['id'], $data['name']);
+        }
+    
+        return $allProfiles;
+    }
+
+    /**
+     * Récupère les profils autorisés à utiliser le transfert d'entité
+     *
+     * @return $allProfiles
+     */
+    public static function canUseProfile()
+    {
+        global $DB;
+
+        $query = "SELECT P.id, P.name
+        FROM glpi_plugin_entitytickettransfer_profiles PEP
+        LEFT JOIN glpi_profiles P ON P.id = PEP.id_profiles
+        ORDER BY name ASC";
+    
+        $result = $DB->query($query);
+    
+        $allProfiles = array();
+    
+        foreach ($result as $data) {
+            array_push($allProfiles, $data['id'], $data['name']);
+        }
+    
+        return $allProfiles;
+    }
+
+    /**
+     * Ajoute le droit à un profil d'utiliser le transfert d'entité
+     *
+     * @return void
+     */
+    public function addProfiles()
+    {
+        global $DB;
+
+        if (isset($_POST['add_profiles'])) {
+            $add_profiles = $_POST['add_profiles'];
+        
+            $query = "INSERT INTO glpi_plugin_entitytickettransfer_profiles (`id_profiles`)
+            VALUES ($add_profiles)";
+        
+            $result = $DB->query($query);
+        }
+    }
+
+    /**
+     * Supprime le droit à un profil d'utiliser le transfert d'entité
+     *
+     * @return void
+     */
+    public function deleteProfiles()
+    {
+        global $DB;
+
+        if (isset($_POST['delete_profiles'])) {
+            $delete_profiles = $_POST['delete_profiles'];
+        
+            $query = "DELETE FROM glpi_plugin_entitytickettransfer_profiles
+            WHERE id_profiles = $delete_profiles";
+        
+            $result = $DB->query($query);
+        }
+    }
+
+    /**
+     * Affiche le form pour configurer le plugin
+     *
+     * @return void
+     */
+    public function showForm()
+    {
+        global $CFG_GLPI;
+
+        $cantUseProfile = self::cantUseProfile();
+        $canUseProfile = self::canUseProfile();
+        echo ("
+            <form action='./config.form.php' method='post'>
+                <label for='add_profiles'>".__("Choisissez les profils ayant accès à l'outil de transfert d'entité", "entitytickettransfer")."</label>
+                <select name='add_profiles' id='add_profiles'>");
+        for ($i = 0; $i < count($cantUseProfile); $i = $i+2) {
+            echo "<option value='" . $cantUseProfile[$i] . "'>" . $cantUseProfile[$i+1] . "</option>";
+        }
+                echo("</select>
+                <button type='submit' name='addProfiles' style='background-color: #80cead;color: #1e293b;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 1rem;'>".__("Ajouter", "entitytickettransfer")."</button>
+            ");
+        Html::closeForm();
+
+        echo ("
+            <form action='./config.form.php' method='post'>
+                <label for='delete_profiles'>".__("Supprimer les profils ayant accès à l'outil de transfert d'entité", "entitytickettransfer")."</label>
+                <select name='delete_profiles' id='delete_profiles'>");
+        for ($i = 0; $i < count($canUseProfile); $i = $i+2) {
+            echo "<option value='" . $canUseProfile[$i] . "'>" . $canUseProfile[$i+1] . "</option>";
+        }
+                echo("</select>
+                <button type='submit' name='deleteProfiles' style='background-color: #f00020;color: white;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem; margin-right:1rem;'>".__("Supprimer", "entitytickettransfer")."</button>
+            ");
+        Html::closeForm();
+    }
+}
