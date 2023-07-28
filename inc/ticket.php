@@ -35,7 +35,7 @@ if (!isset($_SESSION['glpiactiveprofile']['id'])) {
     // Session is not valid then exit
     exit;
 }
-//test
+
 class PluginEntitytickettransferTicket extends CommonDBTM
 {
     public $checkEntity;
