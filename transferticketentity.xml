@@ -1,6 +1,6 @@
 <root>
-      <name>Entity Ticket Transfer</name>
-      <key>entitytickettransfer</key>
+      <name>Transfer Ticket Entity</name>
+      <key>transferticketentity</key>
       <state>stable</state>
       <!-- <logo>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/logo.png</logo> -->
       <description>

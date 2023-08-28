@@ -3,14 +3,14 @@
  -------------------------------------------------------------------------
  LICENSE
 
- This file is part of entitytickettransfer plugin for GLPI.
+ This file is part of Transferticketentity plugin for GLPI.
 
- entitytickettransfer is free software: you can redistribute it and/or modify
+ Transferticketentity is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- entitytickettransfer is distributed in the hope that it will be useful,
+ Transferticketentity is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU Affero General Public License for more details.
@@ -19,7 +19,7 @@
  along with Reports. If not, see <http://www.gnu.org/licenses/>.
 
  @category  Ticket
- @package   Entitytickettransfer
+ @package   Transferticketentity
  @author    Yannick Comba <y.comba@maine-et-loire.fr>
  @copyright 2015-2023 Département de Maine et Loire plugin team
  @license   AGPL License 3.0 or (at your option) any later version
@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginEntitytickettransferTicket extends Ticket
+class PluginTransferticketentityTicket extends Ticket
 {
     /**
      * Vérifie le profil de l'utilisateur
@@ -44,7 +44,7 @@ class PluginEntitytickettransferTicket extends Ticket
         global $DB;
 
         $query = "SELECT id_profiles
-        FROM glpi_plugin_entitytickettransfer_profiles";
+        FROM glpi_plugin_transferticketentity_profiles";
 
         $result = $DB->query($query);
 
@@ -68,9 +68,10 @@ class PluginEntitytickettransferTicket extends Ticket
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         $checkProfiles = self::checkProfiles();
+
         if (in_array($_SESSION['glpiactiveprofile']['id'], $checkProfiles)) {
             if ($item->getType() == 'Ticket') {
-                return "Entity ticket transfer";
+                return __("Transfert d'entité", "transferticketentity");
             }
             return '';
         }
@@ -98,6 +99,33 @@ class PluginEntitytickettransferTicket extends Ticket
 
         foreach ($result as $data) {
             return [$data['id'], $data['name']];
+        }
+    }
+
+    public function checkTicket()
+    {
+        global $DB;
+
+        $id_ticket = $_SERVER["QUERY_STRING"];
+        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
+        $id_ticket = substr($id_ticket, 1);
+
+        $query = "SELECT id
+        FROM glpi_tickets
+        WHERE `status` = 6";
+        
+        $result = $DB->query($query);
+
+        $array = [];
+
+        foreach ($result as $data) {
+            array_push($array, $data['id']);
+        }
+
+        if(!in_array($id_ticket, $array)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -201,8 +229,8 @@ class PluginEntitytickettransferTicket extends Ticket
         if ($item->getType() == 'Ticket') {
             $ID   = $item->getID();
             $profile = new self();
-            if (!isset($_SESSION['glpi_plugin_entitytickettransfer_profile']['id'])) {
-                PluginEntitytickettransferProfileRights::changeProfile();
+            if (!isset($_SESSION['glpi_plugin_transferticketentity_profile']['id'])) {
+                PluginTransferticketentityProfileRights::changeProfile();
             }
             $profile->showFormMcv($ID);
         }
@@ -224,11 +252,23 @@ class PluginEntitytickettransferTicket extends Ticket
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
 
+        $theServer = explode("front/profile.form.php?",$_SERVER["HTTP_REFERER"]);
+        $theServer = $theServer[0];
+
         $id_ticket = $_SERVER["QUERY_STRING"];
         $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
         $id_ticket = substr($id_ticket, 1);
 
         $id_user = $_SESSION["glpiID"];
+        $checkTicket = self::checkTicket();
+
+        if($checkTicket == false) {
+            echo "<div style='text-align: center;'>";
+                echo "<p style='color: red; font-size: 1.25rem; padding-top: 2rem;'>".__("Transfert non autorisé sur ticket clos.", "transferticketentity")."</p>";
+            echo "</div>";
+
+            return false;
+        }
 
         echo "<style>         
                 .tt_modal {
@@ -244,16 +284,16 @@ class PluginEntitytickettransferTicket extends Ticket
         </style>";
 
         echo "<div id='tt_gest_error'>";
-            echo "<p style='color:red;'>".__("Erreur, veuillez recharger la page.", "entitytickettransfer")."</p>";
-            echo "<p style='color:red;'>".__("Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5.", "entitytickettransfer")."</p>";
+            echo "<p style='color:red;'>".__("Erreur, veuillez recharger la page.", "transferticketentity")."</p>";
+            echo "<p style='color:red;'>".__("Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5.", "transferticketentity")."</p>";
         echo "</div>";
 
         echo"
-        <form class='form_transfert' style='margin:auto; display:none' action='../plugins/entitytickettransfer/inc/ticket.php' method='post'>
+        <form class='form_transfert' style='margin:auto; display:none' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
             <div class='tt_entity_choice'>
-                <label for='entity_choice'>".__("Sélectionnez l'entité vers laquelle migrer le ticket", "entitytickettransfer")." : </label>
+                <label for='entity_choice'>".__("Sélectionnez l'entité vers laquelle migrer le ticket", "transferticketentity")." : </label>
                 <select name='entity_choice' id='entity_choice'>
-                    <option selected disabled value=''>-- ".__("Choisissez votre entité", "entitytickettransfer")." --</option>";
+                    <option selected disabled value=''>-- ".__("Choisissez votre entité", "transferticketentity")." --</option>";
         for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
             echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
         }
@@ -262,9 +302,9 @@ class PluginEntitytickettransferTicket extends Ticket
 
             <div style='display:flex;'>
                 <div class='tt_group_choice' style='display: none;'>
-                    <label for='group_choice'>".__("Sélectionnez le groupe à assigner", "entitytickettransfer")." : </label>
+                    <label for='group_choice'>".__("Sélectionnez le groupe à assigner", "transferticketentity")." : </label>
                     <select name='group_choice' id='group_choice'>
-                        <option id='no_select' disabled value=''>-- ".__("Choisissez votre groupe", "entitytickettransfer")." --</option>";
+                        <option id='no_select' disabled value=''>-- ".__("Choisissez votre groupe", "transferticketentity")." --</option>";
         for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
             echo "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
         }
@@ -274,20 +314,19 @@ class PluginEntitytickettransferTicket extends Ticket
                 <div style='display:none'>
                     <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' style='display: none;' readonly>
                     <input type ='number' id='id_user' value= '$id_user' name='id_user' style='display: none;' readonly>
-                    <input type ='number' id='getTicketGroup' value= '$getTicketGroup' name='getTicketGroup' style='display: none;' readonly>
-                    <input type ='number' id='getTicketEntity' value= '$getTicketEntity' name='getTicketEntity' style='display: none;' readonly>
+                    <input type ='text' id='theServer' value= '$theServer' name='theServer' style='display: none;' readonly>
                 </div>
 
                 <div id='div_confirmation' style='display: none; padding-left: .5rem;'>
-                    <button id='tt_btn_open_modal_form' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 1rem;'>".__("Valider", "entitytickettransfer")."</button>
+                    <button id='tt_btn_open_modal_form' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 1rem;'>".__("Valider", "transferticketentity")."</button>
                 </div>
             </div>
 
             <dialog id='tt_modal_form_adder' class='tt_modal'>
-                <h2 style='color:black; font-weight:normal;'>".__("Confirmer le transfert ?", "entitytickettransfer")."</h2>
-                <p style='color:black; font-weight:normal; padding-bottom:3rem;'>".__("Une fois le transfert effectué, le ticket ne restera visible que si vous avez les droits requis.", "entitytickettransfer")."</p>
-                <button type='submit' name='canceltransfert' id='canceltransfert' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #f00020;color: white;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem; margin-right:1rem;'>".__("Annuler", "entitytickettransfer")."</button>
-                <button type='submit' name='transfertticket' id='transfertticket' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #80cead;color: #1e293b;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem;'>".__("Confirmer", "entitytickettransfer")."</button>
+                <h2 style='color:black; font-weight:normal;'>".__("Confirmer le transfert ?", "transferticketentity")."</h2>
+                <p style='color:black; font-weight:normal; padding-bottom:3rem;'>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
+                <button type='submit' name='canceltransfert' id='canceltransfert' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #f00020;color: white;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem; margin-right:1rem;'>".__("Annuler", "transferticketentity")."</button>
+                <button type='submit' name='transfertticket' id='transfertticket' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #80cead;color: #1e293b;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem;'>".__("Confirmer", "transferticketentity")."</button>
             </dialog>";
         Html::closeForm();
 

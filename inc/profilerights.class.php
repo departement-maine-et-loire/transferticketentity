@@ -3,14 +3,14 @@
  -------------------------------------------------------------------------
  LICENSE
 
- This file is part of entitytickettransfer plugin for GLPI.
+ This file is part of Transferticketentity plugin for GLPI.
 
- entitytickettransfer is free software: you can redistribute it and/or modify
+ Transferticketentity is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- entitytickettransfer is distributed in the hope that it will be useful,
+ Transferticketentity is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU Affero General Public License for more details.
@@ -19,7 +19,7 @@
  along with Reports. If not, see <http://www.gnu.org/licenses/>.
 
  @category  Ticket
- @package   Entitytickettransfer
+ @package   Transferticketentity
  @author    Yannick Comba <y.comba@maine-et-loire.fr>
  @copyright 2015-2023 Département de Maine et Loire plugin team
  @license   AGPL License 3.0 or (at your option) any later version
@@ -32,27 +32,27 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginEntitytickettransferProfileRights extends CommonDBTM
+class PluginTransferticketentityProfileRights extends CommonDBTM
 {
 
     static function hasChangeProfile()
     {
-        if ((isset($_SESSION['glpi_plugin_entitytickettransfer_profile']['id']))) {
-            if ($_SESSION['glpiactiveprofile']['id'] != $_SESSION['glpi_plugin_entitytickettransfer_profile']['id']) {
-                $_SESSION['glpi_plugin_entitytickettransfer_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
+        if ((isset($_SESSION['glpi_plugin_transferticketentity_profile']['id']))) {
+            if ($_SESSION['glpiactiveprofile']['id'] != $_SESSION['glpi_plugin_transferticketentity_profile']['id']) {
+                $_SESSION['glpi_plugin_transferticketentity_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
                 return true;
             } else {
                 return false;
             }
         } else {
-            $_SESSION['glpi_plugin_entitytickettransfer_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
+            $_SESSION['glpi_plugin_transferticketentity_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
         }
     }
 
     static function setSessionProfileId()
     {
-        if (!isset($_SESSION['glpi_plugin_entitytickettransfer_profile'])) {
-            $_SESSION['glpi_plugin_entitytickettransfer_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
+        if (!isset($_SESSION['glpi_plugin_transferticketentity_profile'])) {
+            $_SESSION['glpi_plugin_transferticketentity_profile']['id'] = $_SESSION['glpiactiveprofile']['id'];
         }
     }
 
@@ -64,7 +64,7 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
             [
             'SELECT' =>
             "right",
-            'FROM' => 'glpi_plugin_entitytickettransfer_profile_rights',
+            'FROM' => 'glpi_plugin_transferticketentity_profile_rights',
             'WHERE' => [
             "profile"    => $_SESSION['glpiactiveprofile']['id']
             ],
@@ -84,7 +84,7 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
             [
             'SELECT' =>
             "right",
-            'FROM' => 'glpi_plugin_entitytickettransfer_profile_rights',
+            'FROM' => 'glpi_plugin_transferticketentity_profile_rights',
             'WHERE' => [
             "profile"    => $ID
             ],
@@ -98,7 +98,7 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
 
     static function setSessionProfileRights()
     {
-        $_SESSION['glpi_plugin_entitytickettransfer_profile']['right'] = self::getSessionRights();
+        $_SESSION['glpi_plugin_transferticketentity_profile']['right'] = self::getSessionRights();
     }
 
     static function changeProfile()
@@ -110,9 +110,9 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
     static function canUpdate()
     {
 
-        if (isset($_SESSION["glpi_plugin_entitytickettransfer_profile"])) {
-            return ($_SESSION['glpi_plugin_entitytickettransfer_profile']['right'] == 'w'
-            || $_SESSION["glpi_plugin_entitytickettransfer_profile"]['right'] == 'su');
+        if (isset($_SESSION["glpi_plugin_transferticketentity_profile"])) {
+            return ($_SESSION['glpi_plugin_transferticketentity_profile']['right'] == 'w'
+            || $_SESSION["glpi_plugin_transferticketentity_profile"]['right'] == 'su');
         }
         return false;
     }
@@ -120,10 +120,10 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
     static function canView()
     {
 
-        if (isset($_SESSION["glpi_plugin_entitytickettransfer_profile"])) {
-            return ($_SESSION["glpi_plugin_entitytickettransfer_profile"]['right'] == 'w'
-            || $_SESSION["glpi_plugin_entitytickettransfer_profile"]['right'] == 'r'
-            || $_SESSION["glpi_plugin_entitytickettransfer_profile"]['right'] == 'su');
+        if (isset($_SESSION["glpi_plugin_transferticketentity_profile"])) {
+            return ($_SESSION["glpi_plugin_transferticketentity_profile"]['right'] == 'w'
+            || $_SESSION["glpi_plugin_transferticketentity_profile"]['right'] == 'r'
+            || $_SESSION["glpi_plugin_transferticketentity_profile"]['right'] == 'su');
         }
         return false;
     }
@@ -151,8 +151,8 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
 
     static function isSuperAdmin()
     {
-        if (isset($_SESSION["glpi_plugin_entitytickettransfer_profile"])) {
-            return $_SESSION["glpi_plugin_entitytickettransfer_profile"]['right'] == 'su';
+        if (isset($_SESSION["glpi_plugin_transferticketentity_profile"])) {
+            return $_SESSION["glpi_plugin_transferticketentity_profile"]['right'] == 'su';
         }
         return false;
     }
@@ -166,7 +166,7 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
         if (!$myProfile->getFromDB($ID)) {
             // Add a field in the table including the profile ID of the connected user and the right to write
             $DB->insert(
-                'glpi_plugin_entitytickettransfer_profile_rights',
+                'glpi_plugin_transferticketentity_profile_rights',
                 [
                 'profile' => $ID,
                 'right' => 'su'
@@ -195,7 +195,7 @@ class PluginEntitytickettransferProfileRights extends CommonDBTM
             }
 
             $DB->updateOrInsert(
-                'glpi_plugin_entitytickettransfer_profile_rights',
+                'glpi_plugin_transferticketentity_profile_rights',
                 [
                 'profile'      => $id,
                 'right'  => $right

@@ -1,4 +1,4 @@
-# GLPi Entity Ticket Transfer Plugin
+# GLPi Ticket Transfer Entity Plugin
 
 ## Introduction
 
@@ -16,3 +16,7 @@ Vous pouvez configurer les droits d'accès au plugin à 2 endroits :
  - Le premier se situe dans la configuration du plugin, d'ici vous avez une vu sur l'ensemble des profils y ayant
    accès.
  - Le second se situe directement dans les profils.
+
+## Compatibilité
+
+Ce plugin a été testé jusqu'à la version de GLPI 10.0.9

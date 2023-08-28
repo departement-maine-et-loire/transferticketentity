@@ -3,14 +3,14 @@
  -------------------------------------------------------------------------
  LICENSE
 
- This file is part of entitytickettransfer plugin for GLPI.
+ This file is part of Transferticketentity plugin for GLPI.
 
- entitytickettransfer is free software: you can redistribute it and/or modify
+ Transferticketentity is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- entitytickettransfer is distributed in the hope that it will be useful,
+ Transferticketentity is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU Affero General Public License for more details.
@@ -19,7 +19,7 @@
  along with Reports. If not, see <http://www.gnu.org/licenses/>.
 
  @category  Ticket
- @package   Entitytickettransfer
+ @package   Transferticketentity
  @author    Yannick Comba <y.comba@maine-et-loire.fr>
  @copyright 2015-2023 Département de Maine et Loire plugin team
  @license   AGPL License 3.0 or (at your option) any later version
@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginEntitytickettransferProfile extends Profile
+class PluginTransferticketentityProfile extends Profile
 {
     /**
      * Ajoute un onglet supplémentaire
@@ -40,12 +40,12 @@ class PluginEntitytickettransferProfile extends Profile
      * @param string $item         Ticket
      * @param int    $withtemplate 0
      * 
-     * @return "Entity ticket transfer"
+     * @return nametab
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->getType() == 'Profile') {
-            return "Entity ticket transfer";
+            return __("Transfert d'entité", "transferticketentity");
         }
         return '';
     }
@@ -60,7 +60,7 @@ class PluginEntitytickettransferProfile extends Profile
         global $DB;
 
         $query = "SELECT P.id, P.name
-        FROM glpi_plugin_entitytickettransfer_profiles PEP
+        FROM glpi_plugin_transferticketentity_profiles PEP
         LEFT JOIN glpi_profiles P ON P.id = PEP.id_profiles
         ORDER BY name ASC";
 
@@ -90,8 +90,8 @@ class PluginEntitytickettransferProfile extends Profile
         if ($item->getType() == 'Profile') {
             $ID   = $item->getID();
             $profile = new self();
-            if (!isset($_SESSION['glpi_plugin_entitytickettransfer_profile']['id'])) {
-                PluginEntitytickettransferProfileRights::changeProfile();
+            if (!isset($_SESSION['glpi_plugin_transferticketentity_profile']['id'])) {
+                PluginTransferticketentityProfileRights::changeProfile();
             }
             $profile->showFormMcv($ID);
         }
@@ -123,14 +123,14 @@ class PluginEntitytickettransferProfile extends Profile
         }
 
         echo "
-        <form action='../plugins/entitytickettransfer/inc/profile.php' method='post'>
+        <form action='../plugins/transferticketentity/inc/profile.php' method='post'>
             <table class='table table-hover card-table'>
                 <tbody>
                     <tr class='border-top' style='background:var(--tblr-border-color-light);'>
-                        <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Modifier les droits", "entitytickettransfer")."</h4></th>
+                        <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Modifier les droits", "transferticketentity")."</h4></th>
                     </tr>
                     <tr>
-                        <td class='tab_bg_2' style='width:40%;'>".__("Utilisation du transfert d'entité", "entitytickettransfer")."</td>
+                        <td class='tab_bg_2' style='width:40%;'>".__("Utilisation du transfert d'entité", "transferticketentity")."</td>
                         <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked></td>
                     </tr>
                 </tbody>
@@ -142,7 +142,7 @@ class PluginEntitytickettransferProfile extends Profile
         
             <div class='center'>
                 <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
-                    <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "entitytickettransfer")."</span></span>
+                    <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "transferticketentity")."</span></span>
                 </button>
             </div>";
         Html::closeForm();

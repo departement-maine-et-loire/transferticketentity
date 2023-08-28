@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2023-07-26 16:02+0200\n"
+"PO-Revision-Date: 2023-08-28 08:43+0200\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -21,17 +21,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
+#: inc/profile.class.php:74 inc/ticket.class.php:48
+msgid "Transfert d'entité"
+msgstr "Transfert d'entité"
+
 #: inc/config.class.php:90
-msgid "Choisissez les profils ayant accès à l'outil de transfert d'entité"
-msgstr "Choisissez les profils ayant accès à l'outil de transfert d'entité"
+msgid "Sélectionnez le profil habilité à effectuer un transfert d'entité"
+msgstr "Sélectionnez le profil habilité à effectuer un transfert d'entité"
 
 #: inc/config.class.php:96
 msgid "Ajouter"
 msgstr "Ajouter"
 
 #: inc/config.class.php:102
-msgid "Supprimer les profils ayant accès à l'outil de transfert d'entité"
-msgstr "Supprimer les profils ayant accès à l'outil de transfert d'entité"
+msgid "Retirez les droits de transfert d'entité au profil sélectionné"
+msgstr "Retirez les droits de transfert d'entité au profil sélectionné"
 
 #: inc/config.class.php:108
 msgid "Supprimer"
@@ -86,8 +90,8 @@ msgid "Confirmer le transfert ?"
 msgstr "Confirmer le transfert ?"
 
 #: inc/ticket.class.php:251
-msgid "Une fois le transfert effectué, le ticket ne restera visible que si vous avez les droits requis."
-msgstr "Une fois le transfert effectué, le ticket ne restera visible que si vous avez les droits requis."
+msgid "Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis."
+msgstr "Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis."
 
 #: inc/ticket.class.php:252
 msgid "Annuler"
@@ -120,3 +124,7 @@ msgstr "Transfert réussi pour le ticket n° : "
 #: inc/ticket.php:197
 msgid "Transfert annulé"
 msgstr "Transfert annulé"
+
+#: inc/ticket.class.php:266
+msgid "Transfert non autorisé sur ticket clos."
+msgstr "Transfert non autorisé sur ticket clos."

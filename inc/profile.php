@@ -3,14 +3,14 @@
  -------------------------------------------------------------------------
  LICENSE
 
- This file is part of entitytickettransfer plugin for GLPI.
+ This file is part of Transferticketentity plugin for GLPI.
 
- entitytickettransfer is free software: you can redistribute it and/or modify
+ Transferticketentity is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- entitytickettransfer is distributed in the hope that it will be useful,
+ Transferticketentity is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU Affero General Public License for more details.
@@ -19,7 +19,7 @@
  along with Reports. If not, see <http://www.gnu.org/licenses/>.
 
  @category  Ticket
- @package   Entitytickettransfer
+ @package   Transferticketentity
  @author    Yannick Comba <y.comba@maine-et-loire.fr>
  @copyright 2015-2023 Département de Maine et Loire plugin team
  @license   AGPL License 3.0 or (at your option) any later version
@@ -35,7 +35,7 @@ if (!isset($_SESSION['glpiactiveprofile']['id'])) {
     exit;
 }
 
-class PluginEntitytickettransferChangeProfile extends CommonDBTM
+class PluginTransferticketentityChangeProfile extends CommonDBTM
 {
     public $changeProfile;
     public $getNameProfile;
@@ -77,39 +77,42 @@ class PluginEntitytickettransferChangeProfile extends CommonDBTM
         global $CFG_GLPI;
         global $DB;
 
+        $theServer = explode("front/profile.form.php?",$_SERVER["HTTP_REFERER"]);
+        $theServer = $theServer[0];
+
         if (isset($_POST['plugin_update_profile'])) {
             $name_profile = self::getNameProfile();
             $id_profil = $_POST['id_profil'];
 
             if ($_POST['plugin_change_profile'] == 'swap_profil') {
-                $query = "INSERT INTO glpi_plugin_entitytickettransfer_profiles (`id_profiles`)
+                $query = "INSERT INTO glpi_plugin_transferticketentity_profiles (`id_profiles`)
                 VALUES ($id_profil)";
             
                 $result = $DB->query($query);
 
                 Session::addMessageAfterRedirect(
-                    __("Élément modifié", "entitytickettransfer") . " : <a href='/front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
+                    __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
                     true,
-                    SUCCESS
+                    INFO
                 );
     
-                header('location:/front/profile.form.php?id='.$id_profil);
+                header('location:' . $theServer . 'front/profile.form.php?id='.$id_profil);
             } else {
-                $query = "DELETE FROM glpi_plugin_entitytickettransfer_profiles
+                $query = "DELETE FROM glpi_plugin_transferticketentity_profiles
                 WHERE id_profiles = $id_profil";
             
                 $result = $DB->query($query);
 
                 Session::addMessageAfterRedirect(
-                    __("Élément modifié", "entitytickettransfer") . " : <a href='/front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
+                    __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
                     true,
-                    SUCCESS
+                    INFO
                 );
     
-                header('location:/front/profile.form.php?id='.$id_profil);
+                header('location:' . $theServer . 'front/profile.form.php?id='.$id_profil);
             }
         }
     }
 }
 
-$profile = new PluginEntitytickettransferChangeProfile();
+$profile = new PluginTransferticketentityChangeProfile();

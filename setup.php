@@ -3,14 +3,14 @@
  -------------------------------------------------------------------------
  LICENSE
 
- This file is part of entitytickettransfer plugin for GLPI.
+ This file is part of Transferticketentity plugin for GLPI.
 
- entitytickettransfer is free software: you can redistribute it and/or modify
+ Transferticketentity is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- entitytickettransfer is distributed in the hope that it will be useful,
+ Transferticketentity is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  GNU Affero General Public License for more details.
@@ -19,7 +19,7 @@
  along with Reports. If not, see <http://www.gnu.org/licenses/>.
 
  @category  Ticket
- @package   Entitytickettransfer
+ @package   Transferticketentity
  @author    Yannick Comba <y.comba@maine-et-loire.fr>
  @copyright 2015-2023 Département de Maine et Loire plugin team
  @license   AGPL License 3.0 or (at your option) any later version
@@ -30,29 +30,29 @@
 
 use Glpi\Plugin\Hooks;
 
-define('ENTITYTICKETTRANSFER_VERSION', '1.0.0');
-require_once GLPI_ROOT . "/plugins/entitytickettransfer/inc/profilerights.class.php";
+define('TRANSFERTICKETENTITY_VERSION', '1.0.0');
+require_once GLPI_ROOT . "/plugins/transferticketentity/inc/profilerights.class.php";
 
-function plugin_init_entitytickettransfer()
+function plugin_init_transferticketentity()
 {
     global $PLUGIN_HOOKS;
 
     // Ajout d'un onglet sur les profils et les tickets
-    Plugin::registerClass('PluginEntitytickettransferProfile', ['addtabon' => 'Profile']);
-    Plugin::registerClass('PluginEntitytickettransferTicket', ['addtabon' => 'Ticket']);
+    Plugin::registerClass('PluginTransferticketentityProfile', ['addtabon' => 'Profile']);
+    Plugin::registerClass('PluginTransferticketentityTicket', ['addtabon' => 'Ticket']);
 
-    $PLUGIN_HOOKS['change_profile']['entitytickettransfer'] = ['PluginEntitytickettransferProfileRights', 'changeProfile'];
-    $PLUGIN_HOOKS['csrf_compliant']['entitytickettransfer'] = true;
+    $PLUGIN_HOOKS['change_profile']['transferticketentity'] = ['PluginTransferticketentityProfileRights', 'changeProfile'];
+    $PLUGIN_HOOKS['csrf_compliant']['transferticketentity'] = true;
 
     // Ajout de la page de configuration
-    $PLUGIN_HOOKS['config_page']['entitytickettransfer'] = 'front/config.form.php';
+    $PLUGIN_HOOKS['config_page']['transferticketentity'] = 'front/config.form.php';
 }
 
-function plugin_version_entitytickettransfer()
+function plugin_version_transferticketentity()
 {
     return [
-      'name'           => 'Entitytickettransfer',
-      'version'        => ENTITYTICKETTRANSFER_VERSION,
+      'name'           => 'TransferTicketEntity',
+      'version'        => TRANSFERTICKETENTITY_VERSION,
       'author'         => 'Yannick COMBA',
       'license'        => 'GPLv3+',
       'homepage'       => 'https://github.com/departement-maine-et-loire/',
@@ -64,12 +64,12 @@ function plugin_version_entitytickettransfer()
     ];
 }
 
-function plugin_entitytickettransfer_check_prerequisites()
+function plugin_transferticketentity_check_prerequisites()
 {
     return true;
 }
 
-function plugin_entitytickettransfer_check_config($verbose = false)
+function plugin_transferticketentity_check_config($verbose = false)
 {
     if (true) {
         return true;
@@ -82,7 +82,7 @@ function plugin_entitytickettransfer_check_config($verbose = false)
     return false;
 }
 
-function plugin_entitytickettransfer_options()
+function plugin_transferticketentity_options()
 {
     return [
       Plugin::OPTION_AUTOINSTALL_DISABLED => true,

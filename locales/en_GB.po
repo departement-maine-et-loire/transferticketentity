@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - admincolor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2023-07-26 16:02+0200\n"
+"PO-Revision-Date: 2023-08-25 15:39+0200\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
 "Language: en_GB\n"
@@ -21,17 +21,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
 
+#: inc/profile.class.php:74 inc/ticket.class.php:48
+msgid "Transfert d'entité"
+msgstr "Transfer Ticket Entity"
+
 #: inc/config.class.php:90
-msgid "Choisissez les profils ayant accès à l'outil de transfert d'entité"
-msgstr "Choose profiles with access to Entity Transfer Tool"
+msgid "Sélectionnez le profil habilité à effectuer un transfert d'entité"
+msgstr "Select the profile to enable entity transfer"
 
 #: inc/config.class.php:96
 msgid "Ajouter"
 msgstr "Add"
 
 #: inc/config.class.php:102
-msgid "Supprimer les profils ayant accès à l'outil de transfert d'entité"
-msgstr "Delete profiles with access to Entity Transfer Tool"
+msgid "Retirez les droits de transfert d'entité au profil sélectionné"
+msgstr "Remove entity transfer rights to the selected profile"
 
 #: inc/config.class.php:108
 msgid "Supprimer"
@@ -63,7 +67,7 @@ msgstr "If the problem persists, you can try to empty the cache by doing CTRL + 
 
 #: inc/ticket.class.php:216
 msgid "Sélectionnez l'entité vers laquelle migrer le ticket"
-msgstr "Select the entity to migrate the ticket to"
+msgstr "Select ticket entity to transfer"
 
 #: inc/ticket.class.php:218
 msgid "Choisissez votre entité"
@@ -86,8 +90,8 @@ msgid "Confirmer le transfert ?"
 msgstr "Confirm transfer ?"
 
 #: inc/ticket.class.php:251
-msgid "Une fois le transfert effectué, le ticket ne restera visible que si vous avez les droits requis."
-msgstr "Once the transfer has been made, the ticket will only remain visible if you have the required rights."
+msgid "Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis."
+msgstr "Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
 
 #: inc/ticket.class.php:252
 msgid "Annuler"
@@ -120,3 +124,7 @@ msgstr "Successful transfer for ticket n° : "
 #: inc/ticket.php:197
 msgid "Transfert annulé"
 msgstr "Transfer canceled"
+
+#: inc/ticket.class.php:266
+msgid "Transfert non autorisé sur ticket clos."
+msgstr "Unauthorized transfer on closed ticket."
