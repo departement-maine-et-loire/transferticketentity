@@ -65,6 +65,21 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
         foreach ($result as $data) {
             return $data['name'];
         }
+
+        // Test ok
+        // $result = $DB->request([
+        //     'SELECT' => ['name'],
+        //     'FROM' => 'glpi_profiles',
+        //     'WHERE' => ['id' => $id_profil],
+        // ]);
+
+        // $array = array();
+
+        // foreach ($result as $data) {
+        //     array_push($array, $data['name']);
+        // }
+
+        // return $array;
     }
 
     /**
@@ -85,10 +100,11 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
             $id_profil = $_POST['id_profil'];
 
             if ($_POST['plugin_change_profile'] == 'swap_profil') {
-                $query = "INSERT INTO glpi_plugin_transferticketentity_profiles (`id_profiles`)
-                VALUES ($id_profil)";
-            
-                $result = $DB->query($query);
+                $DB->insert(
+                    'glpi_plugin_transferticketentity_profiles', [
+                        'id_profiles'      => $id_profil
+                    ]
+                );
 
                 Session::addMessageAfterRedirect(
                     __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
@@ -98,10 +114,11 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
     
                 header('location:' . $theServer . 'front/profile.form.php?id='.$id_profil);
             } else {
-                $query = "DELETE FROM glpi_plugin_transferticketentity_profiles
-                WHERE id_profiles = $id_profil";
-            
-                $result = $DB->query($query);
+                $DB->delete(
+                    'glpi_plugin_transferticketentity_profiles', [
+                       'id_profiles' => $id_profil
+                    ]
+                 );
 
                 Session::addMessageAfterRedirect(
                     __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",

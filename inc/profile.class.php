@@ -73,6 +73,25 @@ class PluginTransferticketentityProfile extends Profile
         }
 
         return $allProfiles;
+
+        // Test ok
+        // $result = $DB->request([
+        //     'SELECT' => ['glpi_profiles.id', 'glpi_profiles.name'],
+        //     'DISTINCT' => TRUE,
+        //     'FROM' => 'glpi_profiles',
+        //     'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
+        //                                                                                'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
+        //     'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
+        //     'ORDER' => 'name'
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['id'], $data['name']);
+        // }
+
+        // return $array;
     }
 
     /**
@@ -109,6 +128,7 @@ class PluginTransferticketentityProfile extends Profile
     public function showFormMcv($ID)
     {
         global $CFG_GLPI;
+        global $DB;
 
         $profiles_id = $_SESSION['glpiactiveprofile']['id'];
 
