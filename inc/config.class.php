@@ -135,11 +135,12 @@ class PluginTransferticketentityConfig extends CommonDBTM
 
         if (isset($_POST['add_profiles'])) {
             $add_profiles = $_POST['add_profiles'];
-        
-            $query = "INSERT INTO glpi_plugin_transferticketentity_profiles (`id_profiles`)
-            VALUES ($add_profiles)";
-        
-            $result = $DB->query($query);
+
+            $DB->insert(
+                'glpi_plugin_transferticketentity_profiles', [
+                    'id_profiles'      => $add_profiles
+                ]
+            );
         }
     }
 
@@ -155,10 +156,11 @@ class PluginTransferticketentityConfig extends CommonDBTM
         if (isset($_POST['delete_profiles'])) {
             $delete_profiles = $_POST['delete_profiles'];
         
-            $query = "DELETE FROM glpi_plugin_transferticketentity_profiles
-            WHERE id_profiles = $delete_profiles";
-        
-            $result = $DB->query($query);
+            $DB->delete(
+                'glpi_plugin_transferticketentity_profiles', [
+                   'id_profiles' => $delete_profiles
+                ]
+             );
         }
     }
 
