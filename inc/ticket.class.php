@@ -55,6 +55,20 @@ class PluginTransferticketentityTicket extends Ticket
         }
 
         return $checkProfiles;
+
+        // Test ok
+        // $result = $DB->request([
+        //     'SELECT' => 'id_profiles',
+        //     'FROM' => 'glpi_plugin_transferticketentity_profiles'
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['id_profiles']);
+        // }
+
+        // return $array;
     }
 
     /**
@@ -100,8 +114,30 @@ class PluginTransferticketentityTicket extends Ticket
         foreach ($result as $data) {
             return [$data['id'], $data['name']];
         }
+
+        // Test ok
+        // $result = $DB->request([
+        //     'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
+        //     'FROM' => 'glpi_tickets',
+        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
+        //                                                    'glpi_entities' => 'id']]],
+        //     'WHERE' => ['glpi_tickets.id' => $id_ticket]
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['id'], $data['name']);
+        // }
+
+        // return $array;
     }
 
+    /**
+     * Vérifie que le ticket n'est pas clos
+     *
+     * @return $data
+     */
     public function checkTicket()
     {
         global $DB;
@@ -121,6 +157,19 @@ class PluginTransferticketentityTicket extends Ticket
         foreach ($result as $data) {
             array_push($array, $data['id']);
         }
+
+        // Test ok
+        // $result = $DB->request([
+        //     'SELECT' => 'id',
+        //     'FROM' => 'glpi_tickets',
+        //     'WHERE' => ['status' => 6]
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['id']);
+        // }
 
         if(!in_array($id_ticket, $array)) {
             return true;
@@ -149,9 +198,27 @@ class PluginTransferticketentityTicket extends Ticket
 
         $result = $DB->query($query);
 
+        $array = array();
+
         foreach ($result as $data) {
-            return $data['groups_id'];
+            array_push($array, $data['groups_id']);
         }
+
+        return $array;
+
+        // Test ok
+        // $result = $DB->request([
+        //     'FROM' => 'glpi_groups_tickets',
+        //     'WHERE' => ['tickets_id' => $id_ticket, 'type' => 2]
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['groups_id']);
+        // }
+
+        // return $array;
     }
 
     /**
@@ -184,6 +251,27 @@ class PluginTransferticketentityTicket extends Ticket
         }
 
         return $allEntities;
+
+        // Test NOK
+        // $result = $DB->request([
+        //     'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
+        //     'FROM' => 'glpi_groups',
+        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
+        //                                                    'glpi_entities' => 'id']]],
+        //     'LEFT JOIN' => ['glpi_tickets' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
+        //                                                   'glpi_entities' => 'id']]],
+        //     'WHERE' => ['glpi_groups.entities_id' => 'NOT NULL', 'glpi_groups.is_assign' => 1, 'glpi_entities.id' != $theEntity],
+        //     'GROUPBY' => 'glpi_entities.id',
+        //     'ORDER' => 'glpi_entities.id'
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push($array, $data['id'], $data['name']);
+        // }
+
+        // return $array;
     }
 
     /**
@@ -212,6 +300,24 @@ class PluginTransferticketentityTicket extends Ticket
         }
 
         return $allGroupsEntities;
+
+        // Test ok
+        // $result = $DB->request([
+        //     'FROM' => 'glpi_groups',
+        //     'WHERE' => ['is_assign' => 1],
+        //     'ORDER' => ['entities_id', 'id']
+        // ]);
+
+        // $array = array();
+
+        // foreach($result as $data){
+        //     array_push(
+        //         $array, $data['id'], 
+        //         $data['entities_id'], $data['name']
+        //     );
+        // }
+
+        // return $array;
     }
 
     /**
@@ -246,9 +352,37 @@ class PluginTransferticketentityTicket extends Ticket
     public function showFormMcv()
     {
         global $CFG_GLPI;
-        
-        $getTicketEntity = self::getTicketEntity();
-        $getTicketGroup = self::getTicketGroup();
+        global $DB;
+
+        // $test = self::getGroupEntities();
+        // var_dump($test);
+
+        $entity_choice = 1;
+
+        // Devrait être ok
+        $result = $DB->request([
+            'SELECT' => 'glpi_groups.id',
+            'FROM' => 'glpi_groups',
+            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
+                                                                'glpi_entities' => 'id']]],
+            'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
+            'ORDER' => 'glpi_entities.id'
+        ]);
+
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['id']);
+        }
+
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['id']);
+        }
+
+        var_dump($array);
+
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
 
@@ -264,7 +398,9 @@ class PluginTransferticketentityTicket extends Ticket
 
         if($checkTicket == false) {
             echo "<div style='text-align: center;'>";
-                echo "<p style='color: red; font-size: 1.25rem; padding-top: 2rem;'>".__("Transfert non autorisé sur ticket clos.", "transferticketentity")."</p>";
+                echo "<p style='color: red; font-size: 1.25rem; padding-top: 2rem;'>".
+                    __("Transfert non autorisé sur ticket clos.", "transferticketentity")
+                    ."</p>";
             echo "</div>";
 
             return false;
