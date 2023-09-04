@@ -354,35 +354,6 @@ class PluginTransferticketentityTicket extends Ticket
         global $CFG_GLPI;
         global $DB;
 
-        // $test = self::getGroupEntities();
-        // var_dump($test);
-
-        $entity_choice = 1;
-
-        // Devrait être ok
-        $result = $DB->request([
-            'SELECT' => 'glpi_groups.id',
-            'FROM' => 'glpi_groups',
-            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-                                                                'glpi_entities' => 'id']]],
-            'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
-            'ORDER' => 'glpi_entities.id'
-        ]);
-
-        $array = array();
-
-        foreach($result as $data){
-            array_push($array, $data['id']);
-        }
-
-        $array = array();
-
-        foreach($result as $data){
-            array_push($array, $data['id']);
-        }
-
-        var_dump($array);
-
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
 
