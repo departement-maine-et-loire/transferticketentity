@@ -38,7 +38,7 @@ class PluginTransferticketentityConfig extends CommonDBTM
     /**
      * Récupère les profils qui ne sont pas autorisés à utiliser le transfert d'entité
      *
-     * @return $allProfiles
+     * @return array $allProfiles
      */
     public static function cantUseProfile()
     {
@@ -68,7 +68,7 @@ class PluginTransferticketentityConfig extends CommonDBTM
         //     'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
         //                                                                                'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
         //     'WHERE' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL'],
-        //     'ORDER' => 'name'
+        //     'ORDER' => 'name ASC'
         // ]);
 
         // $array = array();
@@ -83,7 +83,7 @@ class PluginTransferticketentityConfig extends CommonDBTM
     /**
      * Récupère les profils autorisés à utiliser le transfert d'entité
      *
-     * @return $allProfiles
+     * @return array $allProfiles
      */
     public static function canUseProfile()
     {
@@ -112,7 +112,7 @@ class PluginTransferticketentityConfig extends CommonDBTM
         //     'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
         //                                                                                'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
         //     'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
-        //     'ORDER' => 'name'
+        //     'ORDER' => 'name ASC'
         // ]);
 
         // $array = array();

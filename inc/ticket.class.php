@@ -37,7 +37,7 @@ class PluginTransferticketentityTicket extends Ticket
     /**
      * Vérifie le profil de l'utilisateur
      *
-     * @return $checkProfiles
+     * @return array $checkProfiles
      */
     public function checkProfiles()
     {
@@ -74,7 +74,7 @@ class PluginTransferticketentityTicket extends Ticket
     /**
      * Si le profil est autorisé, ajoute un onglet supplémentaire
      *
-     * @param string $item         Ticket
+     * @param object $item         Ticket
      * @param int    $withtemplate 0
      * 
      * @return "Entity ticket transfer"
@@ -224,7 +224,7 @@ class PluginTransferticketentityTicket extends Ticket
     /**
      * Permet de récupérer toutes les entités qui ont au moins un groupe ET utilisées
      *
-     * @return $allEntities
+     * @return array $allEntities
      */
     public function getAllEntities()
     {
@@ -262,7 +262,7 @@ class PluginTransferticketentityTicket extends Ticket
         //                                                   'glpi_entities' => 'id']]],
         //     'WHERE' => ['glpi_groups.entities_id' => 'NOT NULL', 'glpi_groups.is_assign' => 1, 'glpi_entities.id' != $theEntity],
         //     'GROUPBY' => 'glpi_entities.id',
-        //     'ORDER' => 'glpi_entities.id'
+        //     'ORDER' => 'glpi_entities.id ASC'
         // ]);
 
         // $array = array();
@@ -277,7 +277,7 @@ class PluginTransferticketentityTicket extends Ticket
     /**
      * Permet de récupérer les groupes auxquels des tickets peuvent être assignés
      *
-     * @return $allGroupsEntities
+     * @return array $allGroupsEntities
      */
     public function getGroupEntities()
     {
@@ -305,7 +305,7 @@ class PluginTransferticketentityTicket extends Ticket
         // $result = $DB->request([
         //     'FROM' => 'glpi_groups',
         //     'WHERE' => ['is_assign' => 1],
-        //     'ORDER' => ['entities_id', 'id']
+        //     'ORDER' => ['entities_id ASC', 'id ASC']
         // ]);
 
         // $array = array();
@@ -323,7 +323,7 @@ class PluginTransferticketentityTicket extends Ticket
     /**
      * Si on est sur les tickets, affiche un onglet supplémentaire
      * 
-     * @param string $item         Ticket
+     * @param object $item         Ticket
      * @param int    $tabnum       1
      * @param int    $withtemplate 0
      * 

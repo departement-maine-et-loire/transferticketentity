@@ -56,7 +56,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     /**
      * Ne récupère que les entités qui ont au moins un groupe actif
      *
-     * @return $checkEntityETT
+     * @return array $checkEntityETT
      */
     public function checkEntityETT()
     {
@@ -88,7 +88,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
         //                                                         'glpi_entities' => 'id']]],
         //     'WHERE' => ['glpi_groups.is_assign' => 1],
         //     'GROUPBY' => 'glpi_entities.id',
-        //     'ORDER' => 'glpi_entities.id'
+        //     'ORDER' => 'glpi_entities.id ASC'
         // ]);
 
         // $array = array();
@@ -103,7 +103,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     /**
      * Ne récupère que les groupes qui appartiennent à l'entité sélectionnée
      *
-     * @return $checkGroup
+     * @return array $checkGroup
      */
     public function checkGroup()
     {
@@ -135,7 +135,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
         //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
         //                                                         'glpi_entities' => 'id']]],
         //     'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
-        //     'ORDER' => 'glpi_entities.id'
+        //     'ORDER' => 'glpi_entities.id ASC'
         // ]);
 
         // $array = array();

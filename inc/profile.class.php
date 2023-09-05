@@ -37,7 +37,7 @@ class PluginTransferticketentityProfile extends Profile
     /**
      * Ajoute un onglet supplémentaire
      *
-     * @param string $item         Ticket
+     * @param object $item         Ticket
      * @param int    $withtemplate 0
      * 
      * @return nametab
@@ -53,7 +53,7 @@ class PluginTransferticketentityProfile extends Profile
     /**
      * Récupère les profils autorisés à utiliser le transfert d'entité
      *
-     * @return $allProfiles
+     * @return array $allProfiles
      */
     public function canUseProfiles()
     {
@@ -82,7 +82,7 @@ class PluginTransferticketentityProfile extends Profile
         //     'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
         //                                                                                'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
         //     'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
-        //     'ORDER' => 'name'
+        //     'ORDER' => 'name ASC'
         // ]);
 
         // $array = array();
@@ -97,7 +97,7 @@ class PluginTransferticketentityProfile extends Profile
     /**
      * Si on est sur les profils, affiche un onglet supplémentaire
      * 
-     * @param string $item         Ticket
+     * @param object $item         Ticket
      * @param int    $tabnum       1
      * @param int    $withtemplate 0
      * 
