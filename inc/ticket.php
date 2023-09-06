@@ -382,12 +382,13 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     ]
                 );
 
-                // Change le ticket d'entité
+                // Changes the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
                 $ticket->update(
                     [
                     'id'     => $id_ticket,
-                    'entities_id' => $entity_choice
+                    'entities_id' => $entity_choice,
+                    'status' => 2
                     ]
                 );
 
