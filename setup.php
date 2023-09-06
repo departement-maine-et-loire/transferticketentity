@@ -43,9 +43,6 @@ function plugin_init_transferticketentity()
 
     $PLUGIN_HOOKS['change_profile']['transferticketentity'] = ['PluginTransferticketentityProfileRights', 'changeProfile'];
     $PLUGIN_HOOKS['csrf_compliant']['transferticketentity'] = true;
-
-    // Ajout de la page de configuration
-    $PLUGIN_HOOKS['config_page']['transferticketentity'] = 'front/config.form.php';
 }
 
 function plugin_version_transferticketentity()
@@ -66,6 +63,11 @@ function plugin_version_transferticketentity()
 
 function plugin_transferticketentity_check_prerequisites()
 {
+    $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
+    if (version_compare($version, '10.0', '<')) {
+       echo "This plugin requires GLPI >= 10.0";
+       return false;
+    }
     return true;
 }
 
