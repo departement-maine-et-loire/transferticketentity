@@ -126,7 +126,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 
     /**
-     * Ne récupère que les entités qui ont au moins un groupe actif
+     * Get only the entities with at least one active group
      *
      * @return array $checkEntityETT
      */
@@ -173,7 +173,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 
     /**
-     * Ne récupère que les groupes qui appartiennent à l'entité sélectionnée
+     * Get only the groups belonging to the selected entity
      *
      * @return array $checkGroup
      */
@@ -220,7 +220,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 
     /**
-     * Récupère le nom de l'entité sélectionnée
+     * Get the name of the selected entity
      *
      * @return $data
      */
@@ -256,7 +256,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 
     /**
-     * Récupère le nom du groupe sélectionné
+     * Get the selected group name
      *
      * @return $data
      */
@@ -292,7 +292,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 
     /**
-     * Effectue les actions nécessaire au transfert d'entité
+     * Carries out the necessary actions for the transfer entity
      * 
      * @return void
      */
@@ -329,7 +329,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
 
                 header('location:' . $theServer);
             } else if (!in_array($entity_choice, $checkEntity)) {
-                // Vérifie que l'entité sélectionnée appartient à celles disponible
+                // Check that the selected entity belongs to those available
                 Session::addMessageAfterRedirect(
                     __(
                         "Veuillez sélectionner une entité valide", 
@@ -364,7 +364,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                 header('location:' . $theServer);
             }
             else { 
-                // Enlève le lien avec l'utilisateur actuel
+                // Remove the link with the current user
                 $ticket_user = new Ticket_User();
                 $ticket_user->delete(
                     [
@@ -373,7 +373,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     ]
                 );
 
-                // Enlève le lien avec le groupe actuel
+                // Remove the link with the current group
                 $group_ticket = new Group_Ticket();
                 $group_ticket->delete(
                     [
@@ -382,7 +382,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     ]
                 );
 
-                // Changes the entity ticket and set its status to processing (assigned)
+                // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
                 $ticket->update(
                     [
@@ -392,7 +392,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     ]
                 );
 
-                // Change le ticket de groupe
+                // Change group ticket
                 $group_check = [
                     'tickets_id' => $id_ticket,
                     'groups_id' => $group_choice,
@@ -404,7 +404,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     $group_ticket->update($group_check);
                 }
 
-                // Historise le transfert dans une tâche
+                // Log the transfer in a task
                 $itil_followup = new ITILFollowup();
                 $itil_followup->add(
                     [

@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginTransferticketentityTicket extends Ticket
 {
     /**
-     * Vérifie le profil de l'utilisateur
+     * Check the user profile
      *
      * @return array $checkProfiles
      */
@@ -72,7 +72,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Si le profil est autorisé, ajoute un onglet supplémentaire
+     * If the profile is authorised, add an extra tab
      *
      * @param object $item         Ticket
      * @param int    $withtemplate 0
@@ -92,7 +92,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Donne l'entité du ticket
+     * Give the ticket entity
      *
      * @return $data
      */
@@ -134,7 +134,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Vérifie que le ticket n'est pas clos
+     * Check that the ticket is not closed
      *
      * @return $data
      */
@@ -179,7 +179,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Permet de récuper le groupe assigné au ticket
+     * Get the group assigned to the ticket
      *
      * @return $data
      */
@@ -222,7 +222,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Permet de récupérer toutes les entités qui ont au moins un groupe ET utilisées
+     * Get all entities that have at least one group AND in use
      *
      * @return array $allEntities
      */
@@ -275,7 +275,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Permet de récupérer les groupes auxquels des tickets peuvent être assignés
+     * Get the groups to which tickets can be assigned
      *
      * @return array $allGroupsEntities
      */
@@ -321,7 +321,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Si on est sur les tickets, affiche un onglet supplémentaire
+     * If we are on tickets, an additional tab is displayed
      * 
      * @param object $item         Ticket
      * @param int    $tabnum       1
@@ -345,7 +345,7 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Affiche le form pour effectuer le transfert de ticket
+     * Display the ticket transfer form
      *
      * @return void
      */
