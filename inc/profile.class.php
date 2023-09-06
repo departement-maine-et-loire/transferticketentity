@@ -158,13 +158,15 @@ class PluginTransferticketentityProfile extends Profile
 
             <div style='display:none'>
                 <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' style='display: none;' readonly>
-            </div>
+            </div>";
         
-            <div class='center'>
+        if(Session::haveRight("profile", UPDATE)){
+            echo "<div class='center'>
                 <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
                     <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "transferticketentity")."</span></span>
                 </button>
             </div>";
-        Html::closeForm();
+            Html::closeForm();
+        }
     }
 }
