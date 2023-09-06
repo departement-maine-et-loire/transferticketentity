@@ -431,7 +431,11 @@ class PluginTransferticketentityTicket extends Ticket
 
             <dialog id='tt_modal_form_adder' class='tt_modal'>
                 <h2 style='color:black; font-weight:normal;'>".__("Confirmer le transfert ?", "transferticketentity")."</h2>
-                <p style='color:black; font-weight:normal; padding-bottom:3rem;'>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
+                <p style='color:black; font-weight:normal; padding-bottom:1rem;'>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
+                <div style='padding-bottom:2rem;' class='justification'>
+                    <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
+                    <input type='text' name='justification' required>
+                </div>
                 <button type='submit' name='canceltransfert' id='canceltransfert' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #f00020;color: white;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem; margin-right:1rem;'>".__("Annuler", "transferticketentity")."</button>
                 <button type='submit' name='transfertticket' id='transfertticket' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #80cead;color: #1e293b;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem;'>".__("Confirmer", "transferticketentity")."</button>
             </dialog>";

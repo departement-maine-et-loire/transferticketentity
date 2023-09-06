@@ -63,11 +63,8 @@ class PluginTransferticketentityTicket extends CommonDBTM
     public function checkAssign() {
         global $DB;
 
-        $id_ticket = $_SERVER["QUERY_STRING"];
-        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
-        $id_ticket = substr($id_ticket, 1);
-
-        $id_user = $_SESSION["glpiID"];
+        $id_ticket = $_POST['id_ticket'];
+        $id_user = $_POST['id_user'];
         $groupTech = array();
 
         $result = $DB->request([
@@ -312,6 +309,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
             $id_ticket = $_POST['id_ticket'];
             $id_user = $_POST['id_user'];
             $theServer = $_POST['theServer'];
+            $justification = $_POST['justification'];
 
             $theEntity = self::theEntity();
             $theGroup = self::theGroup();
@@ -353,7 +351,19 @@ class PluginTransferticketentityTicket extends CommonDBTM
                 );
     
                 header('location:' . $theServer);
-            } else { 
+            } else if (!isset($_POST['justification']) || $_POST['justification'] == '') {
+                Session::addMessageAfterRedirect(
+                    __(
+                        "Please explain your transfer", 
+                        'transferticketentity'
+                    ),
+                    true,
+                    ERROR
+                );
+    
+                header('location:' . $theServer);
+            }
+            else { 
                 // Enlève le lien avec l'utilisateur actuel
                 $ticket_user = new Ticket_User();
                 $ticket_user->delete(
