@@ -414,7 +414,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                         "Escalade vers", 
                         "transferticketentity"
                     ) . " $theEntity " .
-                    __("dans le groupe", "transferticketentity") . " $theGroup"
+                    __("dans le groupe", "transferticketentity") . " $theGroup \n $justification"
                     ]
                 );
     
