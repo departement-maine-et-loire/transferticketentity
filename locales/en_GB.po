@@ -126,5 +126,9 @@ msgid "Transfert annulé"
 msgstr "Transfer canceled"
 
 #: inc/ticket.class.php:266
-msgid "Transfert non autorisé sur ticket clos."
+msgid "You must be assigned to the ticket to be able to transfer it"
 msgstr "Unauthorized transfer on closed ticket."
+
+#: inc/ticket.php:266
+msgid "You must be assigned to the ticket to be able to transfer it"
+msgstr "You must be assigned to the ticket to be able to transfer it"

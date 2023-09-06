@@ -38,6 +38,7 @@ if (!isset($_SESSION['glpiactiveprofile']['id'])) {
 
 class PluginTransferticketentityTicket extends CommonDBTM
 {
+    public $checkAssign;
     public $checkEntityETT;
     public $checkGroup;
     public $theEntity;
@@ -46,11 +47,85 @@ class PluginTransferticketentityTicket extends CommonDBTM
 
     public function __construct()
     {
+        $this->checkAssign = $this->checkAssign();
         $this->checkEntityETT = $this->checkEntityETT();
         $this->checkGroup = $this->checkGroup();
         $this->theEntity = $this->theEntity();
         $this->theGroup = $this->theGroup();
         $this->ticketTransferETT = $this->ticketTransferETT();
+    }
+
+    /**
+     * Checks that the technician or his group is assigned to the ticket
+     *
+     * @return bool
+     */
+    public function checkAssign() {
+        global $DB;
+
+        $id_ticket = $_SERVER["QUERY_STRING"];
+        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
+        $id_ticket = substr($id_ticket, 1);
+
+        $id_user = $_SESSION["glpiID"];
+        $groupTech = array();
+
+        $result = $DB->request([
+            'SELECT' => 'groups_id',
+            'FROM' => 'glpi_groups_users',
+            'WHERE' => ['users_id' => $id_user]
+        ]);
+
+        foreach($result as $data){
+            if(!in_array($data, $groupTech)) {
+                array_push($groupTech, $data['groups_id']);
+            }
+        }
+
+        $checkAssignedTech = array();
+        $checkAssignedGroup = array();
+
+        $result = $DB->request([
+            'SELECT' => 'users_id',
+            'FROM' => 'glpi_tickets_users',
+            'WHERE' => ['tickets_id' => $id_ticket]
+        ]);
+
+        foreach($result as $data){
+            if(!in_array($data, $checkAssignedTech)) {
+                array_push($checkAssignedTech, $data['users_id']);
+            }
+        }
+
+        $result = $DB->request([
+            'SELECT' => 'groups_id',
+            'FROM' => 'glpi_groups_tickets',
+            'WHERE' => ['tickets_id' => $id_ticket]
+        ]);
+
+        foreach($result as $data){
+            if(!in_array($data, $checkAssignedGroup)) {
+                array_push($checkAssignedGroup, $data['groups_id']);
+            }
+        }
+
+        $var_check = 0;
+
+        if (in_array($id_user, $checkAssignedTech)) {
+            $var_check++;
+        }
+
+        foreach($groupTech as $checkAssign) {
+            if (in_array($checkAssign, $checkAssignedGroup)) {
+                $var_check++;
+            }
+        }
+
+        if ($var_check >= 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -230,6 +305,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
         global $DB;
 
         if (isset($_POST['transfertticket'])) {
+            $checkAssign = self::checkAssign();
             $checkEntity = self::checkEntityETT();
             $checkGroup = self::checkGroup();
 
@@ -243,8 +319,19 @@ class PluginTransferticketentityTicket extends CommonDBTM
             $entity_choice = $_REQUEST['entity_choice'];
             $group_choice = $_REQUEST['group_choice'];
 
-            // Vérifie que l'entité sélectionnée appartient à celles disponible
-            if (!in_array($entity_choice, $checkEntity)) {
+            if (!$checkAssign) {
+                Session::addMessageAfterRedirect(
+                    __(
+                        "You must be assigned to the ticket to be able to transfer it", 
+                        'transferticketentity'
+                    ),
+                true,
+                ERROR
+                );
+
+                header('location:' . $theServer);
+            } else if (!in_array($entity_choice, $checkEntity)) {
+                // Vérifie que l'entité sélectionnée appartient à celles disponible
                 Session::addMessageAfterRedirect(
                     __(
                         "Veuillez sélectionner une entité valide", 
