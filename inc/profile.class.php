@@ -34,6 +34,20 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginTransferticketentityProfile extends Profile
 {
+    static $rightname = "profile";
+
+    static function getAllRights() {
+        $rights = [
+            ['itemtype'  => 'PluginTickettransferEntityModel',
+                  'label'     => __('Change rights', 'tickettransferentity'),
+                  'field'     => 'plugin_tickettransferentity_model'],
+            ['itemtype'  => 'PluginTickettransferEntityModel',
+                  'label'     => __('Change entity', 'tickettransferentity'),
+                  'field'     => 'plugin_tickettransferentity_use',
+                  'rights'    => [READ => __('Read')]]];
+          return $rights;
+    }
+
     /**
      * Add an additional tab
      *
@@ -89,18 +103,56 @@ class PluginTransferticketentityProfile extends Profile
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-
         if ($item->getType() == 'Profile') {
-            $ID   = $item->getID();
             $profile = new self();
-            if (!isset($_SESSION['glpi_plugin_transferticketentity_profile']['id'])) {
-                PluginTransferticketentityProfileRights::changeProfile();
-            }
+            $ID   = $item->getField('id');
+
+            self::addDefaultProfileInfos(
+                $item->getID(),
+                ['plugin_tickettransferentity_model' => 0]
+            );
             $profile->showFormMcv($ID);
         }
 
         return true;
     }
+
+        /**
+    * @param $profile
+   **/
+   static function addDefaultProfileInfos($profiles_id, $rights) {
+
+    $profileRight = new ProfileRight();
+    foreach ($rights as $right => $value) {
+       if (!countElementsInTable(
+           'glpi_profilerights',
+           ['profiles_id' => $profiles_id, 'name' => $right]
+       )) {
+          $myright['profiles_id'] = $profiles_id;
+          $myright['name']        = $right;
+          $myright['rights']      = $value;
+          $profileRight->add($myright);
+
+          //Add right to the current session
+          $_SESSION['glpiactiveprofile'][$right] = $value;
+       }
+    }
+ }
+
+  /**
+  * @param $ID  integer
+  */
+ static function createFirstAccess($profiles_id) {
+
+    include_once Plugin::getPhpDir('tickettransferentity')."/inc/profile.class.php";
+    foreach (self::getAllRights() as $right) {
+       self::addDefaultProfileInfos(
+        $profiles_id,
+        ['plugin_tickettransferentity_model' => ALLSTANDARDRIGHT,
+        'plugin_tickettransferentity_use' => READ]
+       );
+    }
+ }
 
     /**
      * Display the plugin configuration form
@@ -121,18 +173,26 @@ class PluginTransferticketentityProfile extends Profile
 
         // Check or uncheck the box if the profile is authorised to use entity transfer
         if (in_array($id_profil, $canUseProfiles)) {
-            $checked = 'checked';
+            $checked = true;
         } else {
-            $checked = '';
+            $checked = false;
         }
 
         if(Session::haveRight("profile", UPDATE)) {
-            $disabled = '';
+            $disabled = false;
         } else {
-            $disabled = 'disabled';
+            $disabled = true;
         }
+
+        $paramCheckbox = [
+            'name' => 'plugin_change_profile',
+            'checked' => $checked,
+            'zero_on_empty' => false,
+            'value' => 'swap_profil',
+            'readonly' => $disabled
+        ];
         
-        if(Session::haveRight("profile", UPDATE)) {
+        if (Session::haveRight("profile", UPDATE)) {
             echo "<form action='../plugins/transferticketentity/inc/profile.php' method='post'>";
         }
         
@@ -143,7 +203,9 @@ class PluginTransferticketentityProfile extends Profile
                         </tr>
                         <tr>
                             <td class='tab_bg_2 tt_profile_tab_bg_2'>".__("Using entity transfer", "transferticketentity")."</td>
-                            <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked $disabled></td>
+                            <td>";
+                                Html::showCheckbox($paramCheckbox);
+                            echo "</td>
                         </tr>
                     </tbody>
                 </table>

@@ -234,13 +234,9 @@ class PluginTransferticketentityTicket extends Ticket
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-
         if ($item->getType() == 'Ticket') {
-            $ID   = $item->getID();
             $profile = new self();
-            if (!isset($_SESSION['glpi_plugin_transferticketentity_profile']['id'])) {
-                PluginTransferticketentityProfileRights::changeProfile();
-            }
+            $ID   = $item->getField('id');
             $profile->showFormMcv($ID);
         }
 
@@ -291,53 +287,52 @@ class PluginTransferticketentityTicket extends Ticket
         echo "</div>";
 
         echo"
-        <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
-            <div class='tt_entity_choice'>
-                <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
-                <select name='entity_choice' id='entity_choice'>
-                    <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
-        for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
-            echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
-        }
-                echo "</select>
-            </div>
-
-            <div class='tt_flex'>
-                <div class='tt_group_choice'>
-                    <label for='group_choice'>".__("Select the group to assign", "transferticketentity")." : </label>
-                    <select name='group_choice' id='group_choice'>
-                        <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>";
-        for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
-            echo "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
-        }
+            <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
+                <div class='tt_entity_choice'>
+                    <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
+                    <select name='entity_choice' id='entity_choice'>
+                        <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
+                    for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
+                        echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
+                    }
                     echo "</select>
                 </div>
 
-                <div class='tt_hidden_value'>
-                    <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' readonly>
-                    <input type ='number' id='id_user' value= '$id_user' name='id_user' readonly>
-                    <input type ='text' id='theServer' value= '$theServer' name='theServer' readonly>
+                <div class='tt_flex'>
+                    <div class='tt_group_choice'>
+                        <label for='group_choice'>".__("Select the group to assign", "transferticketentity")." : </label>
+                        <select name='group_choice' id='group_choice'>
+                            <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>";
+                        for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
+                            echo "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
+                        }
+                        echo "</select>
+                    </div>
+
+                    <div class='tt_hidden_value'>
+                        <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' readonly>
+                        <input type ='number' id='id_user' value= '$id_user' name='id_user' readonly>
+                        <input type ='text' id='theServer' value= '$theServer' name='theServer' readonly>
+                    </div>
+
+                    <div id='div_confirmation'>
+                        <button id='tt_btn_open_modal_form'>".__("Confirm", "transferticketentity")."</button>
+                    </div>
                 </div>
 
-                <div id='div_confirmation'>
-                    <button id='tt_btn_open_modal_form'>".__("Confirm", "transferticketentity")."</button>
-                </div>
-            </div>
-
-            <dialog id='tt_modal_form_adder' class='tt_modal'>
-                <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
-                <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
-                <div class='justification'>
-                    <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
-                    <textarea name='justification' required></textarea>
-                </div>
-                <div>
-                    <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Cancel", "transferticketentity")."</button>
-                    <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirm", "transferticketentity")."</button>
-                </div>
-            </dialog>";
-        Html::closeForm();
-
+                <dialog id='tt_modal_form_adder' class='tt_modal'>
+                    <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
+                    <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
+                    <div class='justification'>
+                        <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
+                        <textarea name='justification' required></textarea>
+                    </div>
+                    <div>
+                        <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Cancel", "transferticketentity")."</button>
+                        <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirm", "transferticketentity")."</button>
+                    </div>
+                </dialog>";
+            Html::closeForm();
         self::addStyleSheetAndScript();
     }
 }

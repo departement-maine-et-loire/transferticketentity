@@ -43,19 +43,6 @@ function plugin_transferticketentity_install()
     $default_collation = DBConnection::getDefaultCollation();
     $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
-    // Table for managing plugin's rights
-    if (!$DB->TableExists("glpi_plugin_transferticketentity_profile_rights")) {
-        $query = "CREATE TABLE `glpi_plugin_transferticketentity_profile_rights` (
-        `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
-        `profile` INT(11) NOT NULL,
-        `right` CHAR(2) NOT NULL,
-         PRIMARY KEY  (`id`)
-      ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-
-        $DB->query($query) or die("error creating glpi_plugin_transferticketentity_profile_rights " . $DB->error());
-        PluginTransferticketentityProfileRights::createAdminAccess($_SESSION['glpiactiveprofile']['id']);
-    }
-
     // Table used to manage rights of profiles authorised to use the plugin
     if (!$DB->tableExists("glpi_plugin_transferticketentity_profiles")) {
         $query = "CREATE TABLE `glpi_plugin_transferticketentity_profiles` (
@@ -65,7 +52,7 @@ function plugin_transferticketentity_install()
             ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
 
         $DB->query($query) or die("error creating glpi_plugin_transferticketentity_profiles ". $DB->error());
-        PluginTransferticketentityProfileRights::createAdminAccess($_SESSION['glpiactiveprofile']['id']);
+        PluginTransferticketentityProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
 
         $query = "INSERT INTO `glpi_plugin_transferticketentity_profiles`
                     (`id_profiles`)
@@ -85,7 +72,7 @@ function plugin_transferticketentity_uninstall()
 {
     global $DB;
 
-    $tables = array('glpi_plugin_transferticketentity_profiles', 'glpi_plugin_transferticketentity_profile_rights');
+    $tables = array('glpi_plugin_transferticketentity_profiles');
 
     foreach ($tables as $table) {
         $DB->query("DROP TABLE IF EXISTS `$table`;");
