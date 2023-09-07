@@ -215,11 +215,9 @@ class PluginTransferticketentityProfile extends Profile
         </div>";
         
         if(Session::haveRight("profile", UPDATE)){
-            echo "  <div class='center'>
-                        <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
-                            <span><i class='fas fa-save'></i><span>".__("Save", "transferticketentity")."</span></span>
-                        </button>
-                    </div>";
+            echo "<div class='center'>";
+                echo Html::submit(_sx('button', 'Save'), ['name' => 'plugin_update_profile', 'class' => 'btn btn-primary mt-2']);
+            echo"</div>";
             Html::closeForm();
         }
 

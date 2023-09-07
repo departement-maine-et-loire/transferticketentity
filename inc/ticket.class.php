@@ -271,6 +271,27 @@ class PluginTransferticketentityTicket extends Ticket
         $id_user = $_SESSION["glpiID"];
         $checkTicket = self::checkTicket();
 
+        // Impossible de l'utiliser avec du JS ?
+        // $entitiesValues = array(null);
+        // $entitiesNames = array(" -- " . __("Choose your entity", "transferticketentity") . " -- ");
+
+        // for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
+        //     array_push($entitiesValues, $getAllEntities[$i]);
+        //     array_push($entitiesNames, $getAllEntities[$i+1]);
+        // }
+        
+        // for ($i = 0; $i < count($entitiesValues); $i++) {
+        //     $allSelectEntities[$entitiesValues[$i]] = $entitiesNames[$i];
+        // }
+
+        // $paramEntities = [
+        //     'class' => 'entity_choice',
+        //     'required' => true,
+        //     'rand' => ''
+        // ];
+        
+        // Dropdown::showFromArray('entity_choice', $allSelectEntities, $paramEntities);
+
         if ($checkTicket == false) {
             echo "<div class='unauthorised'>";
                 echo "<p>".

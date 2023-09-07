@@ -31,7 +31,6 @@
 use Glpi\Plugin\Hooks;
 
 define('TRANSFERTICKETENTITY_VERSION', '1.0.0');
-require_once GLPI_ROOT . "/plugins/transferticketentity/inc/profilerights.class.php";
 
 function plugin_init_transferticketentity()
 {
