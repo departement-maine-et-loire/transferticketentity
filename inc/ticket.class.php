@@ -43,32 +43,18 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $query = "SELECT id_profiles
-        FROM glpi_plugin_transferticketentity_profiles";
+        $result = $DB->request([
+            'SELECT' => 'id_profiles',
+            'FROM' => 'glpi_plugin_transferticketentity_profiles'
+        ]);
 
-        $result = $DB->query($query);
+        $array = array();
 
-        $checkProfiles = array();
-
-        foreach ($result as $data) {
-            array_push($checkProfiles, $data['id_profiles']);
+        foreach($result as $data){
+            array_push($array, $data['id_profiles']);
         }
 
-        return $checkProfiles;
-
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'id_profiles',
-        //     'FROM' => 'glpi_plugin_transferticketentity_profiles'
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id_profiles']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**
@@ -103,34 +89,22 @@ class PluginTransferticketentityTicket extends Ticket
         $id_ticket = $_SERVER["QUERY_STRING"];
         $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
         $id_ticket = substr($id_ticket, 1);
-        
-        $query = "SELECT E.id, E.name
-        FROM glpi_tickets T
-        LEFT JOIN glpi_entities E ON E.id = T.entities_id
-        WHERE T.id = $id_ticket";
 
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
+            'FROM' => 'glpi_tickets',
+            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
+                                                           'glpi_entities' => 'id']]],
+            'WHERE' => ['glpi_tickets.id' => $id_ticket]
+        ]);
 
-        foreach ($result as $data) {
-            return [$data['id'], $data['name']];
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['id'], $data['name']);
         }
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
-        //     'FROM' => 'glpi_tickets',
-        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
-        //                                                    'glpi_entities' => 'id']]],
-        //     'WHERE' => ['glpi_tickets.id' => $id_ticket]
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id'], $data['name']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**
@@ -146,30 +120,17 @@ class PluginTransferticketentityTicket extends Ticket
         $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
         $id_ticket = substr($id_ticket, 1);
 
-        $query = "SELECT id
-        FROM glpi_tickets
-        WHERE `status` = 6";
-        
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'SELECT' => 'id',
+            'FROM' => 'glpi_tickets',
+            'WHERE' => ['status' => 6]
+        ]);
 
-        $array = [];
+        $array = array();
 
-        foreach ($result as $data) {
+        foreach($result as $data){
             array_push($array, $data['id']);
         }
-
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'id',
-        //     'FROM' => 'glpi_tickets',
-        //     'WHERE' => ['status' => 6]
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id']);
-        // }
 
         if(!in_array($id_ticket, $array)) {
             return true;
@@ -191,34 +152,18 @@ class PluginTransferticketentityTicket extends Ticket
         $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
         $id_ticket = substr($id_ticket, 1);
 
-        $query = "SELECT *
-        FROM glpi_groups_tickets
-        WHERE tickets_id = $id_ticket
-        AND TYPE = 2";
-
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'FROM' => 'glpi_groups_tickets',
+            'WHERE' => ['tickets_id' => $id_ticket, 'type' => 2]
+        ]);
 
         $array = array();
 
-        foreach ($result as $data) {
+        foreach($result as $data){
             array_push($array, $data['groups_id']);
         }
 
         return $array;
-
-        // Test ok
-        // $result = $DB->request([
-        //     'FROM' => 'glpi_groups_tickets',
-        //     'WHERE' => ['tickets_id' => $id_ticket, 'type' => 2]
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['groups_id']);
-        // }
-
-        // return $array;
     }
 
     /**
@@ -283,41 +228,22 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $query = "SELECT *
-        FROM glpi_groups
-        WHERE is_assign = 1
-        ORDER BY entities_id ASC, id ASC";
+        $result = $DB->request([
+            'FROM' => 'glpi_groups',
+            'WHERE' => ['is_assign' => 1],
+            'ORDER' => ['entities_id ASC', 'id ASC']
+        ]);
 
-        $result = $DB->query($query);
+        $array = array();
 
-        $allGroupsEntities = array();
-
-        foreach ($result as $data) {
+        foreach($result as $data){
             array_push(
-                $allGroupsEntities, $data['id'], 
+                $array, $data['id'], 
                 $data['entities_id'], $data['name']
             );
         }
 
-        return $allGroupsEntities;
-
-        // Test ok
-        // $result = $DB->request([
-        //     'FROM' => 'glpi_groups',
-        //     'WHERE' => ['is_assign' => 1],
-        //     'ORDER' => ['entities_id ASC', 'id ASC']
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push(
-        //         $array, $data['id'], 
-        //         $data['entities_id'], $data['name']
-        //     );
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**
@@ -344,11 +270,8 @@ class PluginTransferticketentityTicket extends Ticket
         return true;
     }
 
-    public static function addStyleSheet() {
+    public static function addStyleSheetAndScript() {
         echo Html::css("/plugins/transferticketentity/css/style.css");
-    }
-
-    public static function addScript() {
         echo Html::script("/plugins/transferticketentity/js/script.js");
     }
 
@@ -361,8 +284,6 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $CFG_GLPI;
         global $DB;
-
-        self::addStyleSheet();
 
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
@@ -440,6 +361,6 @@ class PluginTransferticketentityTicket extends Ticket
             </dialog>";
         Html::closeForm();
 
-        self::addScript();
+        self::addStyleSheetAndScript();
     }
 }
