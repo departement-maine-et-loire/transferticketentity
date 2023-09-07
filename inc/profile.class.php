@@ -59,39 +59,23 @@ class PluginTransferticketentityProfile extends Profile
     {
         global $DB;
 
-        $query = "SELECT P.id, P.name
-        FROM glpi_plugin_transferticketentity_profiles PEP
-        LEFT JOIN glpi_profiles P ON P.id = PEP.id_profiles
-        ORDER BY name ASC";
+        $result = $DB->request([
+            'SELECT' => ['glpi_profiles.id', 'glpi_profiles.name'],
+            'DISTINCT' => TRUE,
+            'FROM' => 'glpi_profiles',
+            'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
+                                                                                       'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
+            'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
+            'ORDER' => 'name ASC'
+        ]);
 
-        $result = $DB->query($query);
+        $array = array();
 
-        $allProfiles = array();
-
-        foreach ($result as $data) {
-            array_push($allProfiles, $data['id'], $data['name']);
+        foreach($result as $data){
+            array_push($array, $data['id'], $data['name']);
         }
 
-        return $allProfiles;
-
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => ['glpi_profiles.id', 'glpi_profiles.name'],
-        //     'DISTINCT' => TRUE,
-        //     'FROM' => 'glpi_profiles',
-        //     'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
-        //                                                                                'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
-        //     'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
-        //     'ORDER' => 'name ASC'
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id'], $data['name']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**

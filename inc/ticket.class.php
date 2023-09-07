@@ -177,46 +177,23 @@ class PluginTransferticketentityTicket extends Ticket
         $getTicketEntity = self::getTicketEntity();
         $theEntity = $getTicketEntity[0];
 
-        $query = "SELECT E.id, E.name
-        FROM glpi_groups G
-        LEFT JOIN glpi_entities E ON E.id = G.entities_id
-        LEFT JOIN glpi_tickets T ON T.entities_id = E.id
-        WHERE G.entities_id IS NOT NULL
-        AND G.is_assign = 1
-        AND E.id != $theEntity
-        GROUP BY E.id
-        ORDER BY E.id";
+        $result = $DB->request([
+            'SELECT' => ['E.id', 'E.name'],
+            'FROM' => 'glpi_groups AS G',
+            'LEFT JOIN' => ['glpi_entities AS E' => ['FKEY' => ['G'     => 'entities_id',
+                                                           'E' => 'id']]],
+            'WHERE' => ['NOT' => ['G.entities_id' => 'NULL'], 'G.is_assign' => 1, 'NOT' => ['E.id' => $theEntity]],
+            'GROUPBY' => 'E.id',
+            'ORDER' => 'E.id ASC'
+        ]);
 
-        $result = $DB->query($query);
+        $array = array();
 
-        $allEntities = array();
-
-        foreach ($result as $data) {
-            array_push($allEntities, $data['id'], $data['name']);
+        foreach($result as $data){
+            array_push($array, $data['id'], $data['name']);
         }
 
-        return $allEntities;
-
-        // Test NOK
-        // $result = $DB->request([
-        //     'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
-        //     'FROM' => 'glpi_groups',
-        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-        //                                                    'glpi_entities' => 'id']]],
-        //     'LEFT JOIN' => ['glpi_tickets' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
-        //                                                   'glpi_entities' => 'id']]],
-        //     'WHERE' => ['glpi_groups.entities_id' => 'NOT NULL', 'glpi_groups.is_assign' => 1, 'glpi_entities.id' != $theEntity],
-        //     'GROUPBY' => 'glpi_entities.id',
-        //     'ORDER' => 'glpi_entities.id ASC'
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id'], $data['name']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**

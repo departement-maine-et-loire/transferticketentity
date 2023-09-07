@@ -56,30 +56,19 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
         global $DB;
         $id_profil = $_POST['id_profil'];
 
-        $query = "SELECT name
-        FROM glpi_profiles
-        WHERE id = $id_profil";
-  
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'SELECT' => ['name'],
+            'FROM' => 'glpi_profiles',
+            'WHERE' => ['id' => $id_profil],
+        ]);
+
+        $array = array();
 
         foreach ($result as $data) {
-            return $data['name'];
+            array_push($array, $data['name']);
         }
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => ['name'],
-        //     'FROM' => 'glpi_profiles',
-        //     'WHERE' => ['id' => $id_profil],
-        // ]);
-
-        // $array = array();
-
-        // foreach ($result as $data) {
-        //     array_push($array, $data['name']);
-        // }
-
-        // return $array;
+        return $array[0];
     }
 
     /**

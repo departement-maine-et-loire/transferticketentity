@@ -134,42 +134,23 @@ class PluginTransferticketentityTicket extends CommonDBTM
     {
         global $DB;
     
-        $query = "SELECT E.id
-        FROM glpi_groups G
-        LEFT JOIN glpi_entities E ON E.id = G.entities_id
-        WHERE G.entities_id IS NOT NULL
-        AND G.is_assign = 1
-        GROUP BY E.id
-        ORDER BY E.id";
-    
-        $result = $DB->query($query);
-    
-        $checkEntity = array();
-    
-        foreach ($result as $data) {
-            array_push($checkEntity, $data['id']);
+        $result = $DB->request([
+            'SELECT' => 'glpi_entities.id',
+            'FROM' => 'glpi_groups',
+            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
+                                                                'glpi_entities' => 'id']]],
+            'WHERE' => ['glpi_groups.is_assign' => 1],
+            'GROUPBY' => 'glpi_entities.id',
+            'ORDER' => 'glpi_entities.id ASC'
+        ]);
+
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['id']);
         }
-    
-        return $checkEntity;
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'glpi_entities.id',
-        //     'FROM' => 'glpi_groups',
-        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-        //                                                         'glpi_entities' => 'id']]],
-        //     'WHERE' => ['glpi_groups.is_assign' => 1],
-        //     'GROUPBY' => 'glpi_entities.id',
-        //     'ORDER' => 'glpi_entities.id ASC'
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**
@@ -182,41 +163,22 @@ class PluginTransferticketentityTicket extends CommonDBTM
         global $DB;
         $entity_choice = $_REQUEST['entity_choice'];
     
-        $query = "SELECT G.id
-        FROM glpi_groups G
-        LEFT JOIN glpi_entities E ON E.id = G.entities_id
-        WHERE G.entities_id IS NOT NULL
-        AND G.is_assign = 1
-        AND E.id = $entity_choice
-        ORDER BY E.id";
-    
-        $result = $DB->query($query);
-    
-        $checkGroup = array();
-    
-        foreach ($result as $data) {
-            array_push($checkGroup, $data['id']);
+        $result = $DB->request([
+            'SELECT' => 'glpi_groups.id',
+            'FROM' => 'glpi_groups',
+            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
+                                                                'glpi_entities' => 'id']]],
+            'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
+            'ORDER' => 'glpi_entities.id ASC'
+        ]);
+
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['id']);
         }
-    
-        return $checkGroup;
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'glpi_groups.id',
-        //     'FROM' => 'glpi_groups',
-        //     'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-        //                                                         'glpi_entities' => 'id']]],
-        //     'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
-        //     'ORDER' => 'glpi_entities.id ASC'
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['id']);
-        // }
-
-        // return $array;
+        return $array;
     }
 
     /**
@@ -229,30 +191,19 @@ class PluginTransferticketentityTicket extends CommonDBTM
         global $DB;
         $entity_choice = $_REQUEST['entity_choice'];
 
-        $query = "SELECT name
-        FROM glpi_entities
-        WHERE id = $entity_choice";
-  
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'SELECT' => 'name',
+            'FROM' => 'glpi_entities',
+            'WHERE' => ['id' => $entity_choice]
+        ]);
 
-        foreach ($result as $data) {
-            return $data['name'];
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['name']);
         }
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'name',
-        //     'FROM' => 'glpi_entities',
-        //     'WHERE' => ['id' => $entity_choice]
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['name']);
-        // }
-
-        // return $array;
+        return $array[0];
     }
 
     /**
@@ -265,30 +216,19 @@ class PluginTransferticketentityTicket extends CommonDBTM
         global $DB;
         $group_choice = $_REQUEST['group_choice'];
 
-        $query = "SELECT name
-        FROM glpi_groups
-        WHERE id = $group_choice";
-  
-        $result = $DB->query($query);
+        $result = $DB->request([
+            'SELECT' => 'name',
+            'FROM' => 'glpi_groups',
+            'WHERE' => ['id' => $group_choice]
+        ]);
 
-        foreach ($result as $data) {
-            return $data['name'];
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['name']);
         }
 
-        // Test ok
-        // $result = $DB->request([
-        //     'SELECT' => 'name',
-        //     'FROM' => 'glpi_groups',
-        //     'WHERE' => ['id' => $group_choice]
-        // ]);
-
-        // $array = array();
-
-        // foreach($result as $data){
-        //     array_push($array, $data['name']);
-        // }
-
-        // return $array;
+        return $array[0];
     }
 
     /**
