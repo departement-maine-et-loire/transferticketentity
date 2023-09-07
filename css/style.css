@@ -1,3 +1,5 @@
+/*----------------------------------------- all files -----------------------------------------------*/
+
 .tt_hidden_value {
     display:none;
 }
@@ -6,7 +8,7 @@
     display:flex;
 }
 
-/*----------------------------------- ticket.class.php -----------------------------------------------*/
+/*--------------------------------------- ticket.class.php -------------------------------------------*/
 
 .unauthorised {
     text-align: center;
@@ -121,4 +123,20 @@
 
 #tt_modal_form_adder p {
     padding-bottom:1rem;
+}
+
+/*--------------------------------------- profile.class.php -------------------------------------------*/
+
+.tt_profile_border-top {
+    background:var(--tblr-border-color-light);
+}
+
+.tt_profile_border-top h4 {
+    line-height:1.4285714286;
+    font-size:0.875rem;
+    color:#626976;
+}
+
+.tt_profile_tab_bg_2 {
+    width:40%;
 }

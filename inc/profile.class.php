@@ -138,18 +138,18 @@ class PluginTransferticketentityProfile extends Profile
         
         echo "  <table class='table table-hover card-table'>
                     <tbody>
-                        <tr class='border-top' style='background:var(--tblr-border-color-light);'>
-                            <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Change rights", "transferticketentity")."</h4></th>
+                        <tr class='border-top tt_profile_border-top'>
+                            <th colspan='2'><h4>".__("Change rights", "transferticketentity")."</h4></th>
                         </tr>
                         <tr>
-                            <td class='tab_bg_2' style='width:40%;'>".__("Using entity transfer", "transferticketentity")."</td>
+                            <td class='tab_bg_2 tt_profile_tab_bg_2'>".__("Using entity transfer", "transferticketentity")."</td>
                             <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked $disabled></td>
                         </tr>
                     </tbody>
                 </table>
 
-        <div style='display:none'>
-            <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' style='display: none;' readonly>
+        <div class='tt_hidden_value'>
+            <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' readonly>
         </div>";
         
         if(Session::haveRight("profile", UPDATE)){
@@ -160,5 +160,7 @@ class PluginTransferticketentityProfile extends Profile
                     </div>";
             Html::closeForm();
         }
+
+        PluginTransferticketentityTicket::addStyleSheetAndScript();
     }
 }
