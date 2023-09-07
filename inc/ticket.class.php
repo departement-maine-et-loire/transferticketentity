@@ -344,8 +344,12 @@ class PluginTransferticketentityTicket extends Ticket
         return true;
     }
 
-    public static function addScriptAndStyleSheet() {
+    public static function addStyleSheet() {
         echo Html::css("/plugins/transferticketentity/css/style.css");
+    }
+
+    public static function addScript() {
+        echo Html::script("/plugins/transferticketentity/js/script.js");
     }
 
     /**
@@ -358,7 +362,7 @@ class PluginTransferticketentityTicket extends Ticket
         global $CFG_GLPI;
         global $DB;
 
-        self::addScriptAndStyleSheet();
+        self::addStyleSheet();
 
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
@@ -389,7 +393,7 @@ class PluginTransferticketentityTicket extends Ticket
         echo "</div>";
 
         echo"
-        <form class='form_transfert' style='margin:auto; display:none' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
+        <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
             <div class='tt_entity_choice'>
                 <label for='entity_choice'>".__("Sélectionnez l'entité vers laquelle migrer le ticket", "transferticketentity")." : </label>
                 <select name='entity_choice' id='entity_choice'>
@@ -400,7 +404,7 @@ class PluginTransferticketentityTicket extends Ticket
                 echo "</select>
             </div>
 
-            <div style='display:flex;'>
+            <div class='tt_flex'>
                 <div class='tt_group_choice' style='display: none;'>
                     <label for='group_choice'>".__("Sélectionnez le groupe à assigner", "transferticketentity")." : </label>
                     <select name='group_choice' id='group_choice'>
@@ -411,101 +415,31 @@ class PluginTransferticketentityTicket extends Ticket
                     echo "</select>
                 </div>
 
-                <div style='display:none'>
-                    <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' style='display: none;' readonly>
-                    <input type ='number' id='id_user' value= '$id_user' name='id_user' style='display: none;' readonly>
-                    <input type ='text' id='theServer' value= '$theServer' name='theServer' style='display: none;' readonly>
+                <div class='tt_hidden_value'>
+                    <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' readonly>
+                    <input type ='number' id='id_user' value= '$id_user' name='id_user' readonly>
+                    <input type ='text' id='theServer' value= '$theServer' name='theServer' readonly>
                 </div>
 
-                <div id='div_confirmation' style='display: none; padding-left: .5rem;'>
-                    <button id='tt_btn_open_modal_form' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 1rem;'>".__("Valider", "transferticketentity")."</button>
+                <div id='div_confirmation'>
+                    <button id='tt_btn_open_modal_form'>".__("Valider", "transferticketentity")."</button>
                 </div>
             </div>
 
             <dialog id='tt_modal_form_adder' class='tt_modal'>
-                <h2 style='color:black; font-weight:normal;'>".__("Confirmer le transfert ?", "transferticketentity")."</h2>
-                <p style='color:black; font-weight:normal; padding-bottom:1rem;'>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
-                <div style='padding-bottom:2rem;' class='justification'>
+                <h2>".__("Confirmer le transfert ?", "transferticketentity")."</h2>
+                <p>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
+                <div class='justification'>
                     <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
                     <textarea name='justification' required></textarea>
                 </div>
-                <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Annuler", "transferticketentity")."</button>
-                <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirmer", "transferticketentity")."</button>
+                <div>
+                    <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Annuler", "transferticketentity")."</button>
+                    <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirmer", "transferticketentity")."</button>
+                </div>
             </dialog>";
         Html::closeForm();
 
-        echo "<script>       
-            if(document.querySelector('.tt_entity_choice') != null) {
-                document.querySelector('#tt_gest_error').style.display='none'
-                document.querySelector('.form_transfert').style.display=''
-            
-                let entity_choice = document.querySelector('#entity_choice')
-                let tt_group_choice = document.querySelector('.tt_group_choice')
-                let tt_btn_open_modal_form = document.querySelector('#tt_btn_open_modal_form')
-            
-                const clone_all_groups = document.querySelectorAll('#group_choice option')
-                let all_groups = []
-            
-                let all_groups_unchoice = document.querySelectorAll('#group_choice option')
-                all_groups_unchoice.forEach(function(all_group_unchoice) {
-                    all_group_unchoice.remove()
-                })
-            
-                entity_choice.addEventListener('click', function (event) {
-                    if(entity_choice.value == '') {
-                        tt_group_choice.style.display = 'none'
-                        tt_btn_open_modal_form.disabled = true
-                        tt_btn_open_modal_form.style.backgroundColor = '#D3D3D3'
-                        tt_btn_open_modal_form.style.color = '#FFFFFF'
-                        tt_btn_open_modal_form.style.cursor = 'not-allowed'
-                    } else {
-                        tt_group_choice.style.display = ''
-                        document.querySelector('#div_confirmation').style.display = ''
-                        document.querySelector('.tt_group_choice').style.display = ''
-                    }
-                })
-            
-                entity_choice.addEventListener('change', function (event) {
-                    all_groups = []
-                    all_groups = clone_all_groups
-            
-                    all_groups.forEach(function(all_group) {
-                        if('tt_plugin_entity_' + entity_choice.value == all_group.className || all_group.value == '') {
-                            document.querySelector('#group_choice').appendChild(all_group)
-                        } else {
-                            all_group.remove()
-                        }
-                    })
-            
-                    document.querySelector('#no_select').selected = true
-                })
-            
-                document.querySelector('.form_transfert').addEventListener('click', function (event) {
-                    if(document.querySelector('#group_choice').value == '') {
-                        tt_btn_open_modal_form.disabled = true
-                        tt_btn_open_modal_form.style.backgroundColor = '#D3D3D3'
-                        tt_btn_open_modal_form.style.color = '#FFFFFF'
-                        tt_btn_open_modal_form.style.cursor = 'not-allowed'
-                    } else {
-                        tt_btn_open_modal_form.disabled = false
-                        tt_btn_open_modal_form.style.backgroundColor = '#80cead'
-                        tt_btn_open_modal_form.style.color = '#1e293b'
-                        tt_btn_open_modal_form.style.cursor = 'pointer'
-                    }
-                })
-            
-                let modal_form_adder = document.getElementById('tt_modal_form_adder')
-            
-                document.querySelector('#canceltransfert').addEventListener('click', function(event){
-                    event.preventDefault()
-                    modal_form_adder.close();
-                });
-            
-                tt_btn_open_modal_form.addEventListener('click', function(event){
-                    event.preventDefault()
-                    modal_form_adder.showModal();
-                });
-            }
-        </script>";
+        self::addScript();
     }
 }

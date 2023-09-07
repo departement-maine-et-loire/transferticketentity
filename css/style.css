@@ -1,3 +1,11 @@
+.tt_hidden_value {
+    display:none;
+}
+
+.tt_flex {
+    display:flex;
+}
+
 /*----------------------------------- ticket.class.php -----------------------------------------------*/
 
 .unauthorised {
@@ -12,6 +20,28 @@
 
 #tt_gest_error {
     color:red;
+}
+
+.form_transfert {
+    margin:auto;
+    display:none;
+}
+
+.form_transfert #div_confirmation {
+    display: none;
+    padding-left: .5rem;
+}
+
+.form_transfert #div_confirmation #tt_btn_open_modal_form {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border: 1px solid rgba(98, 105, 118, 0.24);
+    border-radius: 4px;
+    font-weight: 500;
+    line-height: 1.4285714286;
+    padding: 0.4375rem 1rem;
 }
 
 .tt_modal {
@@ -74,4 +104,17 @@
     font-weight: 500;
     line-height: 1.4285714286;
     padding: 0.4375rem 2rem;
+}
+
+#tt_modal_form_adder .justification {
+    padding-bottom:1rem;
+}
+
+#tt_modal_form_adder h2 p {
+    color:black;
+    font-weight:normal;
+}
+
+#tt_modal_form_adder p {
+    padding-bottom:1rem;
 }
