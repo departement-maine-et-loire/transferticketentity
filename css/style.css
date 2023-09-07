@@ -1,0 +1,77 @@
+/*----------------------------------- ticket.class.php -----------------------------------------------*/
+
+.unauthorised {
+    text-align: center;
+}
+
+.unauthorised p {
+    color: red;
+    font-size: 1.25rem;
+    padding-top: 2rem;
+}
+
+#tt_gest_error {
+    color:red;
+}
+
+.tt_modal {
+    background-color: red;
+    background-color: #fefefe;
+    margin: auto;
+    max-width: 600px;
+    padding: 15px;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    text-align: center;
+    z-index: 10001;
+}
+
+.tt_modal label {
+    padding-bottom: .5rem;
+}
+
+.tt_modal textarea {
+    width: 80%;
+    height: 80px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.tt_modal textarea:focus { 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+#canceltransfert {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background-color: #f00020;
+    color: white;
+    border: 1px solid rgba(98, 105, 118, 0.24);
+    border-radius: 4px;
+    font-weight: 500;
+    line-height: 1.4285714286;
+    padding: 0.4375rem 2rem;
+    margin-right:1rem;
+}
+
+#transfertticket {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    background-color: #80cead;
+    color: #1e293b;
+    border: 1px solid rgba(98, 105, 118, 0.24);
+    border-radius: 4px;
+    font-weight: 500;
+    line-height: 1.4285714286;
+    padding: 0.4375rem 2rem;
+}

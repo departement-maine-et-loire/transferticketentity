@@ -344,6 +344,10 @@ class PluginTransferticketentityTicket extends Ticket
         return true;
     }
 
+    public static function addScriptAndStyleSheet() {
+        echo Html::css("/plugins/transferticketentity/css/style.css");
+    }
+
     /**
      * Display the ticket transfer form
      *
@@ -353,6 +357,8 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $CFG_GLPI;
         global $DB;
+
+        self::addScriptAndStyleSheet();
 
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
@@ -367,9 +373,9 @@ class PluginTransferticketentityTicket extends Ticket
         $id_user = $_SESSION["glpiID"];
         $checkTicket = self::checkTicket();
 
-        if($checkTicket == false) {
-            echo "<div style='text-align: center;'>";
-                echo "<p style='color: red; font-size: 1.25rem; padding-top: 2rem;'>".
+        if ($checkTicket == false) {
+            echo "<div class='unauthorised'>";
+                echo "<p>".
                     __("Transfert non autorisé sur ticket clos.", "transferticketentity")
                     ."</p>";
             echo "</div>";
@@ -377,22 +383,9 @@ class PluginTransferticketentityTicket extends Ticket
             return false;
         }
 
-        echo "<style>         
-                .tt_modal {
-                    background-color: #fefefe;
-                    margin: auto;
-                    max-width: 600px;
-                    padding: 15px;
-                    border: 1px solid #888;
-                    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-                    text-align: center;
-                    z-index: 10001;
-                }
-        </style>";
-
         echo "<div id='tt_gest_error'>";
-            echo "<p style='color:red;'>".__("Erreur, veuillez recharger la page.", "transferticketentity")."</p>";
-            echo "<p style='color:red;'>".__("Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5.", "transferticketentity")."</p>";
+            echo "<p>".__("Erreur, veuillez recharger la page.", "transferticketentity")."</p>";
+            echo "<p>".__("Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5.", "transferticketentity")."</p>";
         echo "</div>";
 
         echo"
@@ -434,10 +427,10 @@ class PluginTransferticketentityTicket extends Ticket
                 <p style='color:black; font-weight:normal; padding-bottom:1rem;'>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
                 <div style='padding-bottom:2rem;' class='justification'>
                     <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
-                    <input type='text' name='justification' required>
+                    <textarea name='justification' required></textarea>
                 </div>
-                <button type='submit' name='canceltransfert' id='canceltransfert' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #f00020;color: white;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem; margin-right:1rem;'>".__("Annuler", "transferticketentity")."</button>
-                <button type='submit' name='transfertticket' id='transfertticket' style='display:inline-flex;align-items: center;justify-content: center;white-space: nowrap;background-color: #80cead;color: #1e293b;border: 1px solid rgba(98, 105, 118, 0.24);border-radius: 4px;font-weight: 500;line-height: 1.4285714286;padding: 0.4375rem 2rem;'>".__("Confirmer", "transferticketentity")."</button>
+                <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Annuler", "transferticketentity")."</button>
+                <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirmer", "transferticketentity")."</button>
             </dialog>";
         Html::closeForm();
 

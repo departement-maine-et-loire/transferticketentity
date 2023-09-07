@@ -142,30 +142,38 @@ class PluginTransferticketentityProfile extends Profile
             $checked = '';
         }
 
-        echo "
-        <form action='../plugins/transferticketentity/inc/profile.php' method='post'>
-            <table class='table table-hover card-table'>
-                <tbody>
-                    <tr class='border-top' style='background:var(--tblr-border-color-light);'>
-                        <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Modifier les droits", "transferticketentity")."</h4></th>
-                    </tr>
-                    <tr>
-                        <td class='tab_bg_2' style='width:40%;'>".__("Utilisation du transfert d'entité", "transferticketentity")."</td>
-                        <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked></td>
-                    </tr>
-                </tbody>
-            </table>
+        if(Session::haveRight("profile", UPDATE)) {
+            $disabled = '';
+        } else {
+            $disabled = 'disabled';
+        }
+        
+        if(Session::haveRight("profile", UPDATE)) {
+            echo "<form action='../plugins/transferticketentity/inc/profile.php' method='post'>";
+        }
+        
+        echo "  <table class='table table-hover card-table'>
+                    <tbody>
+                        <tr class='border-top' style='background:var(--tblr-border-color-light);'>
+                            <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Modifier les droits", "transferticketentity")."</h4></th>
+                        </tr>
+                        <tr>
+                            <td class='tab_bg_2' style='width:40%;'>".__("Utilisation du transfert d'entité", "transferticketentity")."</td>
+                            <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked $disabled></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <div style='display:none'>
-                <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' style='display: none;' readonly>
-            </div>";
+        <div style='display:none'>
+            <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' style='display: none;' readonly>
+        </div>";
         
         if(Session::haveRight("profile", UPDATE)){
-            echo "<div class='center'>
-                <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
-                    <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "transferticketentity")."</span></span>
-                </button>
-            </div>";
+            echo "  <div class='center'>
+                        <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
+                            <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "transferticketentity")."</span></span>
+                        </button>
+                    </div>";
             Html::closeForm();
         }
     }
