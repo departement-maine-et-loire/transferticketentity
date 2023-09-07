@@ -22,111 +22,95 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: inc/profile.class.php:74 inc/ticket.class.php:48
-msgid "Transfert d'entité"
+msgid "Transfer Ticket Entity"
 msgstr "Transfer Ticket Entity"
 
-#: inc/config.class.php:90
-msgid "Sélectionnez le profil habilité à effectuer un transfert d'entité"
-msgstr "Select the profile to enable entity transfer"
-
-#: inc/config.class.php:96
-msgid "Ajouter"
-msgstr "Add"
-
-#: inc/config.class.php:102
-msgid "Retirez les droits de transfert d'entité au profil sélectionné"
-msgstr "Remove entity transfer rights to the selected profile"
-
-#: inc/config.class.php:108
-msgid "Supprimer"
-msgstr "Delete"
-
 #: inc/profile.class.php:74
-msgid "Modifier les droits"
+msgid "Change rights"
 msgstr "Change rights"
 
 #: inc/profile.class.php:77
-msgid "Utilisation du transfert d'entité"
+msgid "Using entity transfer"
 msgstr "Using entity transfer"
 
 #: inc/profile.class.php:89
-msgid "Sauvegarder"
+msgid "Save"
 msgstr "Save"
 
 #: inc/profile.php:50 inc/profile.php:63
-msgid "Élément modifié"
+msgid "Item successfully updated"
 msgstr "Item successfully updated"
 
 #: inc/ticket.class.php:210
-msgid "Erreur, veuillez recharger la page."
+msgid "Error, please reload the page."
 msgstr "Error, please reload the page."
 
 #: inc/ticket.class.php:211
-msgid "Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5."
+msgid "If the problem persists, you can try to empty the cache by doing CTRL + F5."
 msgstr "If the problem persists, you can try to empty the cache by doing CTRL + F5."
 
 #: inc/ticket.class.php:216
-msgid "Sélectionnez l'entité vers laquelle migrer le ticket"
+msgid "Select ticket entity to transfer"
 msgstr "Select ticket entity to transfer"
 
 #: inc/ticket.class.php:218
-msgid "Choisissez votre entité"
+msgid "Choose your entity"
 msgstr "Choose your entity"
 
 #: inc/ticket.class.php:227
-msgid "Sélectionnez le groupe à assigner"
+msgid "Select the group to assign"
 msgstr "Select the group to assign"
 
 #: inc/ticket.class.php:229
-msgid "Choisissez votre groupe"
+msgid "Choose your group"
 msgstr "Choose your group"
 
 #: inc/ticket.class.php:244
-msgid "Valider"
+msgid "Confirm"
 msgstr "Confirm"
 
 #: inc/ticket.class.php:250
-msgid "Confirmer le transfert ?"
+msgid "Confirm transfer ?"
 msgstr "Confirm transfer ?"
 
 #: inc/ticket.class.php:251
-msgid "Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis."
+msgid "Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
 msgstr "Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
 
 #: inc/ticket.class.php:252
-msgid "Annuler"
+msgid "Cancel"
 msgstr "Cancel"
 
 #: inc/ticket.class.php:253
-msgid "Confirmer"
+msgid "Confirm"
 msgstr "Confirm"
 
 #: inc/ticket.php:125
-msgid "Veuillez sélectionner une entité valide"
+msgid "Please select a valid entity"
 msgstr "Please select a valid entity"
 
 #: inc/ticket.php:135
-msgid "Veuillez sélectionner un groupe valide"
+msgid "Please select a valid group"
 msgstr "Please select a valid group"
 
 #: inc/ticket.php:181
-msgid "Escalade vers"
+msgid "Escalation to"
 msgstr "Escalation to"
 
 #: inc/ticket.php:181
-msgid "dans le groupe"
+msgid "in the group"
 msgstr "in the group"
 
 #: inc/ticket.php:185
-msgid "Transfert réussi pour le ticket n° : "
+msgid "Successful transfer for ticket n° : "
 msgstr "Successful transfer for ticket n° : "
 
 #: inc/ticket.php:197
-msgid "Transfert annulé"
+msgid "Transfer canceled"
 msgstr "Transfer canceled"
 
 #: inc/ticket.class.php:266
-msgid "Transfert non autorisé sur ticket clos."
+msgid "Unauthorized transfer on closed ticket."
 msgstr "Unauthorized transfer on closed ticket."
 
 #: inc/ticket.class.php:436 inc/ticket.php:357

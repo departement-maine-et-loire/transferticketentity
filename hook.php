@@ -43,7 +43,7 @@ function plugin_transferticketentity_install()
     $default_collation = DBConnection::getDefaultCollation();
     $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
-    // Table permettant de gérer les droits du plugin
+    // Table for managing plugin's rights
     if (!$DB->TableExists("glpi_plugin_transferticketentity_profile_rights")) {
         $query = "CREATE TABLE `glpi_plugin_transferticketentity_profile_rights` (
         `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ function plugin_transferticketentity_install()
         PluginTransferticketentityProfileRights::createAdminAccess($_SESSION['glpiactiveprofile']['id']);
     }
 
-    // Table permettant de gérer les droits des profils autorisés à utiliser le plugin
+    // Table used to manage rights of profiles authorised to use the plugin
     if (!$DB->tableExists("glpi_plugin_transferticketentity_profiles")) {
         $query = "CREATE TABLE `glpi_plugin_transferticketentity_profiles` (
                 `id` int {$default_key_sign} NOT NULL auto_increment,

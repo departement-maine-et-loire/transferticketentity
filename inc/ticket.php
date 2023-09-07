@@ -332,7 +332,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
                 // Check that the selected entity belongs to those available
                 Session::addMessageAfterRedirect(
                     __(
-                        "Veuillez sélectionner une entité valide", 
+                        "Please select a valid entity", 
                         'transferticketentity'
                     ),
                     true,
@@ -343,7 +343,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
             } else if (!in_array($group_choice, $checkGroup)) {
                 Session::addMessageAfterRedirect(
                     __(
-                        "Veuillez sélectionner un groupe valide", 
+                        "Please select a valid group", 
                         'transferticketentity'
                     ),
                     true,
@@ -412,16 +412,16 @@ class PluginTransferticketentityTicket extends CommonDBTM
                     'items_id' => $id_ticket,
                     'users_id' => $id_user,
                     'content' => __(
-                        "Escalade vers", 
+                        "Escalation to", 
                         "transferticketentity"
                     ) . " $theEntity " .
-                    __("dans le groupe", "transferticketentity") . " $theGroup \n <br> <br> $justification"
+                    __("in the group", "transferticketentity") . " $theGroup \n <br> <br> $justification"
                     ]
                 );
     
                 Session::addMessageAfterRedirect(
                     __(
-                        "Transfert réussi pour le ticket n° : ", 
+                        "Successful transfer for ticket n° : ", 
                         "transferticketentity"
                     ) . $id_ticket,
                     true,
@@ -438,7 +438,7 @@ class PluginTransferticketentityTicket extends CommonDBTM
             $theServer = $_POST['theServer'];
 
             Session::addMessageAfterRedirect(
-                __("Transfert annulé", 'transferticketentity'),
+                __("Transfer canceled", 'transferticketentity'),
                 true,
                 ERROR
             );

@@ -47,7 +47,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
     }
 
     /**
-     * Récupère le nom donné au profil
+     * Get the profile name
      *
      * @return $data
      */
@@ -83,7 +83,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
     }
 
     /**
-     * Rend éligible ou non le profil au transfert d'entité
+     * Make the profile eligible or ineligible for entity transfer
      *
      * @return $data
      */
@@ -107,7 +107,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
                 );
 
                 Session::addMessageAfterRedirect(
-                    __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
+                    __("Item successfully updated", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
                     true,
                     INFO
                 );
@@ -121,7 +121,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
                  );
 
                 Session::addMessageAfterRedirect(
-                    __("Élément modifié", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
+                    __("Item successfully updated", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
                     true,
                     INFO
                 );

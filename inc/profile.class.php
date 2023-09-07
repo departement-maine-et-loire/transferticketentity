@@ -35,7 +35,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginTransferticketentityProfile extends Profile
 {
     /**
-     * Ajoute un onglet supplémentaire
+     * Add an additional tab
      *
      * @param object $item         Ticket
      * @param int    $withtemplate 0
@@ -45,13 +45,13 @@ class PluginTransferticketentityProfile extends Profile
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->getType() == 'Profile') {
-            return __("Transfert d'entité", "transferticketentity");
+            return __("Transfer Ticket Entity", "transferticketentity");
         }
         return '';
     }
 
     /**
-     * Récupère les profils autorisés à utiliser le transfert d'entité
+     * Get profiles authorised to use entity transfer
      *
      * @return array $allProfiles
      */
@@ -95,7 +95,7 @@ class PluginTransferticketentityProfile extends Profile
     }
 
     /**
-     * Si on est sur les profils, affiche un onglet supplémentaire
+     * If we are on profiles, an additional tab is displayed
      * 
      * @param object $item         Ticket
      * @param int    $tabnum       1
@@ -119,7 +119,7 @@ class PluginTransferticketentityProfile extends Profile
     }
 
     /**
-     * Affiche le form pour configurer le plugin
+     * Display the plugin configuration form
      *
      * @param int $ID id
      * 
@@ -135,7 +135,7 @@ class PluginTransferticketentityProfile extends Profile
         $canUseProfiles = self::canUseProfiles();
         $id_profil = $_GET['id'];
 
-        // Permet de cocher ou non la case si le profil est autorisé à utiliser le transfert d'entité
+        // Check or uncheck the box if the profile is authorised to use entity transfer
         if (in_array($id_profil, $canUseProfiles)) {
             $checked = 'checked';
         } else {
@@ -155,10 +155,10 @@ class PluginTransferticketentityProfile extends Profile
         echo "  <table class='table table-hover card-table'>
                     <tbody>
                         <tr class='border-top' style='background:var(--tblr-border-color-light);'>
-                            <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Modifier les droits", "transferticketentity")."</h4></th>
+                            <th colspan='2'><h4 style='line-height:1.4285714286; font-size:0.875rem; color:#626976;'>".__("Change rights", "transferticketentity")."</h4></th>
                         </tr>
                         <tr>
-                            <td class='tab_bg_2' style='width:40%;'>".__("Utilisation du transfert d'entité", "transferticketentity")."</td>
+                            <td class='tab_bg_2' style='width:40%;'>".__("Using entity transfer", "transferticketentity")."</td>
                             <td><input type='checkbox' class='form-check-input' name='plugin_change_profile' value='swap_profil' $checked $disabled></td>
                         </tr>
                     </tbody>
@@ -171,7 +171,7 @@ class PluginTransferticketentityProfile extends Profile
         if(Session::haveRight("profile", UPDATE)){
             echo "  <div class='center'>
                         <button type='submit' value='Sauvegarder' class='btn btn-primary mt-2' name='plugin_update_profile'>          
-                            <span><i class='fas fa-save'></i><span>".__("Sauvegarder", "transferticketentity")."</span></span>
+                            <span><i class='fas fa-save'></i><span>".__("Save", "transferticketentity")."</span></span>
                         </button>
                     </div>";
             Html::closeForm();

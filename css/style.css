@@ -77,6 +77,10 @@
     box-shadow: 0 0 10px #719ECE;
 }
 
+.form_transfert .tt_group_choice {
+    display: none;
+}
+
 #canceltransfert {
     display:inline-flex;
     align-items: center;

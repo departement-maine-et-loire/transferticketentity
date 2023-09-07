@@ -71,7 +71,7 @@ class PluginTransferticketentityTicket extends Ticket
 
         if (in_array($_SESSION['glpiactiveprofile']['id'], $checkProfiles)) {
             if ($item->getType() == 'Ticket') {
-                return __("Transfert d'entité", "transferticketentity");
+                return __("Transfer Ticket Entity", "transferticketentity");
             }
             return '';
         }
@@ -301,7 +301,7 @@ class PluginTransferticketentityTicket extends Ticket
         if ($checkTicket == false) {
             echo "<div class='unauthorised'>";
                 echo "<p>".
-                    __("Transfert non autorisé sur ticket clos.", "transferticketentity")
+                    __("Unauthorized transfer on closed ticket.", "transferticketentity")
                     ."</p>";
             echo "</div>";
 
@@ -309,16 +309,16 @@ class PluginTransferticketentityTicket extends Ticket
         }
 
         echo "<div id='tt_gest_error'>";
-            echo "<p>".__("Erreur, veuillez recharger la page.", "transferticketentity")."</p>";
-            echo "<p>".__("Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5.", "transferticketentity")."</p>";
+            echo "<p>".__("Error, please reload the page.", "transferticketentity")."</p>";
+            echo "<p>".__("If the problem persists, you can try to empty the cache by doing CTRL + F5.", "transferticketentity")."</p>";
         echo "</div>";
 
         echo"
         <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
             <div class='tt_entity_choice'>
-                <label for='entity_choice'>".__("Sélectionnez l'entité vers laquelle migrer le ticket", "transferticketentity")." : </label>
+                <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
                 <select name='entity_choice' id='entity_choice'>
-                    <option selected disabled value=''>-- ".__("Choisissez votre entité", "transferticketentity")." --</option>";
+                    <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
         for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
             echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
         }
@@ -326,10 +326,10 @@ class PluginTransferticketentityTicket extends Ticket
             </div>
 
             <div class='tt_flex'>
-                <div class='tt_group_choice' style='display: none;'>
-                    <label for='group_choice'>".__("Sélectionnez le groupe à assigner", "transferticketentity")." : </label>
+                <div class='tt_group_choice'>
+                    <label for='group_choice'>".__("Select the group to assign", "transferticketentity")." : </label>
                     <select name='group_choice' id='group_choice'>
-                        <option id='no_select' disabled value=''>-- ".__("Choisissez votre groupe", "transferticketentity")." --</option>";
+                        <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>";
         for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
             echo "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
         }
@@ -343,20 +343,20 @@ class PluginTransferticketentityTicket extends Ticket
                 </div>
 
                 <div id='div_confirmation'>
-                    <button id='tt_btn_open_modal_form'>".__("Valider", "transferticketentity")."</button>
+                    <button id='tt_btn_open_modal_form'>".__("Confirm", "transferticketentity")."</button>
                 </div>
             </div>
 
             <dialog id='tt_modal_form_adder' class='tt_modal'>
-                <h2>".__("Confirmer le transfert ?", "transferticketentity")."</h2>
-                <p>".__("Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis.", "transferticketentity")."</p>
+                <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
+                <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
                 <div class='justification'>
                     <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
                     <textarea name='justification' required></textarea>
                 </div>
                 <div>
-                    <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Annuler", "transferticketentity")."</button>
-                    <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirmer", "transferticketentity")."</button>
+                    <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Cancel", "transferticketentity")."</button>
+                    <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirm", "transferticketentity")."</button>
                 </div>
             </dialog>";
         Html::closeForm();
