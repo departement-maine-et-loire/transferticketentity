@@ -29,7 +29,6 @@
  */
 
 namespace GlpiPlugin\Transferticketentity;
-use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
 use CommonDBTM;
 use Session;
 
@@ -94,8 +93,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
             $id_profil = $_POST['id_profil'];
 
             if ($_POST['plugin_change_profile'] == 'swap_profil') {
-                $PluginTransferticketentityProfile = new \PluginTransferticketentityProfile();
-                $PluginTransferticketentityProfile::addDefaultProfileInfos($id_profil, ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]);
+                \PluginTransferticketentityProfile::addDefaultProfileInfos($id_profil, ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]);
 
                 Session::addMessageAfterRedirect(
                     __("Item successfully updated", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
