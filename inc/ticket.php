@@ -29,6 +29,19 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Transferticketentity;
+// Pas utilisé pour l'instant
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityChangeProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTicket;
+use CommonDBTM;
+use Session;
+use Ticket_User;
+use CommonITILActor;
+use Group_Ticket;
+use Ticket;
+use ITILFollowup;
+
 require '../../../inc/includes.php';
 
 if (!isset($_SESSION['glpiactiveprofile']['id'])) {
@@ -36,7 +49,7 @@ if (!isset($_SESSION['glpiactiveprofile']['id'])) {
     exit;
 }
 
-class PluginTransferticketentityTicket extends CommonDBTM
+class PluginTransferticketentityTransfer extends CommonDBTM
 {
     public $checkAssign;
     public $checkEntityETT;
@@ -388,4 +401,4 @@ class PluginTransferticketentityTicket extends CommonDBTM
     }
 }
 
-$transferticketentityTicket = new PluginTransferticketentityTicket();
+$transferticketentityTicket = new PluginTransferticketentityTransfer();

@@ -28,6 +28,12 @@
  --------------------------------------------------------------------------
  */
 
+// Namespace fait planter l'install
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityChangeProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTicket;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTransfer;
+
 /**
  * Install hook
  *
@@ -36,8 +42,6 @@
 function plugin_transferticketentity_install()
 {
     global $DB;
-
-    include_once GLPI_ROOT . "/plugins/transferticketentity/inc/config.class.php";
 
     PluginTransferticketentityProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
 

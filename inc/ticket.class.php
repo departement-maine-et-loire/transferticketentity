@@ -28,6 +28,15 @@
  --------------------------------------------------------------------------
  */
 
+// Namespace fait planter l'install
+// namespace GlpiPlugin\Transferticketentity;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityChangeProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTransfer;
+// use Ticket;
+// use CommonGLPI;
+// use Html;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }

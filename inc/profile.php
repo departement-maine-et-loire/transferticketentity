@@ -28,6 +28,14 @@
  --------------------------------------------------------------------------
  */
 
+// Namespace fait planter l'install
+// namespace GlpiPlugin\Transferticketentity;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTicket;
+// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTransfer;
+// use CommonDBTM;
+// use Session;
+
 require '../../../inc/includes.php';
 
 if (!isset($_SESSION['glpiactiveprofile']['id'])) {
