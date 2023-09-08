@@ -89,11 +89,7 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
             $id_profil = $_POST['id_profil'];
 
             if ($_POST['plugin_change_profile'] == 'swap_profil') {
-                $DB->insert(
-                    'glpi_plugin_transferticketentity_profiles', [
-                        'id_profiles'      => $id_profil
-                    ]
-                );
+                PluginTransferticketentityProfile::addDefaultProfileInfos($id_profil, ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]);
 
                 Session::addMessageAfterRedirect(
                     __("Item successfully updated", "transferticketentity") . " : <a href='" . $theServer . "front/profile.form.php?id=" . $id_profil . "'>$name_profile</a>",
@@ -104,8 +100,9 @@ class PluginTransferticketentityChangeProfile extends CommonDBTM
                 header('location:' . $theServer . 'front/profile.form.php?id='.$id_profil);
             } else {
                 $DB->delete(
-                    'glpi_plugin_transferticketentity_profiles', [
-                       'id_profiles' => $id_profil
+                    'glpi_profilerights', [
+                        'name' => 'plugin_transferticketentity_use',
+                        'profiles_id' => $id_profil
                     ]
                  );
 

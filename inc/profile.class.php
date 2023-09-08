@@ -38,12 +38,9 @@ class PluginTransferticketentityProfile extends Profile
 
     static function getAllRights() {
         $rights = [
-            ['itemtype'  => 'PluginTickettransferEntityModel',
-                  'label'     => __('Change rights', 'tickettransferentity'),
-                  'field'     => 'plugin_tickettransferentity_model'],
-            ['itemtype'  => 'PluginTickettransferEntityModel',
-                  'label'     => __('Change entity', 'tickettransferentity'),
-                  'field'     => 'plugin_tickettransferentity_use',
+            ['itemtype'  => 'PluginTransferTicketEntityUse',
+                  'label'     => __('Change entity', 'transferticketentity'),
+                  'field'     => 'plugin_transferticketentity_use',
                   'rights'    => [READ => __('Read')]]];
           return $rights;
     }
@@ -69,24 +66,21 @@ class PluginTransferticketentityProfile extends Profile
      *
      * @return array $allProfiles
      */
-    public function canUseProfiles()
+    public static function canUseProfiles()
     {
         global $DB;
 
         $result = $DB->request([
-            'SELECT' => ['glpi_profiles.id', 'glpi_profiles.name'],
-            'DISTINCT' => TRUE,
-            'FROM' => 'glpi_profiles',
-            'LEFT JOIN' => ['glpi_plugin_transferticketentity_profiles' => ['FKEY' => ['glpi_profiles'     => 'id',
-                                                                                       'glpi_plugin_transferticketentity_profiles' => 'id_profiles']]],
-            'WHERE' => ['NOT' => ['glpi_plugin_transferticketentity_profiles.id_profiles' => 'NULL']],
+            'SELECT' => ['profiles_id'],
+            'FROM' => 'glpi_profilerights',
+            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'rights' => ALLSTANDARDRIGHT],
             'ORDER' => 'name ASC'
         ]);
 
         $array = array();
 
         foreach($result as $data){
-            array_push($array, $data['id'], $data['name']);
+            array_push($array, $data['profiles_id']);
         }
 
         return $array;
@@ -107,10 +101,6 @@ class PluginTransferticketentityProfile extends Profile
             $profile = new self();
             $ID   = $item->getField('id');
 
-            self::addDefaultProfileInfos(
-                $item->getID(),
-                ['plugin_tickettransferentity_model' => 0]
-            );
             $profile->showFormMcv($ID);
         }
 
@@ -144,12 +134,11 @@ class PluginTransferticketentityProfile extends Profile
   */
  static function createFirstAccess($profiles_id) {
 
-    include_once Plugin::getPhpDir('tickettransferentity')."/inc/profile.class.php";
+    include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
     foreach (self::getAllRights() as $right) {
        self::addDefaultProfileInfos(
         $profiles_id,
-        ['plugin_tickettransferentity_model' => ALLSTANDARDRIGHT,
-        'plugin_tickettransferentity_use' => READ]
+        ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]
        );
     }
  }
@@ -165,8 +154,6 @@ class PluginTransferticketentityProfile extends Profile
     {
         global $CFG_GLPI;
         global $DB;
-
-        $profiles_id = $_SESSION['glpiactiveprofile']['id'];
 
         $canUseProfiles = self::canUseProfiles();
         $id_profil = $_GET['id'];

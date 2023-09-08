@@ -39,26 +39,7 @@ function plugin_transferticketentity_install()
 
     include_once GLPI_ROOT . "/plugins/transferticketentity/inc/config.class.php";
 
-    $default_charset = DBConnection::getDefaultCharset();
-    $default_collation = DBConnection::getDefaultCollation();
-    $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
-
-    // Table used to manage rights of profiles authorised to use the plugin
-    if (!$DB->tableExists("glpi_plugin_transferticketentity_profiles")) {
-        $query = "CREATE TABLE `glpi_plugin_transferticketentity_profiles` (
-                `id` int {$default_key_sign} NOT NULL auto_increment,
-                `id_profiles` INT NOT NULL UNIQUE,
-              PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-
-        $DB->query($query) or die("error creating glpi_plugin_transferticketentity_profiles ". $DB->error());
-        PluginTransferticketentityProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
-
-        $query = "INSERT INTO `glpi_plugin_transferticketentity_profiles`
-                    (`id_profiles`)
-                VALUES (4)";
-        $DB->query($query) or die("error populate glpi_plugin_transferticketentity_profiles ". $DB->error());
-    }
+    PluginTransferticketentityProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
 
     return true;
 }
@@ -72,11 +53,20 @@ function plugin_transferticketentity_uninstall()
 {
     global $DB;
 
-    $tables = array('glpi_plugin_transferticketentity_profiles');
+    $result = $DB->request([
+        'SELECT' => ['profiles_id'],
+        'FROM' => 'glpi_profilerights',
+        'WHERE' => ['name' => 'plugin_transferticketentity_use', 'rights' => ALLSTANDARDRIGHT]
+    ]);
 
-    foreach ($tables as $table) {
-        $DB->query("DROP TABLE IF EXISTS `$table`;");
+    foreach ($result as $id_profil) {
+        $DB->delete(
+            'glpi_profilerights', [
+                'name' => 'plugin_transferticketentity_use',
+                'profiles_id' => $id_profil
+            ]
+        );
     }
- 
+
     return true;
 }

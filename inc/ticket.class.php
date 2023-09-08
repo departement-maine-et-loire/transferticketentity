@@ -35,29 +35,6 @@ if (!defined('GLPI_ROOT')) {
 class PluginTransferticketentityTicket extends Ticket
 {
     /**
-     * Check the user profile
-     *
-     * @return array $checkProfiles
-     */
-    public function checkProfiles()
-    {
-        global $DB;
-
-        $result = $DB->request([
-            'SELECT' => 'id_profiles',
-            'FROM' => 'glpi_plugin_transferticketentity_profiles'
-        ]);
-
-        $array = array();
-
-        foreach($result as $data){
-            array_push($array, $data['id_profiles']);
-        }
-
-        return $array;
-    }
-
-    /**
      * If the profile is authorised, add an extra tab
      *
      * @param object $item         Ticket
@@ -67,7 +44,7 @@ class PluginTransferticketentityTicket extends Ticket
      */
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
-        $checkProfiles = self::checkProfiles();
+        $checkProfiles = PluginTransferticketentityProfile::canUseProfiles();
 
         if (in_array($_SESSION['glpiactiveprofile']['id'], $checkProfiles)) {
             if ($item->getType() == 'Ticket') {
@@ -271,7 +248,7 @@ class PluginTransferticketentityTicket extends Ticket
         $id_user = $_SESSION["glpiID"];
         $checkTicket = self::checkTicket();
 
-        // Dropdown for entity
+        // Dropdown for entity impossible de disable le choix null
         // $entitiesValues = array(null);
         // $entitiesNames = array(" -- " . __("Choose your entity", "transferticketentity") . " -- ");
 
@@ -326,7 +303,7 @@ class PluginTransferticketentityTicket extends Ticket
             return false;
         }
 
-        // Check if JS is functionnal
+        // In case JS is not functionnal
         echo "<div id='tt_gest_error'>";
             echo "<p>".__("Error, please reload the page.", "transferticketentity")."</p>";
             echo "<p>".__("If the problem persists, you can try to empty the cache by doing CTRL + F5.", "transferticketentity")."</p>";
@@ -368,10 +345,12 @@ class PluginTransferticketentityTicket extends Ticket
                 <dialog id='tt_modal_form_adder' class='tt_modal'>
                     <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
                     <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
+
                     <div class='justification'>
                         <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
                         <textarea name='justification' required></textarea>
                     </div>
+
                     <div>
                         <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Cancel", "transferticketentity")."</button>
                         <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirm", "transferticketentity")."</button>
