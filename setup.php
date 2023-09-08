@@ -40,7 +40,6 @@ function plugin_init_transferticketentity()
     Plugin::registerClass('PluginTransferticketentityProfile', ['addtabon' => 'Profile']);
     Plugin::registerClass('PluginTransferticketentityTicket', ['addtabon' => 'Ticket']);
 
-    $PLUGIN_HOOKS['change_profile']['transferticketentity'] = ['PluginTransferticketentityProfileRights', 'changeProfile'];
     $PLUGIN_HOOKS['csrf_compliant']['transferticketentity'] = true;
 }
 
