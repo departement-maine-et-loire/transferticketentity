@@ -318,22 +318,28 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             }
             else { 
                 // Remove the link with the current user
-                $ticket_user = new Ticket_User();
-                $ticket_user->delete(
-                    [
-                    'id'     => $id_ticket,
+                $delete_link_user = [
+                    'tickets_id' => $id_ticket,
                     'type' => CommonITILActor::ASSIGN
-                    ]
-                );
+                ];
+                $ticket_user = new Ticket_User();
+                $found_user = $ticket_user->find($delete_link_user);
+                foreach ($found_user as $id => $tu) {
+                    //delete user
+                    $ticket_user->delete(['id' => $id]);
+                }
 
                 // Remove the link with the current group
-                $group_ticket = new Group_Ticket();
-                $group_ticket->delete(
-                    [
-                    'id'     => $id_ticket,
+                $delete_link_group = [
+                    'tickets_id' => $id_ticket,
                     'type' => CommonITILActor::ASSIGN
-                    ]
-                );
+                ];
+                $group_ticket = new Group_Ticket();
+                $found_group = $group_ticket->find($delete_link_group);
+                foreach ($found_group as $id => $tu) {
+                    //delete group
+                    $group_ticket->delete(['id' => $id]);
+                }
 
                 // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
