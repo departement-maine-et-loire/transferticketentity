@@ -272,32 +272,33 @@ class PluginTransferticketentityTicket extends Ticket
         $checkTicket = self::checkTicket();
 
         // Dropdown for entity
-        $entitiesValues = array(null);
-        $entitiesNames = array(" -- " . __("Choose your entity", "transferticketentity") . " -- ");
+        // $entitiesValues = array(null);
+        // $entitiesNames = array(" -- " . __("Choose your entity", "transferticketentity") . " -- ");
 
-        for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
-            array_push($entitiesValues, $getAllEntities[$i]);
-            array_push($entitiesNames, $getAllEntities[$i+1]);
-        }
+        // for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
+        //     array_push($entitiesValues, $getAllEntities[$i]);
+        //     array_push($entitiesNames, $getAllEntities[$i+1]);
+        // }
         
-        for ($i = 0; $i < count($entitiesValues); $i++) {
-            $allSelectedEntities[$entitiesValues[$i]] = $entitiesNames[$i];
-        }
+        // for ($i = 0; $i < count($entitiesValues); $i++) {
+        //     $allSelectedEntities[$entitiesValues[$i]] = $entitiesNames[$i];
+        // }
 
-        $paramEntities = [
-            'required' => true,
-            'on_change' => 'entityChange()',
-            'rand' => ''
-        ];
+        // $paramEntities = [
+        //     'required' => true,
+        //     'on_change' => 'entityChange()',
+        //     'rand' => ''
+        // ];
+        // Dropdown::showFromArray('entity_choice', $allSelectedEntities, $paramEntities);
 
         // Dropdown for groups non fonctionnel pour l'instant, ne peut pas mettre de classes par options
         // $groupsValues = array(null);
-        // $groupsOptions = array(null);
+        // $groupsOptions = array("class=''");
         // $groupsNames = array(" -- " . __("Choose your group", "transferticketentity") . " -- ");
 
         // for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
         //     array_push($groupsValues, $getGroupEntities[$i]);
-        //     array_push($groupsOptions, $getGroupEntities[$i+1]);
+        //     array_push($groupsOptions, "class='tt_plugin_entity_".$getGroupEntities[$i+1]. "'");
         //     array_push($groupsNames, $getGroupEntities[$i+2]);
         // }
         
@@ -308,7 +309,8 @@ class PluginTransferticketentityTicket extends Ticket
         // $paramGroups = [
         //     'required' => true,
         //     'on_change' => 'groupChange()',
-        //     'rand' => ''
+        //     'rand' => '',
+        //     'other' => $groupsOptions
         // ];
 
         // Dropdown::showFromArray('group_choice', $allSelectedGroups, $paramGroups);
@@ -333,9 +335,14 @@ class PluginTransferticketentityTicket extends Ticket
         echo"
             <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
                 <div class='tt_entity_choice'>
-                    <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>";
-                    Dropdown::showFromArray('entity_choice', $allSelectedEntities, $paramEntities);
-        echo "  </div>
+                    <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
+                    <select name='entity_choice' id='entity_choice'>
+                        <option selected disabled value=''>-- ".__("Choisissez votre entité", "entitytickettransfer")." --</option>";
+                for($i = 0; $i < count($getAllEntities); $i = $i+2) {
+                  echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
+                }
+              echo "</select>
+                </div>
                 <div class='tt_flex'>
                     <div class='tt_group_choice'>
                         <label for='group_choice'>".__("Select the group to assign", "transferticketentity")." : </label>
