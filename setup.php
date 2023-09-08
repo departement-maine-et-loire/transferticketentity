@@ -28,12 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-// Namespace fait planter l'install
-// use Glpi\Plugin\Hooks;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityChangeProfile;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTicket;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTransfer;
+use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
 
 define('TRANSFERTICKETENTITY_VERSION', '1.0.0');
 

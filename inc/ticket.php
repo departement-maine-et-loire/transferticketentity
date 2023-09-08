@@ -30,10 +30,6 @@
  */
 
 namespace GlpiPlugin\Transferticketentity;
-// Pas utilisé pour l'instant
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityProfile;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityChangeProfile;
-// use GlpiPlugin\Transferticketentity\PluginTransferticketentityTicket;
 use CommonDBTM;
 use Session;
 use Ticket_User;
