@@ -29,10 +29,10 @@ This may be useful for a technician who sends a ticket to an entity specialising
 
 <!-- Ce plugin est documenté [ici](https://github.com/departement-maine-et-loire/glpi-example-plugin/wiki) -->
 
-## Comment configurer le plugin
+## How to set up the plugin
 
 You can configure access rights to the plugin in profile administration
 
-## Compatibilité
+## Compatibility
 
 This plugin has been tested up to GLPI version 10.0.9
