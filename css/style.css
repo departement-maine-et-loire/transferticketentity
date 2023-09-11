@@ -12,9 +12,6 @@
 
 .unauthorised {
     text-align: center;
-}
-
-.unauthorised p {
     color: red;
     font-size: 1.25rem;
     padding-top: 2rem;

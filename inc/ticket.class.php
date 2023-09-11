@@ -248,57 +248,15 @@ class PluginTransferticketentityTicket extends Ticket
         $id_user = $_SESSION["glpiID"];
         $checkTicket = self::checkTicket();
 
-        // Dropdown for entity impossible de disable le choix null
-        // $entitiesValues = array(null);
-        // $entitiesNames = array(" -- " . __("Choose your entity", "transferticketentity") . " -- ");
-
-        // for ($i = 0; $i < count($getAllEntities); $i = $i+2) {
-        //     array_push($entitiesValues, $getAllEntities[$i]);
-        //     array_push($entitiesNames, $getAllEntities[$i+1]);
-        // }
-        
-        // for ($i = 0; $i < count($entitiesValues); $i++) {
-        //     $allSelectedEntities[$entitiesValues[$i]] = $entitiesNames[$i];
-        // }
-
-        // $paramEntities = [
-        //     'required' => true,
-        //     'on_change' => 'entityChange()',
-        //     'rand' => ''
-        // ];
-        // Dropdown::showFromArray('entity_choice', $allSelectedEntities, $paramEntities);
-
-        // Dropdown for groups non fonctionnel pour l'instant, ne peut pas mettre de classes par options
-        // $groupsValues = array(null);
-        // $groupsOptions = array("class=''");
-        // $groupsNames = array(" -- " . __("Choose your group", "transferticketentity") . " -- ");
-
-        // for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
-        //     array_push($groupsValues, $getGroupEntities[$i]);
-        //     array_push($groupsOptions, "class='tt_plugin_entity_".$getGroupEntities[$i+1]. "'");
-        //     array_push($groupsNames, $getGroupEntities[$i+2]);
-        // }
-        
-        // for ($i = 0; $i < count($groupsValues); $i++) {
-        //     $allSelectedGroups[$groupsValues[$i]] = $groupsNames[$i];
-        // }
-
-        // $paramGroups = [
-        //     'required' => true,
-        //     'on_change' => 'groupChange()',
-        //     'rand' => '',
-        //     'other' => $groupsOptions
-        // ];
-
-        // Dropdown::showFromArray('group_choice', $allSelectedGroups, $paramGroups);
-
         // Check if ticket is closed
         if ($checkTicket == false) {
+            self::addStyleSheetAndScript();
             echo "<div class='unauthorised'>";
                 echo "<p>".
                     __("Unauthorized transfer on closed ticket.", "transferticketentity")
                     ."</p>";
             echo "</div>";
+            
 
             return false;
         }
@@ -314,7 +272,7 @@ class PluginTransferticketentityTicket extends Ticket
                 <div class='tt_entity_choice'>
                     <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
                     <select name='entity_choice' id='entity_choice'>
-                        <option selected disabled value=''>-- ".__("Choisissez votre entité", "entitytickettransfer")." --</option>";
+                        <option selected disabled value=''>-- ".__("Choose your entity", "entitytickettransfer")." --</option>";
                 for($i = 0; $i < count($getAllEntities); $i = $i+2) {
                   echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
                 }
@@ -328,18 +286,16 @@ class PluginTransferticketentityTicket extends Ticket
                 for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
                     echo   "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
                 }
-                echo   "</select>
-                    </div>
+                echo"   </select>
+                    </div>";
 
-                    <div class='tt_hidden_value'>
-                        <input type ='number' id='id_ticket' value= '$id_ticket' name='id_ticket' readonly>
-                        <input type ='number' id='id_user' value= '$id_user' name='id_user' readonly>
-                        <input type ='text' id='theServer' value= '$theServer' name='theServer' readonly>
-                    </div>
+                    echo Html::hidden("id_ticket", ["value" => "$id_ticket"]);
+                    echo Html::hidden("id_user", ["value" => "$id_user"]);
+                    echo Html::hidden("theServer", ["value" => "$theServer"]);
 
-                    <div id='div_confirmation'>
-                        <button id='tt_btn_open_modal_form' disabled>".__("Confirm", "transferticketentity")."</button>
-                    </div>
+            echo"   <div id='div_confirmation'>";
+                        echo Html::submit(__('Confirm', 'transferticketentity'), ['disabled' => true, 'id' => 'tt_btn_open_modal_form']);
+            echo"   </div>
                 </div>
 
                 <dialog id='tt_modal_form_adder' class='tt_modal'>
@@ -351,10 +307,10 @@ class PluginTransferticketentityTicket extends Ticket
                         <textarea name='justification' required></textarea>
                     </div>
 
-                    <div>
-                        <button type='submit' name='canceltransfert' id='canceltransfert'>".__("Cancel", "transferticketentity")."</button>
-                        <button type='submit' name='transfertticket' id='transfertticket'>".__("Confirm", "transferticketentity")."</button>
-                    </div>
+                    <div>";
+                        echo Html::submit(__('Cancel'), ['name' => 'canceltransfert', 'id' => 'canceltransfert']);
+                        echo Html::submit(__('Confirm', 'transferticketentity'), ['name' => 'transfertticket', 'id' => 'transfertticket']);
+            echo"   </div>
                 </dialog>";
             Html::closeForm();
         self::addStyleSheetAndScript();

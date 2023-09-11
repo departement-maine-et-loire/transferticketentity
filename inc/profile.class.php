@@ -195,11 +195,9 @@ class PluginTransferticketentityProfile extends Profile
                             echo "</td>
                         </tr>
                     </tbody>
-                </table>
-
-        <div class='tt_hidden_value'>
-            <input type ='number' id='id_profil' value= '$id_profil' name='id_profil' readonly>
-        </div>";
+                </table>";
+                
+        echo Html::hidden("id_profil", ["value" => "$id_profil"]);
         
         if(Session::haveRight("profile", UPDATE)){
             echo "<div class='center'>";

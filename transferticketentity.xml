@@ -41,11 +41,7 @@
          </en>
       </tags>
       <screenshots>
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_1.PNG</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_2.PNG</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_3.PNG</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_4.PNG</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_5.PNG</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/screenshots/Capture_6.PNG</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/gifs/TransferTicketEntity_EN.gif</screenshot> -->
+         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/gifs/TransferTicketEntity_FR.gif</screenshot> -->
       </screenshots>
 </root>
