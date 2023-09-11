@@ -272,7 +272,7 @@ class PluginTransferticketentityTicket extends Ticket
                 <div class='tt_entity_choice'>
                     <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
                     <select name='entity_choice' id='entity_choice'>
-                        <option selected disabled value=''>-- ".__("Choose your entity", "entitytickettransfer")." --</option>";
+                        <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
                 for($i = 0; $i < count($getAllEntities); $i = $i+2) {
                   echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
                 }
