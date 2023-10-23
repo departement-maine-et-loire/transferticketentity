@@ -2,7 +2,7 @@
       <name>Transfer Ticket Entity</name>
       <key>transferticketentity</key>
       <state>stable</state>
-      <!-- <logo>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/logo.png</logo> -->
+      <logo>https://raw.githubusercontent.com/departement-maine-et-loire/transferticketentity/master/img/logo.png</logo>
       <description>
          <short>
             <fr>Ce plugin permet aux profils autorisés d'envoyer les tickets à une entité où ils n'ont aucun droit d'accès.</fr>
@@ -13,10 +13,10 @@
             <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights. This can be useful for a technician who sends a ticket to an entity specialized in administration so that no personal information is revealed.</en>
          </long>
       </description>
-      <!-- <homepage>https://github.com/departement-maine-et-loire/example</homepage> -->
-      <!-- <download>https://github.com/departement-maine-et-loire/example/releases</download> -->
-      <!-- <issues>https://github.com/departement-maine-et-loire/example/issues</issues> -->
-      <!-- <readme>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/README.md</readme> -->
+      <homepage>https://github.com/departement-maine-et-loire/transferticketentity</homepage>
+      <download>https://github.com/departement-maine-et-loire/transferticketentity/releases</download>
+      <issues>https://github.com/departement-maine-et-loire/transferticketentity/issues</issues>
+      <readme>https://raw.githubusercontent.com/departement-maine-et-loire/transferticketentity/master/README.md</readme>
       <authors>
          <author>D&#xE9;partement de Maine-et-Loire</author>
          <author>Yannick COMBA</author>
@@ -41,7 +41,7 @@
          </en>
       </tags>
       <screenshots>
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/gifs/TransferTicketEntity_EN.gif</screenshot> -->
-         <!-- <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/example/master/img/gifs/TransferTicketEntity_FR.gif</screenshot> -->
+         <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/transferticketentity/master/img/gifs/TransferTicketEntity_EN.gif</screenshot>
+         <screenshot>https://raw.githubusercontent.com/departement-maine-et-loire/transferticketentity/master/img/gifs/TransferTicketEntity_FR.gif</screenshot>
       </screenshots>
 </root>
