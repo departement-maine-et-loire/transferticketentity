@@ -14,7 +14,7 @@ Une fois le transfert effectué, il n'a plus aucune visibilité sur le ticket.
 
 ## Documentation
 
-<!-- Ce plugin est documenté [ici](https://github.com/departement-maine-et-loire/glpi-example-plugin/wiki) -->
+Ce plugin est documenté [ici](https://github.com/departement-maine-et-loire/transferticketentity/blob/master/README.md)
 
 ## Comment configurer le plugin
 
@@ -40,7 +40,7 @@ Once the transfer has been made, he no longer has any visibility of the ticket.
 
 ## Documentation
 
-<!-- Ce plugin est documenté [ici](https://github.com/departement-maine-et-loire/glpi-example-plugin/wiki) -->
+This plugin is documented [here](https://github.com/departement-maine-et-loire/transferticketentity/blob/master/README.md)
 
 ## How to set up the plugin
 
