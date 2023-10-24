@@ -268,7 +268,7 @@ class PluginTransferticketentityTicket extends Ticket
         echo "</div>";
 
         echo"
-            <form class='form_transfert' action='../plugins/transferticketentity/inc/ticket.php' method='post'>
+            <form class='form_transfert' action='" . $this->getFormURL() . "' method='post'>
                 <div class='tt_entity_choice'>
                     <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
                     <select name='entity_choice' id='entity_choice'>

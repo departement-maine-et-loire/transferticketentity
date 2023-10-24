@@ -39,10 +39,19 @@ class PluginTransferticketentityProfile extends Profile
     static function getAllRights() {
         $rights = [
             ['itemtype'  => 'PluginTransferTicketEntityUse',
-                  'label'     => __('Change entity', 'transferticketentity'),
+                  'label'     => __('Using entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
-                  'rights'    => [READ => __('Read')]]];
+                  'rights'    => [ALLSTANDARDRIGHT => __('Read')]]];
           return $rights;
+    }
+
+    function cleanProfiles($ID) {
+
+        global $DB;
+        $query = "DELETE FROM `glpi_profiles`
+                  WHERE `profiles_id`='$ID'
+                  AND `name` LIKE '%plugin_transferticketentity%'";
+        $DB->query($query);
     }
 
     /**
@@ -152,60 +161,32 @@ class PluginTransferticketentityProfile extends Profile
      */
     public function showFormMcv($ID)
     {
-        global $CFG_GLPI;
-        global $DB;
-
-        $canUseProfiles = self::canUseProfiles();
-        $id_profil = $_GET['id'];
-
-        // Check or uncheck the box if the profile is authorised to use entity transfer
-        if (in_array($id_profil, $canUseProfiles)) {
-            $checked = true;
-        } else {
-            $checked = false;
+        echo "<div class='firstbloc'>";
+        if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
+           $profile = new Profile();
+           echo "<form method='post' action='".$profile->getFormURL()."'>";
         }
-
-        if(Session::haveRight("profile", UPDATE)) {
-            $disabled = false;
-        } else {
-            $disabled = true;
-        }
-
-        $paramCheckbox = [
-            'name' => 'plugin_change_profile',
-            'checked' => $checked,
-            'zero_on_empty' => false,
-            'value' => 'swap_profil',
-            'readonly' => $disabled
-        ];
+  
+        $profile = new Profile();
+        $profile->getFromDB($ID);
+  
+        $rights = self::getAllRights();
+        $profile->displayRightsChoiceMatrix(
+            $rights,
+            [
+               'canedit'       => $canedit,
+               'default_class' => 'tab_bg_2',
+               'title'         => __('General')
+            ]
+        );
         
-        if (Session::haveRight("profile", UPDATE)) {
-            echo "<form action='../plugins/transferticketentity/inc/profile.php' method='post'>";
+        if ($canedit) {
+           echo "<div class='center'>";
+           echo Html::hidden('id', ['value' => $ID]);
+           echo Html::submit(_sx('button', 'Save'), ['name' => 'update', 'class' => 'btn btn-primary']);
+           echo "</div>\n";
+           Html::closeForm();
         }
-        
-        echo "  <table class='table table-hover card-table'>
-                    <tbody>
-                        <tr class='border-top tt_profile_border-top'>
-                            <th colspan='2'><h4>".__("Change rights", "transferticketentity")."</h4></th>
-                        </tr>
-                        <tr>
-                            <td class='tab_bg_2 tt_profile_tab_bg_2'>".__("Using entity transfer", "transferticketentity")."</td>
-                            <td>";
-                                Html::showCheckbox($paramCheckbox);
-                            echo "</td>
-                        </tr>
-                    </tbody>
-                </table>";
-                
-        echo Html::hidden("id_profil", ["value" => "$id_profil"]);
-        
-        if(Session::haveRight("profile", UPDATE)){
-            echo "<div class='center'>";
-                echo Html::submit(_sx('button', 'Save'), ['name' => 'plugin_update_profile', 'class' => 'btn btn-primary mt-2']);
-            echo"</div>";
-            Html::closeForm();
-        }
-
-        PluginTransferticketentityTicket::addStyleSheetAndScript();
+        echo "</div>";
     }
 }
