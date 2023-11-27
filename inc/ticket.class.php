@@ -63,9 +63,7 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $id_ticket = $_SERVER["QUERY_STRING"];
-        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
-        $id_ticket = substr($id_ticket, 1);
+        $id_ticket = $_REQUEST['id'];
 
         $result = $DB->request([
             'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
@@ -93,9 +91,7 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $id_ticket = $_SERVER["QUERY_STRING"];
-        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
-        $id_ticket = substr($id_ticket, 1);
+        $id_ticket = $_REQUEST['id'];
 
         $result = $DB->request([
             'SELECT' => 'id',
@@ -125,9 +121,7 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $id_ticket = $_SERVER["QUERY_STRING"];
-        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
-        $id_ticket = substr($id_ticket, 1);
+        $id_ticket = $_REQUEST['id'];
 
         $result = $DB->request([
             'FROM' => 'glpi_groups_tickets',
@@ -241,9 +235,7 @@ class PluginTransferticketentityTicket extends Ticket
         $theServer = explode("front/profile.form.php?",$_SERVER["HTTP_REFERER"]);
         $theServer = $theServer[0];
 
-        $id_ticket = $_SERVER["QUERY_STRING"];
-        $id_ticket = preg_replace('/[^0-9]/', '', $id_ticket);
-        $id_ticket = substr($id_ticket, 1);
+        $id_ticket = $_REQUEST['id'];
 
         $id_user = $_SESSION["glpiID"];
         $checkTicket = self::checkTicket();
