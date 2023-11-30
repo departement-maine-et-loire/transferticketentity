@@ -232,6 +232,17 @@ class PluginTransferticketentityTicket extends Ticket
         $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
 
+        if (empty($getAllEntities)) {
+            self::addStyleSheetAndScript();
+            echo "<div class='group_not_found'>";
+                echo "<p>".
+                    __("No group found with « Assigned to » right, transfer impossible.", "transferticketentity")
+                    ."</p>";
+            echo "</div>";
+
+            return false;
+        }
+
         $theServer = explode("front/profile.form.php?",$_SERVER["HTTP_REFERER"]);
         $theServer = $theServer[0];
 

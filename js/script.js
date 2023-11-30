@@ -80,36 +80,3 @@ if (document.querySelector('.tt_entity_choice') != null) {
         modal_form_adder.showModal();
     });
 }
-
-// function entityChange() {
-//     if (entity_choice.value == '') {
-//         tt_group_choice.style.display = 'none'
-//         tt_btn_open_modal_form.disabled = true
-//         tt_btn_open_modal_form.style.backgroundColor = '#D3D3D3'
-//         tt_btn_open_modal_form.style.color = '#FFFFFF'
-//         tt_btn_open_modal_form.style.cursor = 'not-allowed'
-//         document.querySelector('#div_confirmation').style.display = ''
-//         document.querySelector('.tt_group_choice').style.display = ''
-//     } else {
-//     // if not, show them
-//         tt_group_choice.style.display = 'block'
-//         document.querySelector('#div_confirmation').style.display = 'block'
-//         document.querySelector('.tt_group_choice').style.display = 'block'
-//     }
-
-//     all_groups = []
-//     all_groups = clone_all_groups
-
-//     all_groups.forEach(function(all_group) {
-//         // Add groups of selected entity
-//         if ('tt_plugin_entity_' + entity_choice.value == all_group.className || all_group.value == '') {
-//             document.querySelector('#group_choice').appendChild(all_group)
-//         } else {
-//         // Delete previous groups
-//             all_group.remove()
-//         }
-//     })
-
-//     // if another entity is chosen, reset the selected group
-//     document.querySelector('#no_select').selected = true
-// }

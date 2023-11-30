@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2023-09-07 10:57+0200\n"
+"PO-Revision-Date: 2023-11-27 10:22+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -81,27 +81,27 @@ msgstr "Annuler"
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: inc/ticket.php:125
+#: front/ticket.form.php:125
 msgid "Please select a valid entity"
 msgstr "Veuillez sélectionner une entité valide"
 
-#: inc/ticket.php:135
+#: front/ticket.form.php:135
 msgid "Please select a valid group"
 msgstr "Veuillez sélectionner un groupe valide"
 
-#: inc/ticket.php:181
+#: front/ticket.form.php:181
 msgid "Escalation to"
 msgstr "Escalade vers"
 
-#: inc/ticket.php:181
+#: front/ticket.form.php:181
 msgid "in the group"
 msgstr "dans le groupe"
 
-#: inc/ticket.php:185
+#: front/ticket.form.php:185
 msgid "Successful transfer for ticket n° : "
 msgstr "Transfert réussi pour le ticket n° : "
 
-#: inc/ticket.php:197
+#: front/ticket.form.php:197
 msgid "Transfer canceled"
 msgstr "Transfert annulé"
 
@@ -109,10 +109,14 @@ msgstr "Transfert annulé"
 msgid "Unauthorized transfer on closed ticket."
 msgstr "Transfert non autorisé sur ticket clos."
 
-#: inc/ticket.class.php:436 inc/ticket.php:357
+#: inc/ticket.class.php:436 front/ticket.form.php:357
 msgid "Please explain your transfer"
 msgstr "Veuillez expliquer la raison de votre transfert"
 
-#: inc/ticket.php:266
+#: front/ticket.form.php:266
 msgid "You must be assigned to the ticket to be able to transfer it"
 msgstr "Vous devez être assigné sur le ticket ou être membre du groupe assigné pour être autorisé à le transférer"
+
+#: inc/ticket.class.php:239
+msgid "No group found with « Assigned to » right, transfer impossible."
+msgstr "Aucun groupe trouvé avec le droit « Attribué à », transfert impossible."

@@ -28,7 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-define('TRANSFERTICKETENTITY_VERSION', '1.0.2');
+define('TRANSFERTICKETENTITY_VERSION', '1.0.3');
 
 function plugin_init_transferticketentity()
 {

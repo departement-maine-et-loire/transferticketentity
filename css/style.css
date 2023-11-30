@@ -122,6 +122,13 @@
     padding-bottom:1rem;
 }
 
+.group_not_found {
+    text-align: center;
+    color: red;
+    font-size: 0.9rem;
+    padding-top: 2rem;
+}
+
 /*--------------------------------------- profile.class.php -------------------------------------------*/
 
 .tt_profile_border-top {
