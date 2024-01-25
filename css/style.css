@@ -4,9 +4,9 @@
     display:none;
 }
 
-.tt_flex {
+/* .tt_flex {
     display:flex;
-}
+} */
 
 /*--------------------------------------- ticket.class.php -------------------------------------------*/
 
@@ -78,6 +78,10 @@
 
 .form_transfert .tt_group_choice {
     display: none;
+}
+
+.tt_group_choice {
+    gap: 0.25rem;
 }
 
 #canceltransfert {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  -------------------------------------------------------------------------
  LICENSE
@@ -26,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
- */
+*/
 
 /**
  * Install hook
@@ -35,7 +36,27 @@
  */
 function plugin_transferticketentity_install()
 {
+    global $DB;
+
     PluginTransferticketentityProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
+
+    $default_charset = DBConnection::getDefaultCharset();
+    $default_collation = DBConnection::getDefaultCollation();
+    $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
+
+    if (!$DB->TableExists("glpi_plugin_transferticketentity_entities_settings")) {
+        $query = "CREATE TABLE `glpi_plugin_transferticketentity_entities_settings` (
+            `id` int {$default_key_sign} NOT NULL auto_increment,
+            `entities_id` int {$default_key_sign} NOT NULL,
+            `allow_entity_only_transfer` BOOLEAN NOT NULL DEFAULT 0,
+            `justification_transfer` BOOLEAN NOT NULL DEFAULT 0,
+            `allow_transfer` BOOLEAN NOT NULL DEFAULT 0,
+            PRIMARY KEY  (`id`),
+            FOREIGN KEY  (`entities_id`) REFERENCES `glpi_entities` (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
+
+        $DB->query($query) or die("error creating glpi_plugin_transferticketentity_entities_settings " . $DB->error());
+    }
     
     return true;
 }
@@ -62,6 +83,14 @@ function plugin_transferticketentity_uninstall()
                 'profiles_id' => $id_profil
             ]
         );
+    }
+
+    $tables = ["glpi_plugin_transferticketentity_entities_settings"];
+
+    foreach ($tables as $table) {
+        if ($DB->tableExists($table)) {
+            $DB->queryOrDie("DROP TABLE IF EXISTS `".$table."`", $DB->error());
+        }
     }
 
     return true;

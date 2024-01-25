@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2023-11-27 10:22+0100\n"
+"PO-Revision-Date: 2024-01-24 15:08+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -118,5 +118,37 @@ msgid "You must be assigned to the ticket to be able to transfer it"
 msgstr "Vous devez être assigné sur le ticket ou être membre du groupe assigné pour être autorisé à le transférer"
 
 #: inc/ticket.class.php:239
-msgid "No group found with « Assigned to » right, transfer impossible."
-msgstr "Aucun groupe trouvé avec le droit « Attribué à », transfert impossible."
+msgid "No entity available found, transfer impossible."
+msgstr "Aucune entité disponible trouvée, transfert impossible."
+
+#: inc/ticket.class.php:305
+msgid "None"
+msgstr "Aucun"
+
+#: inc/entity.class.php:118
+msgid "Settings Transfer Ticket Entity"
+msgstr "Paramètres Transfert d'entité"
+
+#: inc/entity.class.php:123
+msgid "Assigned group required to make a transfer"
+msgstr "Groupe à assigner obligatoire pour effectuer un transfert"
+
+#: inc/entity.class.php:130
+msgid "Justification required to make a transfer"
+msgstr "Justification obligatoire pour effectuer un transfert"
+
+#: inc/entity.class.php:137
+msgid "Allow transfer function"
+msgstr "Autorise la fonction de transfert"
+
+#: inc/ticket.class.php:322
+msgid "No previous entity"
+msgstr "Pas de précédente entité"
+
+#: inc/ticket.class.php:342
+msgid "No group found with « Assigned to » right while a group is required. Transfer impossible."
+msgstr "Aucun groupe avec le droit « Assigné à » n'a été trouvé alors qu'un groupe est requit. Transfert impossible."
+
+#: inc/profile.class.php:45
+msgid "Active"
+msgstr "Actif"

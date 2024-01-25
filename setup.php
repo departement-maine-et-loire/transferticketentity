@@ -1,4 +1,5 @@
 <?php
+
 /**
  -------------------------------------------------------------------------
  LICENSE
@@ -26,9 +27,9 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
- */
+*/
 
-define('TRANSFERTICKETENTITY_VERSION', '1.0.3');
+define('TRANSFERTICKETENTITY_VERSION', '1.1.0');
 
 function plugin_init_transferticketentity()
 {
@@ -37,6 +38,7 @@ function plugin_init_transferticketentity()
     // Add a tab for profiles and tickets
     Plugin::registerClass('PluginTransferticketentityProfile', ['addtabon' => 'Profile']);
     Plugin::registerClass('PluginTransferticketentityTicket', ['addtabon' => 'Ticket']);
+    Plugin::registerClass('PluginTransferticketentityEntity', ['addtabon' => 'Entity']);
 
     $PLUGIN_HOOKS['csrf_compliant']['transferticketentity'] = true;
 }

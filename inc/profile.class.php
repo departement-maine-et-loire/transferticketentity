@@ -1,4 +1,5 @@
 <?php
+
 /**
  -------------------------------------------------------------------------
  LICENSE
@@ -26,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
- */
+*/
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -41,7 +42,7 @@ class PluginTransferticketentityProfile extends Profile
             ['itemtype'  => 'PluginTransferTicketEntityUse',
                   'label'     => __('Using entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
-                  'rights'    => [ALLSTANDARDRIGHT => __('Read')]]];
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]];
           return $rights;
     }
 
