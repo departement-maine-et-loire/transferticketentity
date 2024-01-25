@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
- */
+*/
 
 namespace GlpiPlugin\Transferticketentity;
 use CommonDBTM;
@@ -36,7 +36,8 @@ use Ticket_User;
 use CommonITILActor;
 use Group_Ticket;
 use Ticket;
-use ITILFollowup;
+use TicketTask;
+use Planning;
 
 require '../../../inc/includes.php';
 
@@ -51,6 +52,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     public $checkEntityETT;
     public $checkGroup;
     public $theEntity;
+    public $checkEntityRight;
     public $theGroup;
     public $ticketTransferETT;
 
@@ -60,6 +62,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         $this->checkEntityETT = $this->checkEntityETT();
         $this->checkGroup = $this->checkGroup();
         $this->theEntity = $this->theEntity();
+        $this->checkEntityRight = $this->checkEntityRight();
         $this->theGroup = $this->theGroup();
         $this->ticketTransferETT = $this->ticketTransferETT();
     }
@@ -144,13 +147,13 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         global $DB;
     
         $result = $DB->request([
-            'SELECT' => 'glpi_entities.id',
-            'FROM' => 'glpi_groups',
-            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-                                                                'glpi_entities' => 'id']]],
-            'WHERE' => ['glpi_groups.is_assign' => 1],
-            'GROUPBY' => 'glpi_entities.id',
-            'ORDER' => 'glpi_entities.id ASC'
+            'SELECT' => ['E.id', 'E.entities_id', 'E.name', 'TES.allow_entity_only_transfer', 'TES.justification_transfer', 'TES.allow_transfer'],
+            'FROM' => 'glpi_entities AS E',
+            'LEFT JOIN' => ['glpi_plugin_transferticketentity_entities_settings AS TES' => ['FKEY' => ['E' => 'id',
+                                                           'TES' => 'entities_id']]],
+            'WHERE' => ['TES.allow_transfer' => 1],
+            'GROUPBY' => 'E.id',
+            'ORDER' => 'E.entities_id ASC'
         ]);
 
         $array = array();
@@ -216,6 +219,32 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     }
 
     /**
+     * Get selected entity rights
+     *
+     * @return array
+     */
+    public function checkEntityRight()
+    {
+        global $DB;
+        $entity_choice = $_REQUEST['entity_choice'];
+
+        $result = $DB->request([
+            'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
+            'WHERE' => ['entities_id' => $entity_choice]
+        ]);
+
+        $array = array();
+
+        foreach($result as $data){
+            $array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
+            $array['justification_transfer'] = $data['justification_transfer'];
+            $array['allow_transfer'] = $data['allow_transfer'];
+        }
+
+        return $array;
+    }
+
+    /**
      * Get the selected group name
      *
      * @return $data
@@ -223,21 +252,24 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     public function theGroup()
     {
         global $DB;
-        $group_choice = $_REQUEST['group_choice'];
 
-        $result = $DB->request([
-            'SELECT' => 'name',
-            'FROM' => 'glpi_groups',
-            'WHERE' => ['id' => $group_choice]
-        ]);
-
-        $array = array();
-
-        foreach($result as $data){
-            array_push($array, $data['name']);
-        }
-
-        return $array[0];
+        if (!empty($_REQUEST['group_choice'])) {
+            $group_choice = $_REQUEST['group_choice'];
+    
+            $result = $DB->request([
+                'SELECT' => 'name',
+                'FROM' => 'glpi_groups',
+                'WHERE' => ['id' => $group_choice]
+            ]);
+    
+            $array = array();
+    
+            foreach($result as $data){
+                array_push($array, $data['name']);
+            }
+    
+            return $array[0];
+        } else return false;
     }
 
     /**
@@ -254,17 +286,54 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $checkAssign = self::checkAssign();
             $checkEntity = self::checkEntityETT();
             $checkGroup = self::checkGroup();
+            $checkEntityRight = self::checkEntityRight();
 
             $id_ticket = $_POST['id_ticket'];
-            $id_user = $_POST['id_user'];
             $theServer = $_POST['theServer'];
             $justification = $_POST['justification'];
+            $requiredGroup = true;
 
             $theEntity = self::theEntity();
             $theGroup = self::theGroup();
             
             $entity_choice = $_REQUEST['entity_choice'];
             $group_choice = $_REQUEST['group_choice'];
+
+            if (!isset($_POST['justification']) || $_POST['justification'] == '') {
+                if ($checkEntityRight['justification_transfer'] == 1) {
+                    Session::addMessageAfterRedirect(
+                        __(
+                            "Please explain your transfer", 
+                            'transferticketentity'
+                        ),
+                        true,
+                        ERROR
+                    );
+        
+                    header('location:' . $theServer);
+
+                    return false;
+                } else {
+                    $justification = '';
+                }
+            }
+
+            if (empty($group_choice) && $checkEntityRight['allow_entity_only_transfer'] == 1) {
+                Session::addMessageAfterRedirect(
+                    __(
+                        "Please select a valid group", 
+                        'transferticketentity'
+                    ),
+                    true,
+                    ERROR
+                );
+    
+                header('location:' . $theServer);
+
+                return false;
+            } else if (empty($group_choice) && $checkEntityRight['allow_entity_only_transfer'] == 0) {
+                $requiredGroup = false;
+            }
 
             if (!$checkAssign) {
                 Session::addMessageAfterRedirect(
@@ -289,21 +358,10 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 );
     
                 header('location:' . $theServer);
-            } else if (!in_array($group_choice, $checkGroup)) {
+            } else if (!empty($group_choice) && !in_array($group_choice, $checkGroup)) {
                 Session::addMessageAfterRedirect(
                     __(
                         "Please select a valid group", 
-                        'transferticketentity'
-                    ),
-                    true,
-                    ERROR
-                );
-    
-                header('location:' . $theServer);
-            } else if (!isset($_POST['justification']) || $_POST['justification'] == '') {
-                Session::addMessageAfterRedirect(
-                    __(
-                        "Please explain your transfer", 
                         'transferticketentity'
                     ),
                     true,
@@ -339,40 +397,52 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
                 // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
-                $ticket->update(
-                    [
-                    'id'     => $id_ticket,
-                    'entities_id' => $entity_choice,
-                    'status' => 2
-                    ]
-                );
 
-                // Change group ticket
-                $group_check = [
-                    'tickets_id' => $id_ticket,
-                    'groups_id' => $group_choice,
-                    'type' => CommonITILActor::ASSIGN
-                ];
-                if (!$group_ticket->find($group_check)) {
-                    $group_ticket->add($group_check);
+                if ($theGroup) {
+                    $ticket->update([
+                        'id'     => $id_ticket,
+                        'entities_id' => $entity_choice,
+                        'status' => 2
+                    ]);
                 } else {
-                    $group_ticket->update($group_check);
+                    $ticket->update([
+                        'id'     => $id_ticket,
+                        'entities_id' => $entity_choice,
+                        'status' => 1
+                    ]);
+                }
+
+                if ($requiredGroup) {
+                    // Change group ticket
+                    $group_check = [
+                        'tickets_id' => $id_ticket,
+                        'groups_id' => $group_choice,
+                        'type' => CommonITILActor::ASSIGN
+                    ];
+                    if (!$group_ticket->find($group_check)) {
+                        $group_ticket->add($group_check);
+                    } else {
+                        $group_ticket->update($group_check);
+                    }
+                }
+
+                $groupText = "<br> <br> $justification";
+
+                if ($theGroup) {
+                    $groupText = __("in the group", "transferticketentity") . " $theGroup \n <br> <br> $justification";
                 }
 
                 // Log the transfer in a task
-                $itil_followup = new ITILFollowup();
-                $itil_followup->add(
-                    [
-                    'itemtype' => 'Ticket',
-                    'items_id' => $id_ticket,
-                    'users_id' => $id_user,
-                    'content' => __(
+                $task = new TicketTask();
+                $task->add([
+                    'tickets_id' => $id_ticket,
+                    'is_private' => true,
+                    'state'      => Planning::INFO,
+                    'content'    => __(
                         "Escalation to", 
                         "transferticketentity"
-                    ) . " $theEntity " .
-                    __("in the group", "transferticketentity") . " $theGroup \n <br> <br> $justification"
-                    ]
-                );
+                    ) . " $theEntity " . $groupText
+                ]);
     
                 Session::addMessageAfterRedirect(
                     __(

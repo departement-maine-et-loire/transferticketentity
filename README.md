@@ -14,15 +14,25 @@ Une fois le transfert effectué, il n'a plus aucune visibilité sur le ticket.
 
 ## Documentation
 
-Ce plugin est documenté [ici](https://github.com/departement-maine-et-loire/transferticketentity/blob/master/README.md)
+Pour configurer les prérequis du transfert d'entité :
 
-## Comment configurer le plugin
+- Autoriser la fonction Transfert : définit si le transfert est autorisé vers l'entité et groupes associés
+- Groupe à assigner obligatoire pour effectuer un transfert : 
+	- Définit si le ticket transféré doit être obligatoirement assigné à un groupe.
+	- Si non, le choix "aucun" apparaîtra dans la liste du groupe cible et sera à sélectionner
+	- Si le ticket est envoyé dans une entité sans groupe, il sera considéré comme "nouveau"
+- Justification obligatoire pour effectuer un transfert
+	- Si oui, le champ de saisi s'affiche avec un encart rouge
+	- Si non, ce dernier apparaîtra avec un encart bleu toutefois la zone de saisie restera active si besoin.
 
-Vous pouvez configurer les droits d'accès au plugin dans l'administration des profils
+## Où configurer le plugin
+
+Vous pouvez configurer les droits d'accès au plugin dans l'administration des profils.
+Les prérequis du transfert se gèrent dans l'administration des entités.
 
 ## Compatibilité
 
-Ce plugin a été testé jusqu'à la version de GLPI 10.0.9
+Ce plugin a été testé jusqu'à la version de GLPI 10.0.10
 
 # GLPi Transfer Ticket Entity Plugin (EN)
 
@@ -40,12 +50,22 @@ Once the transfer has been made, he no longer has any visibility of the ticket.
 
 ## Documentation
 
-This plugin is documented [here](https://github.com/departement-maine-et-loire/transferticketentity/blob/master/README.md)
+To configure entity transfer prerequisites :
 
-## How to set up the plugin
+- Allow transfer function : defines whether transfer is allowed to the entity and associated groups
+- Assigned group required to make a transfer : 
+    - Defines whether the transferred ticket must be assigned to a group.
+    - If not, the choice "none" will appear in the target group list and must be selected.
+    - If the ticket is sent to an entity without a group, it will be considered "new"
+- Justification required to make a transfer :
+    - If yes, the input field is displayed with a red highlighting.
+    - If no, it will appear with a blue highlighting, but the input field will remain active if required.
 
-You can configure access rights to the plugin in profile administration
+## Where set up the plugin
+
+You can configure access rights to the plugin in profile administration.
+The transfer prerequisites are managed in the entity administration.
 
 ## Compatibility
 
-This plugin has been tested up to GLPI version 10.0.9
+This plugin has been tested up to GLPI version 10.0.10

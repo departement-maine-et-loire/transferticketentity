@@ -1,4 +1,5 @@
 <?php
+
 /**
  -------------------------------------------------------------------------
  LICENSE
@@ -26,7 +27,9 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
- */
+*/
+
+use Glpi\Application\View\TemplateRenderer;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -138,30 +141,38 @@ class PluginTransferticketentityTicket extends Ticket
     }
 
     /**
-     * Get all entities that have at least one group AND in use
+     * Get all the entities which aren't the current entity with their rights
      *
-     * @return array $allEntities
+     * @return array
      */
-    public function getAllEntities()
+    public function getEntitiesRights()
     {
         global $DB;
+
         $getTicketEntity = self::getTicketEntity();
         $theEntity = $getTicketEntity[0];
 
         $result = $DB->request([
-            'SELECT' => ['E.id', 'E.name'],
-            'FROM' => 'glpi_groups AS G',
-            'LEFT JOIN' => ['glpi_entities AS E' => ['FKEY' => ['G'     => 'entities_id',
-                                                           'E' => 'id']]],
-            'WHERE' => ['NOT' => ['G.entities_id' => 'NULL'], 'G.is_assign' => 1, 'NOT' => ['E.id' => $theEntity]],
+            'SELECT' => ['E.id', 'E.entities_id', 'E.name', 'TES.allow_entity_only_transfer', 'TES.justification_transfer', 'TES.allow_transfer'],
+            'FROM' => 'glpi_entities AS E',
+            'LEFT JOIN' => ['glpi_plugin_transferticketentity_entities_settings AS TES' => ['FKEY' => ['E' => 'id',
+                                                           'TES' => 'entities_id']]],
+            'WHERE' => ['NOT' => ['E.id' => $theEntity]],
             'GROUPBY' => 'E.id',
-            'ORDER' => 'E.id ASC'
+            'ORDER' => 'E.entities_id ASC'
         ]);
 
         $array = array();
+        $temp_array = array();
 
         foreach($result as $data){
-            array_push($array, $data['id'], $data['name']);
+            $temp_array['id'] = $data['id'];
+            $temp_array['entities_id'] = $data['entities_id'];
+            $temp_array['name'] = $data['name'];
+            $temp_array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
+            $temp_array['justification_transfer'] = $data['justification_transfer'];
+            $temp_array['allow_transfer'] = $data['allow_transfer'];
+            array_push($array, $temp_array);
         }
 
         return $array;
@@ -214,9 +225,30 @@ class PluginTransferticketentityTicket extends Ticket
         return true;
     }
 
-    public static function addStyleSheetAndScript() {
+    public static function addStyleSheetAndScript() 
+    {
         echo Html::css("/plugins/transferticketentity/css/style.css");
         echo Html::script("/plugins/transferticketentity/js/script.js");
+    }
+
+    /**
+     * Return parent's entity name
+     *
+     * @return string
+    */
+    public function searchParentEntityName($id)
+    {
+        global $DB;
+
+        $result = $DB->request([
+            'FROM' => 'glpi_entities',
+        ]);
+
+        foreach ($result as $subArray) {
+            if ($subArray['id'] == $id) {
+                return $subArray['name'];
+            }
+        }
     }
 
     /**
@@ -229,14 +261,22 @@ class PluginTransferticketentityTicket extends Ticket
         global $CFG_GLPI;
         global $DB;
 
-        $getAllEntities = self::getAllEntities();
         $getGroupEntities = self::getGroupEntities();
+        $getEntitiesRights = self::getEntitiesRights();
+
+        $getAllEntities = array();
+
+        foreach ($getEntitiesRights as $entity) {
+            if ($entity['allow_transfer'] == 1) {
+                array_push($getAllEntities, $entity['entities_id'], $entity['id'], $entity['name']);
+            }
+        }
 
         if (empty($getAllEntities)) {
             self::addStyleSheetAndScript();
             echo "<div class='group_not_found'>";
                 echo "<p>".
-                    __("No group found with « Assigned to » right, transfer impossible.", "transferticketentity")
+                    __("No entity available found, transfer impossible.", "transferticketentity")
                     ."</p>";
             echo "</div>";
 
@@ -259,7 +299,6 @@ class PluginTransferticketentityTicket extends Ticket
                     __("Unauthorized transfer on closed ticket.", "transferticketentity")
                     ."</p>";
             echo "</div>";
-            
 
             return false;
         }
@@ -269,36 +308,61 @@ class PluginTransferticketentityTicket extends Ticket
             echo "<p>".__("Error, please reload the page.", "transferticketentity")."</p>";
             echo "<p>".__("If the problem persists, you can try to empty the cache by doing CTRL + F5.", "transferticketentity")."</p>";
         echo "</div>";
+        
+        $previousEntity = null;
 
         echo"
             <form class='form_transfert' action='" . $this->getFormURL() . "' method='post'>
                 <div class='tt_entity_choice'>
                     <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
-                    <select name='entity_choice' id='entity_choice'>
+                    <select name='entity_choice' id='entity_choice' style='width: 30%'>
                         <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
-                for($i = 0; $i < count($getAllEntities); $i = $i+2) {
-                  echo "<option value='" . $getAllEntities[$i] . "'>" . $getAllEntities[$i+1] . "</option>";
+                foreach($getEntitiesRights as $entity) {
+                    if ($entity['allow_transfer']) {
+                        if ($entity['entities_id'] === null) {
+                            echo "<optgroup label='" . __('No previous entity', 'transferticketentity') . "'>";
+                                echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
+                        } else {
+                            $searchParentEntityName = self::searchParentEntityName($entity['entities_id']);
+                            if ($previousEntity != $searchParentEntityName) {
+                                echo "</optgroup>";
+                                echo "<optgroup label='" . $searchParentEntityName . "'>";
+                            }
+    
+                            echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
+                            $previousEntity = $searchParentEntityName;
+                        }
+                    }
                 }
-              echo "</select>
-                </div>
-                <div class='tt_flex'>
+                echo "</optgroup>
+                    </select>
+                </div>";
+
+            echo " <div class='group_not_found' id='nogroupfound'>" .
+                    __("No group found with « Assigned to » right while a group is required. Transfer impossible.", "transferticketentity")
+                . "</div>";
+
+            echo" <div class='tt_flex'>
                     <div class='tt_group_choice'>
                         <label for='group_choice'>".__("Select the group to assign", "transferticketentity")." : </label>
-                        <select name='group_choice' id='group_choice'>
-                            <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>";
+                        <select name='group_choice' id='group_choice' style='width: 30%'>
+                            <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>
+                            <option value='' id='tt_none'> ".__("None", "transferticketentity")." </option>";
                 for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
                     echo   "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
                 }
                 echo"   </select>
+
+                        <div id='div_confirmation'>";
+                            echo Html::submit(__('Confirm', 'transferticketentity'), ['disabled' => true, 'id' => 'tt_btn_open_modal_form']);
+                echo"   </div>
                     </div>";
 
                     echo Html::hidden("id_ticket", ["value" => "$id_ticket"]);
                     echo Html::hidden("id_user", ["value" => "$id_user"]);
                     echo Html::hidden("theServer", ["value" => "$theServer"]);
 
-            echo"   <div id='div_confirmation'>";
-                        echo Html::submit(__('Confirm', 'transferticketentity'), ['disabled' => true, 'id' => 'tt_btn_open_modal_form']);
-            echo"   </div>
+                echo "
                 </div>
 
                 <dialog id='tt_modal_form_adder' class='tt_modal'>
@@ -307,7 +371,7 @@ class PluginTransferticketentityTicket extends Ticket
 
                     <div class='justification'>
                         <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
-                        <textarea name='justification' required></textarea>
+                        <textarea id='justification' name='justification' required></textarea>
                     </div>
 
                     <div>";

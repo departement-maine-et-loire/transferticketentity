@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - admincolor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2023-11-27 10:23+0100\n"
+"PO-Revision-Date: 2024-01-24 15:08+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
 "Language: en_GB\n"
@@ -118,5 +118,37 @@ msgid "You must be assigned to the ticket to be able to transfer it"
 msgstr "You must be assigned to the ticket to be able to transfer it"
 
 #: inc/ticket.class.php:239
-msgid "No group found with « Assigned to » right, transfer impossible."
-msgstr "No group found with « Assigned to » right, transfer impossible."
+msgid "No entity available found, transfer impossible."
+msgstr "No entity available found, transfer impossible."
+
+#: inc/ticket.class.php:305
+msgid "None"
+msgstr "None"
+
+#: inc/entity.class.php:118
+msgid "Settings Transfer Ticket Entity"
+msgstr "Settings Transfer Ticket Entity"
+
+#: inc/entity.class.php:123
+msgid "Assigned group required to make a transfer"
+msgstr "Assigned group required to make a transfer"
+
+#: inc/entity.class.php:130
+msgid "Justification required to make a transfer"
+msgstr "Justification required to make a transfer"
+
+#: inc/entity.class.php:137
+msgid "Allow transfer function"
+msgstr "Allow transfer function"
+
+#: inc/ticket.class.php:322
+msgid "No previous entity"
+msgstr "No previous entity"
+
+#: inc/ticket.class.php:342
+msgid "No group found with « Assigned to » right while a group is required. Transfer impossible."
+msgstr "No group found with « Assigned to » right while a group is required. Transfer impossible."
+
+#: inc/profile.class.php:45
+msgid "Active"
+msgstr "Active"
