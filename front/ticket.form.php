@@ -82,8 +82,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
         $result = $DB->request([
             'FROM' => 'glpi_profilerights',
-            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'profiles_id' => $technician_profile],
-            'ORDER' => 'rights DESC'
+            'WHERE' => ['name' => 'plugin_transferticketentity_bypass', 'profiles_id' => $technician_profile]
         ]);
 
         $array = array();
@@ -365,7 +364,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 $requiredGroup = false;
             }
 
-            if ($checkTechRight[0] < UNLOCK && !$checkAssign) {
+            if (!$checkTechRight[0] && !$checkAssign) {
                 Session::addMessageAfterRedirect(
                     __(
                         "You must be assigned to the ticket to be able to transfer it", 
