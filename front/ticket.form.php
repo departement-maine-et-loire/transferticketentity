@@ -48,6 +48,7 @@ if (!isset($_SESSION['glpiactiveprofile']['id'])) {
 
 class PluginTransferticketentityTransfer extends CommonDBTM
 {
+    public $checkTechRight;
     public $checkAssign;
     public $checkEntityETT;
     public $checkGroup;
@@ -58,6 +59,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
     public function __construct()
     {
+        $this->checkTechRight = $this->checkTechRight();
         $this->checkAssign = $this->checkAssign();
         $this->checkEntityETT = $this->checkEntityETT();
         $this->checkGroup = $this->checkGroup();
@@ -68,11 +70,38 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     }
 
     /**
+     * Checks technician's right
+     *
+     * @return bool
+     */
+    public function checkTechRight()
+    {
+        global $DB;
+
+        $technician_profile = $_POST['technician_profile'];
+
+        $result = $DB->request([
+            'FROM' => 'glpi_profilerights',
+            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'profiles_id' => $technician_profile],
+            'ORDER' => 'rights DESC'
+        ]);
+
+        $array = array();
+
+        foreach($result as $data){
+            array_push($array, $data['rights']);
+        }
+
+        return $array;
+    }
+
+    /**
      * Checks that the technician or his group is assigned to the ticket
      *
      * @return bool
      */
-    public function checkAssign() {
+    public function checkAssign()
+    {
         global $DB;
 
         $id_ticket = $_POST['id_ticket'];
@@ -284,6 +313,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
         if (isset($_POST['transfertticket'])) {
             $checkAssign = self::checkAssign();
+            $checkTechRight = self::checkTechRight();
             $checkEntity = self::checkEntityETT();
             $checkGroup = self::checkGroup();
             $checkEntityRight = self::checkEntityRight();
@@ -335,7 +365,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 $requiredGroup = false;
             }
 
-            if (!$checkAssign) {
+            if ($checkTechRight[0] < UNLOCK && !$checkAssign) {
                 Session::addMessageAfterRedirect(
                     __(
                         "You must be assigned to the ticket to be able to transfer it", 
@@ -402,7 +432,8 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                     $ticket->update([
                         'id'     => $id_ticket,
                         'entities_id' => $entity_choice,
-                        'status' => 2
+                        'status' => 2,
+                        'itilcategories_id' => 0
                     ]);
                 } else {
                     $ticket->update([

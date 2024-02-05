@@ -30,6 +30,7 @@
 */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\ContentTemplates\Parameters\ITILCategoryParameters;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -263,6 +264,8 @@ class PluginTransferticketentityTicket extends Ticket
 
         $getGroupEntities = self::getGroupEntities();
         $getEntitiesRights = self::getEntitiesRights();
+        
+        $technician_profile = $_SESSION['glpiactiveprofile']['id'];
 
         $getAllEntities = array();
 
@@ -358,6 +361,7 @@ class PluginTransferticketentityTicket extends Ticket
                 echo"   </div>
                     </div>";
 
+                    echo Html::hidden("technician_profile", ["value" => "$technician_profile"]);
                     echo Html::hidden("id_ticket", ["value" => "$id_ticket"]);
                     echo Html::hidden("id_user", ["value" => "$id_user"]);
                     echo Html::hidden("theServer", ["value" => "$theServer"]);

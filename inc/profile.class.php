@@ -42,7 +42,7 @@ class PluginTransferticketentityProfile extends Profile
             ['itemtype'  => 'PluginTransferTicketEntityUse',
                   'label'     => __('Using entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
-                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]];
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity'), UNLOCK => __('Bypass', 'transferticketentity')]]];
           return $rights;
     }
 
@@ -83,7 +83,7 @@ class PluginTransferticketentityProfile extends Profile
         $result = $DB->request([
             'SELECT' => ['profiles_id'],
             'FROM' => 'glpi_profilerights',
-            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'rights' => ALLSTANDARDRIGHT],
+            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'NOT' => ['rights' => 0]],
             'ORDER' => 'name ASC'
         ]);
 
@@ -170,8 +170,9 @@ class PluginTransferticketentityProfile extends Profile
   
         $profile = new Profile();
         $profile->getFromDB($ID);
-  
+
         $rights = self::getAllRights();
+        
         $profile->displayRightsChoiceMatrix(
             $rights,
             [
