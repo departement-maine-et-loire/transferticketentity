@@ -439,7 +439,8 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                     $ticket->update([
                         'id'     => $id_ticket,
                         'entities_id' => $entity_choice,
-                        'status' => 1
+                        'status' => 1,
+                        'itilcategories_id' => 0
                     ]);
                 }
 

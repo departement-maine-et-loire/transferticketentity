@@ -117,41 +117,46 @@ class PluginTransferticketentityProfile extends Profile
         return true;
     }
 
-        /**
-    * @param $profile
-   **/
-   static function addDefaultProfileInfos($profiles_id, $rights) {
+    /**
+        * @param $profile
+    **/
+    static function addDefaultProfileInfos($profiles_id, $rights) {
 
-    $profileRight = new ProfileRight();
-    foreach ($rights as $right => $value) {
-       if (!countElementsInTable(
-           'glpi_profilerights',
-           ['profiles_id' => $profiles_id, 'name' => $right]
-       )) {
-          $myright['profiles_id'] = $profiles_id;
-          $myright['name']        = $right;
-          $myright['rights']      = $value;
-          $profileRight->add($myright);
+        $profileRight = new ProfileRight();
+        foreach ($rights as $right => $value) {
+        if (!countElementsInTable(
+            'glpi_profilerights',
+            ['profiles_id' => $profiles_id, 'name' => $right]
+        )) {
+            $myright['profiles_id'] = $profiles_id;
+            $myright['name']        = $right;
+            $myright['rights']      = $value;
+            $profileRight->add($myright);
 
-          //Add right to the current session
-          $_SESSION['glpiactiveprofile'][$right] = $value;
-       }
+            //Add right to the current session
+            $_SESSION['glpiactiveprofile'][$right] = $value;
+        }
+        }
     }
- }
 
-  /**
-  * @param $ID  integer
-  */
- static function createFirstAccess($profiles_id) {
+    /**
+     * @param $ID  integer
+    */
+    static function createFirstAccess($profiles_id) {
 
-    include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
-    foreach (self::getAllRights() as $right) {
-       self::addDefaultProfileInfos(
-        $profiles_id,
-        ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]
-       );
+        include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
+        foreach (self::getAllRights() as $right) {
+        self::addDefaultProfileInfos(
+            $profiles_id,
+            ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]
+        );
+        }
     }
- }
+
+    public static function addScript() 
+    {
+        echo Html::script("/plugins/transferticketentity/js/profileSettings.js");
+    }
 
     /**
      * Display the plugin configuration form
@@ -165,7 +170,7 @@ class PluginTransferticketentityProfile extends Profile
         echo "<div class='firstbloc'>";
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
            $profile = new Profile();
-           echo "<form method='post' action='".$profile->getFormURL()."'>";
+           echo "<form method='post' action='".$profile->getFormURL()."' class='transferticketentity'>";
         }
   
         $profile = new Profile();
@@ -190,5 +195,7 @@ class PluginTransferticketentityProfile extends Profile
            Html::closeForm();
         }
         echo "</div>";
+
+        self::addScript();
     }
 }
