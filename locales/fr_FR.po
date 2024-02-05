@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-01-24 15:08+0100\n"
+"PO-Revision-Date: 2024-02-05 16:07+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -152,3 +152,7 @@ msgstr "Aucun groupe avec le droit « Assigné à » n'a été trouvé alors qu'
 #: inc/profile.class.php:45
 msgid "Active"
 msgstr "Actif"
+
+#: inc/profile.class.php:47
+msgid "Allow transfer without assignment"
+msgstr "Autoriser le transfert sans affectation"

@@ -42,7 +42,11 @@ class PluginTransferticketentityProfile extends Profile
             ['itemtype'  => 'PluginTransferTicketEntityUse',
                   'label'     => __('Using entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
-                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity'), UNLOCK => __('Bypass', 'transferticketentity')]]];
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]],
+            ['itemtype'  => 'PluginTransferTicketEntityBypass',
+                  'label'     => __('Allow transfer without assignment', 'transferticketentity'),
+                  'field'     => 'plugin_transferticketentity_bypass',
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]];
           return $rights;
     }
 
