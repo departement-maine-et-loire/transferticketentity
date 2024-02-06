@@ -105,6 +105,7 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
             $allow_entity_only_transfer = $_POST['allow_entity_only_transfer'];
             $justification_transfer = $_POST['justification_transfer'];
             $allow_transfer = $_POST['allow_transfer'];
+            $keep_category = $_POST['keep_category'];
             $ID = $_POST['ID'];
             
             $entityName = self::getNameEntity($ID);
@@ -126,7 +127,8 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
                     'entities_id' => $ID,
                     'allow_entity_only_transfer' => $allow_entity_only_transfer,
                     'justification_transfer' => $justification_transfer,
-                    'allow_transfer' => $allow_transfer
+                    'allow_transfer' => $allow_transfer,
+                    'keep_category' => $keep_category
                 ]
             );
             

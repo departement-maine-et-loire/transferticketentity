@@ -267,6 +267,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
+            $array['keep_category'] = $data['keep_category'];
         }
 
         return $array;
@@ -427,21 +428,25 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
 
+                $ticket_update = [
+                    'id'     => $id_ticket,
+                    'entities_id' => $entity_choice,
+                ];
+
                 if ($theGroup) {
-                    $ticket->update([
-                        'id'     => $id_ticket,
-                        'entities_id' => $entity_choice,
-                        'status' => 2,
-                        'itilcategories_id' => 0
-                    ]);
+                    $ticket_status = ['status' => 2];
+                    $ticket_update = array_merge($ticket_update, $ticket_status);
                 } else {
-                    $ticket->update([
-                        'id'     => $id_ticket,
-                        'entities_id' => $entity_choice,
-                        'status' => 1,
-                        'itilcategories_id' => 0
-                    ]);
+                    $ticket_status = ['status' => 1];
+                    $ticket_update = array_merge($ticket_update, $ticket_status);
                 }
+
+                if(!$checkEntityRight['keep_category']) {
+                    $ticket_category = ['itilcategories_id' => 0];
+                    $ticket_update = array_merge($ticket_update, $ticket_category);
+                }
+
+                $ticket->update($ticket_update);
 
                 if ($requiredGroup) {
                     // Change group ticket

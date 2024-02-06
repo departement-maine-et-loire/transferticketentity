@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - admincolor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-02-05 16:07+0100\n"
+"PO-Revision-Date: 2024-02-06 09:28+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
 "Language: en_GB\n"
@@ -156,3 +156,7 @@ msgstr "Active"
 #: inc/profile.class.php:47
 msgid "Allow transfer without assignment"
 msgstr "Allow transfer without assignment"
+
+#: inc/entity.class.php:153
+msgid "Keep category after transfer"
+msgstr "Keep category after transfer"

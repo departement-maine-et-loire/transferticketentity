@@ -51,6 +51,7 @@ function plugin_transferticketentity_install()
             `allow_entity_only_transfer` BOOLEAN NOT NULL DEFAULT 0,
             `justification_transfer` BOOLEAN NOT NULL DEFAULT 0,
             `allow_transfer` BOOLEAN NOT NULL DEFAULT 0,
+            `keep_category` BOOLEAN NOT NULL DEFAULT 0,
             PRIMARY KEY  (`id`),
             FOREIGN KEY  (`entities_id`) REFERENCES `glpi_entities` (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
