@@ -24,6 +24,9 @@ Pour configurer les prérequis du transfert d'entité :
 - Justification obligatoire pour effectuer un transfert
 	- Si oui, le champ de saisi s'affiche avec un encart rouge
 	- Si non, ce dernier apparaîtra avec un encart bleu toutefois la zone de saisie restera active si besoin.
+- Garder la catégorie après le transfert :
+    - Si oui, la catégorie du ticket sera gardé après le transfert.
+    - Si non, la catégorie du ticket sera remise à null.
 
 ## Où configurer le plugin
 
@@ -60,6 +63,9 @@ To configure entity transfer prerequisites :
 - Justification required to make a transfer :
     - If yes, the input field is displayed with a red highlighting.
     - If no, it will appear with a blue highlighting, but the input field will remain active if required.
+- Keep category after transfer :
+    - If yes, category's ticket will be keep.
+    - If no, category's ticket will be set to null.
 
 ## Where set up the plugin
 
