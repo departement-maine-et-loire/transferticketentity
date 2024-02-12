@@ -40,11 +40,11 @@ class PluginTransferticketentityProfile extends Profile
     static function getAllRights() {
         $rights = [
             ['itemtype'  => 'PluginTransferTicketEntityUse',
-                  'label'     => __('Using entity transfer', 'transferticketentity'),
+                  'label'     => __('Authorized entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
                   'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]],
             ['itemtype'  => 'PluginTransferTicketEntityBypass',
-                  'label'     => __('Allow transfer without assignment', 'transferticketentity'),
+                  'label'     => __('Transfer authorized without assignment of technician or associated group', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_bypass',
                   'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]
         ];

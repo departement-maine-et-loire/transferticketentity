@@ -9,8 +9,14 @@
             <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights.</en>
          </short>
          <long>
-            <fr>Ce plugin permet aux profils autorisés d'envoyer les tickets à une entité où ils n'ont aucun droits d'accès. Cela peut-être utile pour un technicien qui envoie un ticket à une entité spécialisée dans l'administratif pour qu'aucune infos personelles ne soient dévoilées.</fr>
-            <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights. This can be useful for a technician who sends a ticket to an entity specialized in administration so that no personal information is revealed.</en>
+            <fr>Ce plugin permet, pour les profils autorisés, de transférer des tickets d'une entité à une autre sur laquelle ils n'ont pas les accès.
+                Il s'adresse aux organisations qui ont configurés, dans GLPI, leurs périmètres d'activités par entité (DRH, Comptabilité, SI, ...).
+                
+                L'intérêt étant de pouvoir transférer un ticket entre techniciens "GLPI" d'entités différentes et de continuer à assurer la confidentialité des données entre entités.</fr>
+            <en>This plugin enables authorized profiles to transfer tickets from one entity to another to which they do not have access.
+                It is designed for organizations that have configured their GLPI activity perimeters by entity (HR, Accounting, IS, etc.).
+                
+                The aim is to be able to transfer a ticket between "GLPI" technicians from different entities, and to continue to ensure the confidentiality of data between entities.</en>
          </long>
       </description>
       <homepage>https://github.com/departement-maine-et-loire/transferticketentity</homepage>

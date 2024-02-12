@@ -128,7 +128,7 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1'>";
                     echo "<td>";
-                    echo __('Allow transfer function', 'transferticketentity');
+                    echo __('Allow Transfer function', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('allow_transfer', $checkRights['allow_transfer'], -1, ['display' => false, 'class' => 'allow_transfer']);
@@ -136,7 +136,7 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='allow_entity_only_transfer'>";
                     echo "<td>";
-                    echo __('Assigned group required to make a transfer', 'transferticketentity');
+                    echo __('Assigned group required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('allow_entity_only_transfer', $checkRights['allow_entity_only_transfer'], -1, ['display' => false]);
@@ -144,7 +144,7 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='justification_transfer'>";
                     echo "<td>";
-                    echo __('Justification required to make a transfer', 'transferticketentity');
+                    echo __('Justification required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('justification_transfer', $checkRights['justification_transfer'], -1, ['display' => false]);

@@ -16,6 +16,8 @@ Une fois le transfert effectué, il n'a plus aucune visibilité sur le ticket.
 
 Pour configurer les prérequis du transfert d'entité :
 
+- Dans Administration > Profils > VotreProfil > Assistance > Ticket : Mettre à jour doit être coché.
+
 - Autoriser la fonction Transfert : définit si le transfert est autorisé vers l'entité et groupes associés
 - Groupe à assigner obligatoire pour effectuer un transfert : 
 	- Définit si le ticket transféré doit être obligatoirement assigné à un groupe.
@@ -54,6 +56,8 @@ Once the transfer has been made, he no longer has any visibility of the ticket.
 ## Documentation
 
 To configure entity transfer prerequisites :
+
+- In Administration > Profile > YourProfile > Assistance > Ticket : Update must be checked.
 
 - Allow transfer function : defines whether transfer is allowed to the entity and associated groups
 - Assigned group required to make a transfer : 
