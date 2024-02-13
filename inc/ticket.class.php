@@ -247,7 +247,7 @@ class PluginTransferticketentityTicket extends Ticket
 
         foreach ($result as $subArray) {
             if ($subArray['id'] == $id) {
-                return $subArray['name'];
+                return $subArray['completename'];
             }
         }
     }
@@ -372,11 +372,11 @@ class PluginTransferticketentityTicket extends Ticket
                 <dialog id='tt_modal_form_adder' class='tt_modal'>
                     <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
                     <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
-
                     <div class='justification'>
                         <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
                         <textarea id='justification' name='justification' required></textarea>
                     </div>
+                    <p class='adv-msg'>".__("Warning, category will be reset if it does not exist in the target entity.", "transferticketentity")."</p>
 
                     <div>";
                         echo Html::submit(__('Cancel'), ['name' => 'canceltransfert', 'id' => 'canceltransfert']);

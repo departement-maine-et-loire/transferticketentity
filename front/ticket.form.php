@@ -302,6 +302,73 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     }
 
     /**
+     * Check if category exist in target entity
+     *
+     * @return bool
+     */
+    public function checkExistingCategory()
+    {
+        global $DB;
+
+        $id_ticket = $_POST['id_ticket'];
+        $targetEntity = $_REQUEST['entity_choice'];
+
+        $result = $DB->request([
+            'SELECT' => 'itilcategories_id',
+            'FROM' => 'glpi_tickets',
+            'WHERE' => ['id' => $id_ticket]
+        ]);
+
+        $getTicketCategory = '';
+
+        foreach ($result as $data) {
+            $getTicketCategory = $data['itilcategories_id'];
+        }
+
+        $result = $DB->request([
+            'FROM' => 'glpi_entities',
+            'WHERE' => ['id' => $targetEntity]
+        ]);
+
+        $ancestorsEntities = array();
+
+        foreach ($result as $data) {
+            if ($data['ancestors_cache']) {
+                $ancestorsEntities = $data['ancestors_cache'];
+                $ancestorsEntities = json_decode($ancestorsEntities, true);
+                array_push($ancestorsEntities, $targetEntity);
+            } else {
+                array_push($ancestorsEntities, 0);
+            }
+        }
+        
+        $result = $DB->request([
+            'FROM' => 'glpi_itilcategories',
+            'WHERE' => ['id' => $getTicketCategory]
+        ]);
+
+        $getEntitiesFromCategoryTicket = '';
+        $isRecursiveCategory = '';
+
+        foreach ($result as $data) {
+            $getEntitiesFromCategoryTicket = $data['entities_id'];
+            $isRecursiveCategory = $data['is_recursive'];
+        }
+
+        if (!$isRecursiveCategory) {
+            if ($getEntitiesFromCategoryTicket == $targetEntity) {
+                $isRecursiveCategory = true;
+            }
+        }
+
+        if (in_array($getEntitiesFromCategoryTicket, $ancestorsEntities) && $isRecursiveCategory) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Carries out the necessary actions for the transfer entity
      * 
      * @return void
@@ -317,6 +384,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $checkEntity = self::checkEntityETT();
             $checkGroup = self::checkGroup();
             $checkEntityRight = self::checkEntityRight();
+            $checkExistingCategory = self::checkExistingCategory();
 
             $id_ticket = $_POST['id_ticket'];
             $theServer = $_POST['theServer'];
@@ -441,11 +509,11 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                     $ticket_update = array_merge($ticket_update, $ticket_status);
                 }
 
-                if(!$checkEntityRight['keep_category']) {
+                if (!$checkEntityRight['keep_category'] || !($checkEntityRight['keep_category'] && $checkExistingCategory)) {
                     $ticket_category = ['itilcategories_id' => 0];
                     $ticket_update = array_merge($ticket_update, $ticket_category);
                 }
-
+                
                 $ticket->update($ticket_update);
 
                 if ($requiredGroup) {

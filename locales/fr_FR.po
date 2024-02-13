@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-02-12 11:42+0100\n"
+"PO-Revision-Date: 2024-02-13 11:15+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -160,3 +160,7 @@ msgstr "Transfert autorisé sans affectation du technicien ou groupe associé"
 #: inc/entity.class.php:153
 msgid "Keep category after transfer"
 msgstr "Catégorie à conserver après le transfert"
+
+#: inc/ticket.class.php:448
+msgid "Warning, category will be reset if it does not exist in the target entity."
+msgstr "Attention, la catégorie sera remise à nulle si non existante dans l'entité cible."
