@@ -85,6 +85,7 @@ class PluginTransferticketentityEntity extends Entity
             $array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
+            $array['keep_category'] = $data['keep_category'];
         }
 
         return $array;
@@ -110,6 +111,7 @@ class PluginTransferticketentityEntity extends Entity
             $checkRights['allow_entity_only_transfer'] = 0;
             $checkRights['justification_transfer'] = 0;
             $checkRights['allow_transfer'] = 0;
+            $checkRights['keep_category'] = 0;
         }
 
         echo "<div class='firstbloc'>";
@@ -126,7 +128,7 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1'>";
                     echo "<td>";
-                    echo __('Allow transfer function', 'transferticketentity');
+                    echo __('Allow Transfer function', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('allow_transfer', $checkRights['allow_transfer'], -1, ['display' => false, 'class' => 'allow_transfer']);
@@ -134,7 +136,7 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='allow_entity_only_transfer'>";
                     echo "<td>";
-                    echo __('Assigned group required to make a transfer', 'transferticketentity');
+                    echo __('Assigned group required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('allow_entity_only_transfer', $checkRights['allow_entity_only_transfer'], -1, ['display' => false]);
@@ -142,10 +144,18 @@ class PluginTransferticketentityEntity extends Entity
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='justification_transfer'>";
                     echo "<td>";
-                    echo __('Justification required to make a transfer', 'transferticketentity');
+                    echo __('Justification required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
                     echo Dropdown::showYesNo('justification_transfer', $checkRights['justification_transfer'], -1, ['display' => false]);
+                    echo "</td>";
+                echo "</tr>";
+                echo "<tr class='tab_bg_1' id='keep_category'>";
+                    echo "<td>";
+                    echo __('Keep category after transfer', 'transferticketentity');
+                    echo "&nbsp;";
+                    echo "&nbsp;";
+                    echo Dropdown::showYesNo('keep_category', $checkRights['keep_category'], -1, ['display' => false]);
                     echo "</td>";
                 echo "</tr>";
             echo "</tbody>";

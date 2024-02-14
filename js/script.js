@@ -53,6 +53,13 @@ $.ajax({
                 let entityRights = data.filter(e => e.entities_id == entity_choice.value)
                 let justificationRight = entityRights[0]['justification_transfer']
                 let groupRight = entityRights[0]['allow_entity_only_transfer']
+                let categoryRight = entityRights[0]['keep_category']
+
+                if (categoryRight) {
+                    document.querySelector('.adv-msg').style.display='';
+                } else {
+                    document.querySelector('.adv-msg').style.display='none';
+                }
 
                 if (justificationRight == 1) {
                     document.querySelector('#justification').required = true;

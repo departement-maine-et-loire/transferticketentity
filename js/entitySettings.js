@@ -4,9 +4,12 @@ function displayValue() {
         document.querySelector('#allow_entity_only_transfer').firstChild.childNodes[1][0].selected = true
         document.querySelector('#justification_transfer').style.display = 'none'
         document.querySelector('#justification_transfer').firstChild.childNodes[1][0].selected = true
+        document.querySelector('#keep_category').style.display = 'none'
+        document.querySelector('#keep_category').firstChild.childNodes[1][0].selected = true
     } else {
         document.querySelector('#allow_entity_only_transfer').style.display = ''
         document.querySelector('#justification_transfer').style.display = ''
+        document.querySelector('#keep_category').style.display = ''
     }
 }
 

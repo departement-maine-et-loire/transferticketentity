@@ -16,6 +16,8 @@ Une fois le transfert effectué, il n'a plus aucune visibilité sur le ticket.
 
 Pour configurer les prérequis du transfert d'entité :
 
+- Dans Administration > Profils > VotreProfil > Assistance > Ticket : Mettre à jour doit être coché.
+
 - Autoriser la fonction Transfert : définit si le transfert est autorisé vers l'entité et groupes associés
 - Groupe à assigner obligatoire pour effectuer un transfert : 
 	- Définit si le ticket transféré doit être obligatoirement assigné à un groupe.
@@ -24,6 +26,9 @@ Pour configurer les prérequis du transfert d'entité :
 - Justification obligatoire pour effectuer un transfert
 	- Si oui, le champ de saisi s'affiche avec un encart rouge
 	- Si non, ce dernier apparaîtra avec un encart bleu toutefois la zone de saisie restera active si besoin.
+- Garder la catégorie après le transfert :
+    - Si oui, la catégorie du ticket sera gardé après le transfert seulement si elle est disponible dans l'entité cible, sinon elle sera remise à null.
+    - Si non, la catégorie du ticket sera remise à null.
 
 ## Où configurer le plugin
 
@@ -52,6 +57,8 @@ Once the transfer has been made, he no longer has any visibility of the ticket.
 
 To configure entity transfer prerequisites :
 
+- In Administration > Profile > YourProfile > Assistance > Ticket : Update must be checked.
+
 - Allow transfer function : defines whether transfer is allowed to the entity and associated groups
 - Assigned group required to make a transfer : 
     - Defines whether the transferred ticket must be assigned to a group.
@@ -60,6 +67,9 @@ To configure entity transfer prerequisites :
 - Justification required to make a transfer :
     - If yes, the input field is displayed with a red highlighting.
     - If no, it will appear with a blue highlighting, but the input field will remain active if required.
+- Keep category after transfer :
+    - If yes, category's ticket will be keep only if it is available in the target entity, otherwise it will be reset to null.
+    - If no, category's ticket will be set to null.
 
 ## Where set up the plugin
 

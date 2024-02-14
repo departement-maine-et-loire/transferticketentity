@@ -50,7 +50,7 @@ function getEntitiesRights()
     global $DB;
 
     $result = $DB->request([
-        'SELECT' => ['entities_id', 'allow_entity_only_transfer', 'justification_transfer', 'allow_transfer'],
+        'SELECT' => ['entities_id', 'allow_entity_only_transfer', 'justification_transfer', 'allow_transfer', 'keep_category'],
         'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
         'ORDER' => ['entities_id ASC']
     ]);

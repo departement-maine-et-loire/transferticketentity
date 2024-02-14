@@ -30,6 +30,7 @@
 */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\ContentTemplates\Parameters\ITILCategoryParameters;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -246,7 +247,7 @@ class PluginTransferticketentityTicket extends Ticket
 
         foreach ($result as $subArray) {
             if ($subArray['id'] == $id) {
-                return $subArray['name'];
+                return $subArray['completename'];
             }
         }
     }
@@ -263,6 +264,8 @@ class PluginTransferticketentityTicket extends Ticket
 
         $getGroupEntities = self::getGroupEntities();
         $getEntitiesRights = self::getEntitiesRights();
+        
+        $technician_profile = $_SESSION['glpiactiveprofile']['id'];
 
         $getAllEntities = array();
 
@@ -305,8 +308,7 @@ class PluginTransferticketentityTicket extends Ticket
 
         // In case JS is not functionnal
         echo "<div id='tt_gest_error'>";
-            echo "<p>".__("Error, please reload the page.", "transferticketentity")."</p>";
-            echo "<p>".__("If the problem persists, you can try to empty the cache by doing CTRL + F5.", "transferticketentity")."</p>";
+            echo "<span class='loader'></span>";
         echo "</div>";
         
         $previousEntity = null;
@@ -358,6 +360,7 @@ class PluginTransferticketentityTicket extends Ticket
                 echo"   </div>
                     </div>";
 
+                    echo Html::hidden("technician_profile", ["value" => "$technician_profile"]);
                     echo Html::hidden("id_ticket", ["value" => "$id_ticket"]);
                     echo Html::hidden("id_user", ["value" => "$id_user"]);
                     echo Html::hidden("theServer", ["value" => "$theServer"]);
@@ -368,11 +371,11 @@ class PluginTransferticketentityTicket extends Ticket
                 <dialog id='tt_modal_form_adder' class='tt_modal'>
                     <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
                     <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
-
                     <div class='justification'>
                         <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
                         <textarea id='justification' name='justification' required></textarea>
                     </div>
+                    <p class='adv-msg'>".__("Warning, category will be reset if it does not exist in the target entity.", "transferticketentity")."</p>
 
                     <div>";
                         echo Html::submit(__('Cancel'), ['name' => 'canceltransfert', 'id' => 'canceltransfert']);

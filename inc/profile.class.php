@@ -40,15 +40,22 @@ class PluginTransferticketentityProfile extends Profile
     static function getAllRights() {
         $rights = [
             ['itemtype'  => 'PluginTransferTicketEntityUse',
-                  'label'     => __('Using entity transfer', 'transferticketentity'),
+                  'label'     => __('Authorized entity transfer', 'transferticketentity'),
                   'field'     => 'plugin_transferticketentity_use',
-                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]];
-          return $rights;
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]],
+            ['itemtype'  => 'PluginTransferTicketEntityBypass',
+                  'label'     => __('Transfer authorized without assignment of technician or associated group', 'transferticketentity'),
+                  'field'     => 'plugin_transferticketentity_bypass',
+                  'rights'    => [ALLSTANDARDRIGHT => __('Active', 'transferticketentity')]]
+        ];
+
+        return $rights;
     }
 
-    function cleanProfiles($ID) {
-
+    function cleanProfiles($ID)
+    {
         global $DB;
+
         $query = "DELETE FROM `glpi_profiles`
                   WHERE `profiles_id`='$ID'
                   AND `name` LIKE '%plugin_transferticketentity%'";
@@ -68,6 +75,7 @@ class PluginTransferticketentityProfile extends Profile
         if ($item->getType() == 'Profile') {
             return __("Transfer Ticket Entity", "transferticketentity");
         }
+
         return '';
     }
 
@@ -83,7 +91,7 @@ class PluginTransferticketentityProfile extends Profile
         $result = $DB->request([
             'SELECT' => ['profiles_id'],
             'FROM' => 'glpi_profilerights',
-            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'rights' => ALLSTANDARDRIGHT],
+            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'NOT' => ['rights' => 0]],
             'ORDER' => 'name ASC'
         ]);
 
@@ -117,41 +125,48 @@ class PluginTransferticketentityProfile extends Profile
         return true;
     }
 
-        /**
-    * @param $profile
-   **/
-   static function addDefaultProfileInfos($profiles_id, $rights) {
+    /**
+        * @param $profile
+    **/
+    static function addDefaultProfileInfos($profiles_id, $rights) 
+    {
+        $profileRight = new ProfileRight();
 
-    $profileRight = new ProfileRight();
-    foreach ($rights as $right => $value) {
-       if (!countElementsInTable(
-           'glpi_profilerights',
-           ['profiles_id' => $profiles_id, 'name' => $right]
-       )) {
-          $myright['profiles_id'] = $profiles_id;
-          $myright['name']        = $right;
-          $myright['rights']      = $value;
-          $profileRight->add($myright);
+        foreach ($rights as $right => $value) {
+            if (!countElementsInTable(
+                'glpi_profilerights',
+                ['profiles_id' => $profiles_id, 'name' => $right]
+            )) {
+                $myright['profiles_id'] = $profiles_id;
+                $myright['name']        = $right;
+                $myright['rights']      = $value;
+                $profileRight->add($myright);
 
-          //Add right to the current session
-          $_SESSION['glpiactiveprofile'][$right] = $value;
-       }
+                //Add right to the current session
+                $_SESSION['glpiactiveprofile'][$right] = $value;
+            }
+        }
     }
- }
 
-  /**
-  * @param $ID  integer
-  */
- static function createFirstAccess($profiles_id) {
+    /**
+     * @param $ID  integer
+    */
+    static function createFirstAccess($profiles_id)
+    {
+        include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
 
-    include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
-    foreach (self::getAllRights() as $right) {
-       self::addDefaultProfileInfos(
-        $profiles_id,
-        ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]
-       );
+        foreach (self::getAllRights() as $right) {
+            self::addDefaultProfileInfos(
+                $profiles_id,
+                ['plugin_transferticketentity_use' => ALLSTANDARDRIGHT]
+            );
+        }
     }
- }
+
+    public static function addScript() 
+    {
+        echo Html::script("/plugins/transferticketentity/js/profileSettings.js");
+    }
 
     /**
      * Display the plugin configuration form
@@ -163,15 +178,17 @@ class PluginTransferticketentityProfile extends Profile
     public function showFormMcv($ID)
     {
         echo "<div class='firstbloc'>";
+
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
            $profile = new Profile();
-           echo "<form method='post' action='".$profile->getFormURL()."'>";
+           echo "<form method='post' action='".$profile->getFormURL()."' class='transferticketentity'>";
         }
   
         $profile = new Profile();
         $profile->getFromDB($ID);
-  
+
         $rights = self::getAllRights();
+        
         $profile->displayRightsChoiceMatrix(
             $rights,
             [
@@ -188,6 +205,9 @@ class PluginTransferticketentityProfile extends Profile
            echo "</div>\n";
            Html::closeForm();
         }
+        
         echo "</div>";
+
+        self::addScript();
     }
 }

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - admincolor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-01-24 15:08+0100\n"
+"PO-Revision-Date: 2024-02-13 11:15+0100\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
 "Language: en_GB\n"
@@ -30,8 +30,8 @@ msgid "Change rights"
 msgstr "Change rights"
 
 #: inc/profile.class.php:77
-msgid "Using entity transfer"
-msgstr "Using entity transfer"
+msgid "Authorized entity transfer"
+msgstr "Authorized entity transfer"
 
 #: inc/profile.class.php:89
 msgid "Save"
@@ -130,16 +130,16 @@ msgid "Settings Transfer Ticket Entity"
 msgstr "Settings Transfer Ticket Entity"
 
 #: inc/entity.class.php:123
-msgid "Assigned group required to make a transfer"
-msgstr "Assigned group required to make a transfer"
+msgid "Assigned group required"
+msgstr "Assigned group required"
 
 #: inc/entity.class.php:130
-msgid "Justification required to make a transfer"
-msgstr "Justification required to make a transfer"
+msgid "Justification required"
+msgstr "Justification required"
 
 #: inc/entity.class.php:137
-msgid "Allow transfer function"
-msgstr "Allow transfer function"
+msgid "Allow Transfer function"
+msgstr "Allow Transfer function"
 
 #: inc/ticket.class.php:322
 msgid "No previous entity"
@@ -152,3 +152,15 @@ msgstr "No group found with « Assigned to » right while a group is required. T
 #: inc/profile.class.php:45
 msgid "Active"
 msgstr "Active"
+
+#: inc/profile.class.php:47
+msgid "Transfer authorized without assignment of technician or associated group"
+msgstr "Transfer authorized without assignment of technician or associated group"
+
+#: inc/entity.class.php:153
+msgid "Keep category after transfer"
+msgstr "Keep category after transfer"
+
+#: inc/ticket.class.php:448
+msgid "Warning, category will be reset if it does not exist in the target entity."
+msgstr "Warning, category will be reset if it does not exist in the target entity."
