@@ -308,8 +308,7 @@ class PluginTransferticketentityTicket extends Ticket
 
         // In case JS is not functionnal
         echo "<div id='tt_gest_error'>";
-            echo "<p>".__("Error, please reload the page.", "transferticketentity")."</p>";
-            echo "<p>".__("If the problem persists, you can try to empty the cache by doing CTRL + F5.", "transferticketentity")."</p>";
+            echo "<span class='loader'></span>";
         echo "</div>";
         
         $previousEntity = null;
