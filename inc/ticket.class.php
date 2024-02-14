@@ -275,6 +275,17 @@ class PluginTransferticketentityTicket extends Ticket
             }
         }
 
+        if(!Session::haveRight('ticket', UPDATE)) {
+            self::addStyleSheetAndScript();
+            echo "<div class='unauthorised'>";
+                echo "<p>".
+                    __("You don't have right to update tickets. Please contact your administrator.", "transferticketentity")
+                    ."</p>";
+            echo "</div>";
+
+            return false;
+        }
+
         if (empty($getAllEntities)) {
             self::addStyleSheetAndScript();
             echo "<div class='group_not_found'>";
