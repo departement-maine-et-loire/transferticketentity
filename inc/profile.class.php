@@ -59,6 +59,7 @@ class PluginTransferticketentityProfile extends Profile
         $query = "DELETE FROM `glpi_profiles`
                   WHERE `profiles_id`='$ID'
                   AND `name` LIKE '%plugin_transferticketentity%'";
+                  
         $DB->query($query);
     }
 
@@ -126,8 +127,8 @@ class PluginTransferticketentityProfile extends Profile
     }
 
     /**
-        * @param $profile
-    **/
+     * @param $profile
+     **/
     static function addDefaultProfileInfos($profiles_id, $rights) 
     {
         $profileRight = new ProfileRight();
@@ -180,8 +181,8 @@ class PluginTransferticketentityProfile extends Profile
         echo "<div class='firstbloc'>";
 
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
-           $profile = new Profile();
-           echo "<form method='post' action='".$profile->getFormURL()."' class='transferticketentity'>";
+            $profile = new Profile();
+            echo "<form method='post' action='".$profile->getFormURL()."' class='transferticketentity'>";
         }
   
         $profile = new Profile();
@@ -192,18 +193,18 @@ class PluginTransferticketentityProfile extends Profile
         $profile->displayRightsChoiceMatrix(
             $rights,
             [
-               'canedit'       => $canedit,
-               'default_class' => 'tab_bg_2',
-               'title'         => __('General')
+                'canedit'       => $canedit,
+                'default_class' => 'tab_bg_2',
+                'title'         => __('General')
             ]
         );
         
         if ($canedit) {
-           echo "<div class='center'>";
-           echo Html::hidden('id', ['value' => $ID]);
-           echo Html::submit(_sx('button', 'Save'), ['name' => 'update', 'class' => 'btn btn-primary']);
-           echo "</div>\n";
-           Html::closeForm();
+            echo "<div class='center'>";
+            echo Html::hidden('id', ['value' => $ID]);
+            echo Html::submit(_sx('button', 'Save'), ['name' => 'update', 'class' => 'btn btn-primary']);
+            echo "</div>\n";
+            Html::closeForm();
         }
         
         echo "</div>";

@@ -52,8 +52,10 @@ function plugin_transferticketentity_install()
             `justification_transfer` BOOLEAN NOT NULL DEFAULT 0,
             `allow_transfer` BOOLEAN NOT NULL DEFAULT 0,
             `keep_category` BOOLEAN NOT NULL DEFAULT 0,
+            `itilcategories_id` INT {$default_key_sign},
             PRIMARY KEY  (`id`),
-            FOREIGN KEY  (`entities_id`) REFERENCES `glpi_entities` (`id`)
+            FOREIGN KEY  (`entities_id`) REFERENCES `glpi_entities` (`id`),
+            FOREIGN KEY  (`itilcategories_id`) REFERENCES `glpi_itilcategories` (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
 
         $DB->query($query) or die("error creating glpi_plugin_transferticketentity_entities_settings " . $DB->error());
@@ -78,8 +80,8 @@ function plugin_transferticketentity_uninstall()
     ]);
 
     foreach ($result as $id_profil) {
-        $DB->delete(
-            'glpi_profilerights', [
+        $DB->delete('glpi_profilerights', 
+            [
                 'name' => 'plugin_transferticketentity_use',
                 'profiles_id' => $id_profil
             ]

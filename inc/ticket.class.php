@@ -29,9 +29,6 @@
  --------------------------------------------------------------------------
 */
 
-use Glpi\Application\View\TemplateRenderer;
-use Glpi\ContentTemplates\Parameters\ITILCategoryParameters;
-
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
@@ -236,7 +233,7 @@ class PluginTransferticketentityTicket extends Ticket
      * Return parent's entity name
      *
      * @return string
-    */
+     */
     public function searchParentEntityName($id)
     {
         global $DB;
@@ -275,7 +272,7 @@ class PluginTransferticketentityTicket extends Ticket
             }
         }
 
-        if(!Session::haveRight('ticket', UPDATE)) {
+        if (!Session::haveRight('ticket', UPDATE)) {
             self::addStyleSheetAndScript();
             echo "<div class='unauthorised'>";
                 echo "<p>".
@@ -383,7 +380,7 @@ class PluginTransferticketentityTicket extends Ticket
                     <h2>".__("Confirm transfer ?", "transferticketentity")."</h2>
                     <p>".__("Once the transfer has been completed, the ticket will remain visible only if you have the required rights.", "transferticketentity")."</p>
                     <div class='justification'>
-                        <label for='justification'>".__("Please explain your transfer", "transferticketentity")." : </label>
+                        <label for='justification'>".__("Please explain your transfer", "transferticketentity")." </label>
                         <textarea id='justification' name='justification' required></textarea>
                     </div>
                     <p class='adv-msg'>".__("Warning, category will be reset if it does not exist in the target entity.", "transferticketentity")."</p>
@@ -395,5 +392,49 @@ class PluginTransferticketentityTicket extends Ticket
                 </dialog>";
             Html::closeForm();
         self::addStyleSheetAndScript();
+        self::javascriptTranslate();
+    }
+
+    /**
+     * Translate text added with JavaScript
+     *
+     * @return $js
+     */
+    public function javascriptTranslate()
+    {
+        $addText = __('optional', 'transferticketentity');
+
+        $jsPluginTTE = "
+            $.ajax({
+                url: CFG_GLPI.root_doc + '/' + GLPI_PLUGINS_PATH.transferticketentity + '/ajax/getEntitiesRights.php',
+                method: 'GET',
+                success: function (data) {
+                    data = JSON.parse(data);
+
+                    if (document.querySelector('.tt_entity_choice') != null) {
+                        let explainText = document.getElementById('justification').previousElementSibling.innerHTML;
+
+                        $('#entity_choice').on('change', function (event) {
+                            let entityRights = data.filter(e => e.entities_id == entity_choice.value)
+                            let justificationRight = entityRights[0]['justification_transfer']
+                            let addText = '';
+
+                            if (justificationRight == 1) {
+                                addText = ':'
+                                document.getElementById('justification').previousElementSibling.innerHTML = explainText + addText;
+                            } else {
+                                addText = '($addText)' + ' :'
+                                document.getElementById('justification').previousElementSibling.innerHTML = explainText + addText;
+                            }
+                        })
+                    }
+                }, 
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        ";
+
+        echo Html::scriptBlock($jsPluginTTE);
     }
 }

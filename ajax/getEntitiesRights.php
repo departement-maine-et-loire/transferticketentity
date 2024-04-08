@@ -41,7 +41,7 @@ Session::checkLoginUser();
 // }
 
 /**
- * Récupère tout les matricules utilisateurs
+ * Retrieve entities rights from plugin table
  *
  * @return $array
  */

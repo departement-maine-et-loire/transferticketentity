@@ -201,6 +201,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     public function checkGroup()
     {
         global $DB;
+        
         $entity_choice = $_REQUEST['entity_choice'];
     
         $result = $DB->request([
@@ -254,6 +255,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     public function checkEntityRight()
     {
         global $DB;
+
         $entity_choice = $_REQUEST['entity_choice'];
 
         $result = $DB->request([
@@ -268,6 +270,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
             $array['keep_category'] = $data['keep_category'];
+            $array['itilcategories_id'] = $data['itilcategories_id'];
         }
 
         return $array;
@@ -369,6 +372,77 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     }
 
     /**
+     * Check GLPIs mandatory fields
+     *
+     * @return int
+     */
+    public function checkTicketTemplateID()
+    {
+        global $DB;
+
+        $entity_choice = $_REQUEST['entity_choice'];
+        $selectedTemplate = 0;
+
+        while (!$selectedTemplate) {
+            $query = [
+                'FROM' => 'glpi_entities',
+                'WHERE' => ['id' => $entity_choice]
+            ];
+
+            foreach ($DB->request($query) as $data) {
+                $id = $data['id'];
+                $entity_choice = $data['entities_id'];
+                $selectedTemplate = $data['tickettemplates_id'];
+            }
+            
+            if ((!$id && !$selectedTemplate) || ($entity_choice === null && !$selectedTemplate)) {
+                return 0;
+            }
+        }
+
+        return $selectedTemplate;
+    }
+
+    /**
+     * Check GLPIs mandatory fields
+     *
+     * @return boolean
+     */
+    public function checkMandatoryCategory()
+    {
+        global $DB;
+
+        $id_ticket = $_POST['id_ticket'];
+        $tickettemplates_id = self::checkTicketTemplateID();
+
+        $ttm_class = 'Ticket' . 'TemplateMandatoryField'; 
+        $ttm = new $ttm_class();
+        $mandatoryFields = $ttm->getMandatoryFields($tickettemplates_id);
+
+        $result = $DB->request([
+            'FROM' => 'glpi_tickets',
+            'WHERE' => ['id' => $id_ticket]
+        ]);
+
+        $ticketFields = array();
+
+        foreach($result as $data){
+            array_push($ticketFields, $data);
+        }
+
+        $ticketFields = $ticketFields[0];
+
+        // Check if category field is mandatory
+        foreach ($mandatoryFields as $mandatoryField => $MF) {
+            if ($mandatoryField == 'itilcategories_id') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Carries out the necessary actions for the transfer entity
      * 
      * @return void
@@ -385,6 +459,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $checkGroup = self::checkGroup();
             $checkEntityRight = self::checkEntityRight();
             $checkExistingCategory = self::checkExistingCategory();
+            $checkMandatoryCategory = self::checkMandatoryCategory();
 
             $id_ticket = $_POST['id_ticket'];
             $theServer = $_POST['theServer'];
@@ -469,30 +544,6 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 header('location:' . $theServer);
             }
             else { 
-                // Remove the link with the current user
-                $delete_link_user = [
-                    'tickets_id' => $id_ticket,
-                    'type' => CommonITILActor::ASSIGN
-                ];
-                $ticket_user = new Ticket_User();
-                $found_user = $ticket_user->find($delete_link_user);
-                foreach ($found_user as $id => $tu) {
-                    //delete user
-                    $ticket_user->delete(['id' => $id]);
-                }
-
-                // Remove the link with the current group
-                $delete_link_group = [
-                    'tickets_id' => $id_ticket,
-                    'type' => CommonITILActor::ASSIGN
-                ];
-                $group_ticket = new Group_Ticket();
-                $found_group = $group_ticket->find($delete_link_group);
-                foreach ($found_group as $id => $tu) {
-                    //delete group
-                    $group_ticket->delete(['id' => $id]);
-                }
-
                 // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
 
@@ -509,9 +560,63 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                     $ticket_update = array_merge($ticket_update, $ticket_status);
                 }
 
-                if (!$checkEntityRight['keep_category'] || !($checkEntityRight['keep_category'] && $checkExistingCategory)) {
+                // In case keep_category is at yes and category doesn't exist, reset category's ticket
+                if ($checkEntityRight['keep_category'] && !$checkExistingCategory) {
                     $ticket_category = ['itilcategories_id' => 0];
                     $ticket_update = array_merge($ticket_update, $ticket_category);
+                }
+
+                if (!$checkEntityRight['keep_category']) {
+                    if ($checkEntityRight['itilcategories_id'] == null) {
+                        $ticket_category = ['itilcategories_id' => 0];
+                    } else {
+                        $ticket_category = ['itilcategories_id' => $checkEntityRight['itilcategories_id']];
+                    }
+                    $ticket_update = array_merge($ticket_update, $ticket_category);
+                }
+
+                // If category is mandatory with GLPIs template and category will be null
+                if ($ticket_category['itilcategories_id'] == 0 && $checkMandatoryCategory) {
+                    Session::addMessageAfterRedirect(
+                        __(
+                            "Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator.", 
+                            'transferticketentity'
+                        ),
+                        true,
+                        ERROR
+                    );
+        
+                    header('location:' . $theServer);
+
+                    return false;
+                }
+
+                // Remove the link with the current user
+                $delete_link_user = [
+                    'tickets_id' => $id_ticket,
+                    'type' => CommonITILActor::ASSIGN
+                ];
+
+                $ticket_user = new Ticket_User();
+                $found_user = $ticket_user->find($delete_link_user);
+
+                foreach ($found_user as $id => $tu) {
+                    //delete user
+                    $ticket_user->delete(['id' => $id]);
+                }
+
+                // Remove the link with the current group
+                $delete_link_group = [
+                    'tickets_id' => $id_ticket,
+                    'type' => CommonITILActor::ASSIGN
+                ];
+
+                $group_ticket = new Group_Ticket();
+                $found_group = $group_ticket->find($delete_link_group);
+
+                foreach ($found_group as $id => $tu) {
+                    //delete group
+                    $group_ticket->delete(['id' => $id]);
                 }
                 
                 $ticket->update($ticket_update);
@@ -523,6 +628,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                         'groups_id' => $group_choice,
                         'type' => CommonITILActor::ASSIGN
                     ];
+
                     if (!$group_ticket->find($group_check)) {
                         $group_ticket->add($group_check);
                     } else {

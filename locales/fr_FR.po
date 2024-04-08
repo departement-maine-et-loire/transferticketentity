@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-02-14 12:35+0100\n"
+"PO-Revision-Date: 2024-04-08 11:12+0200\n"
 "Last-Translator: Yannick Comba, 2022,2023\n"
 "Language-Team: French (France) (Département de Maine et Loire)\n"
 "Language: fr_FR\n"
@@ -168,3 +168,15 @@ msgstr "Attention, la catégorie sera remise à nulle si non existante dans l'en
 #: inc/ticket.class.php:303
 msgid "You don't have right to update tickets. Please contact your administrator."
 msgstr "Vous n'avez pas le droit de mettre à jour les tickets. Veuillez contacter votre administrateur."
+
+#: inc/ticket.class.php:405
+msgid "optional"
+msgstr "facultatif"
+
+#: inc/entity.class.php:219
+msgid "Default category"
+msgstr "Catégorie par défaut"
+
+#: front/ticket.form.php:266
+msgid "Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator."
+msgstr "La catégorie va être remise à null mais est configurée comme obligatoire dans les templates de GLPI, veuillez contacter votre administrateur."

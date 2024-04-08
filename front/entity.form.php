@@ -106,29 +106,30 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
             $justification_transfer = $_POST['justification_transfer'];
             $allow_transfer = $_POST['allow_transfer'];
             $keep_category = $_POST['keep_category'];
+            $itilcategories_id = $_POST['itilcategories_id'];
             $ID = $_POST['ID'];
             
             $entityName = self::getNameEntity($ID);
             $checkTransferSettings = self::checkTransferSettings($ID);
 
-            if(!empty($checkTransferSettings)) {
+            if (!empty($checkTransferSettings)) {
                 foreach ($checkTransferSettings as $transferSettings) {
-                    $DB->delete(
-                        'glpi_plugin_transferticketentity_entities_settings', [
+                    $DB->delete('glpi_plugin_transferticketentity_entities_settings', 
+                        [
                            'entities_id' => $transferSettings['entities_id']
                         ]
-                     );
+                    );
                 }
             }
 
-            $DB->insert(
-                'glpi_plugin_transferticketentity_entities_settings',
+            $DB->insert('glpi_plugin_transferticketentity_entities_settings',
                 [
                     'entities_id' => $ID,
                     'allow_entity_only_transfer' => $allow_entity_only_transfer,
                     'justification_transfer' => $justification_transfer,
                     'allow_transfer' => $allow_transfer,
-                    'keep_category' => $keep_category
+                    'keep_category' => $keep_category,
+                    'itilcategories_id' => $itilcategories_id
                 ]
             );
             
