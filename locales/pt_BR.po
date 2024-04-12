@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yannick Comba <y.comba@maine-et-loire.fr>, 2022
+# Yannick Comba, 2022,2023
+# Département de Maine et Loire
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Transfer Ticket Entity\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-24 09:03+0000\n"
+"PO-Revision-Date: 2024-02-22 15:22-0300\n"
+"Last-Translator: Yannick Comba, 2022,2023\n"
+"Language-Team: Portuguese (Brasil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: inc/profile.class.php:74 inc/ticket.class.php:48
+msgid "Transfer Ticket Entity"
+msgstr "Transferência de Entidade do Ticket"
+
+#: inc/profile.class.php:74
+msgid "Change rights"
+msgstr "Mudar permissões"
+
+#: inc/profile.class.php:77
+msgid "Using entity transfer"
+msgstr "Usando transferência de entidade"
+
+#: inc/profile.class.php:89
+msgid "Save"
+msgstr "Salvar"
+
+#: inc/profile.php:50 inc/profile.php:63
+msgid "Item successfully updated"
+msgstr "Item atualizado com sucesso"
+
+#: inc/ticket.class.php:210
+msgid "Error, please reload the page."
+msgstr "Erro, por favor atualizar a página."
+
+#: inc/ticket.class.php:211
+msgid "If the problem persists, you can try to empty the cache by doing CTRL + F5."
+msgstr "Se o problema persistir, você pode tentar esvaziar o cache através das teclas CTRL + F5."
+
+#: inc/ticket.class.php:216
+msgid "Select ticket entity to transfer"
+msgstr "Select ticket entity to transfer"
+
+#: inc/ticket.class.php:218
+msgid "Choose your entity"
+msgstr "Escolha sua entidade"
+
+#: inc/ticket.class.php:227
+msgid "Select the group to assign"
+msgstr "Selecione o grupo para atribuir"
+
+#: inc/ticket.class.php:229
+msgid "Choose your group"
+msgstr "Escolha seu grupo"
+
+#: inc/ticket.class.php:250
+msgid "Confirm transfer ?"
+msgstr "Conformar transferência?"
+
+#: inc/ticket.class.php:251
+msgid "Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
+msgstr "Uma vez que a transferência tiver sido completa, o ticket será visível somente se você tiver as permissões corretas."
+
+#: inc/ticket.class.php:252
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: inc/ticket.class.php:253 inc/ticket.class.php:244
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: inc/ticket.php:125
+msgid "Please select a valid entity"
+msgstr "Por favor selecione uma entidade válida"
+
+#: inc/ticket.php:135
+msgid "Please select a valid group"
+msgstr "Por favor selecione um grupo válido"
+
+#: inc/ticket.php:181
+msgid "Escalation to"
+msgstr "Escalação para"
+
+#: inc/ticket.php:181
+msgid "in the group"
+msgstr "no grupo"
+
+#: inc/ticket.php:185
+msgid "Successful transfer for ticket n° : "
+msgstr "Transferência feita com sucesso para o ticket n° : "
+
+#: inc/ticket.php:197
+msgid "Transfer canceled"
+msgstr "Transferência cancelada"
+
+#: inc/ticket.class.php:266
+msgid "Unauthorized transfer on closed ticket."
+msgstr "Não é possível transferir um ticket cujo status é fechado."
+
+#: inc/ticket.class.php:436 inc/ticket.php:357
+msgid "Please explain your transfer"
+msgstr "Por favor apresentar mais dados sobre sua transferência"
+
+#: inc/ticket.php:266
+msgid "You must be assigned to the ticket to be able to transfer it"
+msgstr "Você precisa estar atribuído ao ticket para ser capaz de transferi-lo"

@@ -29,7 +29,7 @@
  --------------------------------------------------------------------------
 */
 
-define('TRANSFERTICKETENTITY_VERSION', '1.1.2');
+define('TRANSFERTICKETENTITY_VERSION', '1.1.3');
 
 function plugin_init_transferticketentity()
 {
@@ -46,26 +46,28 @@ function plugin_init_transferticketentity()
 function plugin_version_transferticketentity()
 {
     return [
-      'name'           => 'TransferTicketEntity',
-      'version'        => TRANSFERTICKETENTITY_VERSION,
-      'author'         => 'Yannick COMBA',
-      'license'        => 'GPLv3+',
-      'homepage'       => 'https://github.com/departement-maine-et-loire/',
-      'requirements'   => [
-         'glpi'   => [
-            'min' => '10.0'
-         ]
-      ]
+        'name'           => 'TransferTicketEntity',
+        'version'        => TRANSFERTICKETENTITY_VERSION,
+        'author'         => 'Yannick COMBA',
+        'license'        => 'GPLv3+',
+        'homepage'       => 'https://github.com/departement-maine-et-loire/',
+        'requirements'   => [
+            'glpi'   => [
+                'min' => '10.0'
+            ]
+        ]
     ];
 }
 
 function plugin_transferticketentity_check_prerequisites()
 {
     $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
+
     if (version_compare($version, '10.0', '<')) {
        echo "This plugin requires GLPI >= 10.0";
        return false;
     }
+
     return true;
 }
 
@@ -85,6 +87,6 @@ function plugin_transferticketentity_check_config($verbose = false)
 function plugin_transferticketentity_options()
 {
     return [
-      Plugin::OPTION_AUTOINSTALL_DISABLED => true,
+        Plugin::OPTION_AUTOINSTALL_DISABLED => true,
     ];
 }

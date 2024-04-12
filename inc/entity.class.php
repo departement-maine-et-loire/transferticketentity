@@ -36,6 +36,59 @@ if (!defined('GLPI_ROOT')) {
 class PluginTransferticketentityEntity extends Entity
 {
     /**
+     * If category belong to ancestor, return it
+     * 
+     * @return array
+     */
+    public function availableCategories()
+    {
+        global $DB;
+        $entity = $_REQUEST['id'];
+        $allItilCategories = ['null' => 'null'];
+
+        $result = $DB->request([
+            'FROM' => 'glpi_entities',
+            'WHERE' => ['id' => $entity]
+        ]);
+
+        $ancestorsEntities = array();
+
+        foreach ($result as $data) {
+            if ($data['ancestors_cache']) {
+                $ancestorsEntities = $data['ancestors_cache'];
+                $ancestorsEntities = json_decode($ancestorsEntities, true);
+                array_push($ancestorsEntities, $entity);
+            } else {
+                array_push($ancestorsEntities, 0);
+            }
+        }
+
+        foreach ($ancestorsEntities as $ancestorEntity) {
+            if ($ancestorEntity == $entity) {
+                $result = $DB->request([
+                    'FROM' => 'glpi_itilcategories',
+                    'WHERE' => ['entities_id' => $ancestorEntity]
+                ]);
+
+                foreach ($result as $data) {
+                    $allItilCategories[$data['id']] = $data['name'];
+                }
+            } else {
+                $result = $DB->request([
+                    'FROM' => 'glpi_itilcategories',
+                    'WHERE' => ['entities_id' => $ancestorEntity, 'is_recursive' => 1]
+                ]);
+
+                foreach ($result as $data) {
+                    $allItilCategories[$data['id']] = $data['name'];
+                }
+            }
+        }
+
+        return $allItilCategories;
+    }
+    
+    /**
      * If the profile is authorised, add an extra tab
      *
      * @param object $item         Entity
@@ -86,6 +139,7 @@ class PluginTransferticketentityEntity extends Entity
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
             $array['keep_category'] = $data['keep_category'];
+            $array['itilcategories_id'] = $data['itilcategories_id'];
         }
 
         return $array;
@@ -106,17 +160,20 @@ class PluginTransferticketentityEntity extends Entity
         $checkRights = self::checkRights($ID);
         $theServer = explode("front/entity.form.php?",$_SERVER["HTTP_REFERER"]);
         $theServer = $theServer[0];
+        $availableCategories = self::availableCategories();
 
         if(empty($checkRights)) {
             $checkRights['allow_entity_only_transfer'] = 0;
             $checkRights['justification_transfer'] = 0;
             $checkRights['allow_transfer'] = 0;
             $checkRights['keep_category'] = 0;
+            $checkRights['itilcategories_id'] = null;
         }
 
         echo "<div class='firstbloc'>";
+
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
-           echo "<form class='transferticketentity' method='post' action='".self::getFormURL()."'>";
+            echo "<form class='transferticketentity' method='post' action='".self::getFormURL()."'>";
         }
 
         echo "<table class='tab_cadre_fixe'>";
@@ -158,17 +215,27 @@ class PluginTransferticketentityEntity extends Entity
                     echo Dropdown::showYesNo('keep_category', $checkRights['keep_category'], -1, ['display' => false]);
                     echo "</td>";
                 echo "</tr>";
+                echo "<tr class='tab_bg_1' id='itilcategories_id'>";
+                    echo "<td>";
+                    echo __('Default category', 'transferticketentity');
+                    echo "&nbsp;";
+                    echo "&nbsp;";
+                    Dropdown::showFromArray('itilcategories_id', $availableCategories, ['value' => $checkRights['itilcategories_id'], 'class' => 'itilcategories_id']);
+                    echo "</td>";
+                echo "</tr>";
             echo "</tbody>";
         echo "</table>";
         echo Html::hidden("theServer", ["value" => "$theServer"]);
         echo Html::hidden("ID", ["value" => "$ID"]);
+
         if ($canedit) {
-           echo "<div class='center'>";
-           echo Html::hidden('id', ['value' => $ID]);
-           echo Html::submit(_sx('button', 'Save'), ['name' => 'transfertticket', 'class' => 'btn btn-primary']);
-           echo "</div>\n";
-           Html::closeForm();
+            echo "<div class='center'>";
+            echo Html::hidden('id', ['value' => $ID]);
+            echo Html::submit(_sx('button', 'Save'), ['name' => 'transfertticket', 'class' => 'btn btn-primary']);
+            echo "</div>\n";
+            Html::closeForm();
         }
+
         echo "</div>";
 
         self::addScript();

@@ -29,6 +29,8 @@ Pour configurer les prérequis du transfert d'entité :
 - Garder la catégorie après le transfert :
     - Si oui, la catégorie du ticket sera gardé après le transfert seulement si elle est disponible dans l'entité cible, sinon elle sera remise à null.
     - Si non, la catégorie du ticket sera remise à null.
+    - Si non, il est possible de choisir une catégorie par défaut.
+    - :warning: Si la catégorie est obligatoire dans l'entité de destination (via les templates de GLPI) et qu'elle sera équivalente à null après le transfert, une erreur apparaîtra.
 
 ## Où configurer le plugin
 
@@ -37,7 +39,7 @@ Les prérequis du transfert se gèrent dans l'administration des entités.
 
 ## Compatibilité
 
-Ce plugin a été testé jusqu'à la version de GLPI 10.0.10
+Ce plugin a été testé jusqu'à la version de GLPI 10.0.14
 
 # GLPi Transfer Ticket Entity Plugin (EN)
 
@@ -70,6 +72,8 @@ To configure entity transfer prerequisites :
 - Keep category after transfer :
     - If yes, category's ticket will be keep only if it is available in the target entity, otherwise it will be reset to null.
     - If no, category's ticket will be set to null.
+    - If no, it's possible to select a default category.
+    - :warning: If category is mandatory in the chosen entity (via GLPI's templates) and it will be equal to null after transfer, an error will occur.
 
 ## Where set up the plugin
 
@@ -78,4 +82,4 @@ The transfer prerequisites are managed in the entity administration.
 
 ## Compatibility
 
-This plugin has been tested up to GLPI version 10.0.10
+This plugin has been tested up to GLPI version 10.0.14
