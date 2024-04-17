@@ -1,25 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Nickyo0822, 2024
-# 
-# 
+#
+#
 # Département de Maine et Loire
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Plugin - transferticketentity\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-04-17 09:05+0000\n"
+"PO-Revision-Date: 2024-04-17 11:32+0200\n"
 "Last-Translator: Nickyo0822, 2024\n"
-"Language-Team: French (https://app.transifex.com/departement-de-maine-et-loire/teams/190752/fr/)\n"
+"Language-Team: French (https://app.transifex.com/departement-de-maine-et-"
+"loire/teams/190752/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
+"1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Poedit 3.3.2\n"
 
 #: inc/profile.class.php:74 inc/ticket.class.php:48
@@ -75,11 +77,11 @@ msgstr "Confirmer le transfert ?"
 
 #: inc/ticket.class.php:251
 msgid ""
-"Once the transfer has been completed, the ticket will remain visible only if"
-" you have the required rights."
+"Once the transfer has been completed, the ticket will remain visible only "
+"if you have the required rights."
 msgstr ""
-"Une fois le transfert effectué, le ticket restera visible uniquement si vous"
-" avez les droits requis."
+"Une fois le transfert effectué, le ticket restera visible uniquement si "
+"vous avez les droits requis."
 
 #: inc/ticket.class.php:252
 msgid "Cancel"
