@@ -118,6 +118,7 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
         global $DB;
 
         if (isset($_POST['transfertticket'])) {
+            // Server name
             $theServer = $_POST['theServer'];
             
             $allow_entity_only_transfer = $_POST['allow_entity_only_transfer'];
