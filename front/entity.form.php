@@ -141,6 +141,7 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
                 INFO
             );
 
+            // Redirection to current entity's page
             header('location:' . $theServer . 'front/entity.form.php?id=' . $ID);
         } 
     }
