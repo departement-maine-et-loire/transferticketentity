@@ -27,9 +27,9 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
-include ("../../../inc/includes.php");
+require "../../../inc/includes.php";
 
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
@@ -49,15 +49,18 @@ function getEntitiesRights()
 {
     global $DB;
 
-    $result = $DB->request([
-        'SELECT' => ['entities_id', 'allow_entity_only_transfer', 'justification_transfer', 'allow_transfer', 'keep_category'],
+    $result = $DB->request(
+        [
+        'SELECT' => ['entities_id', 'allow_entity_only_transfer',
+            'justification_transfer', 'allow_transfer', 'keep_category'],
         'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
         'ORDER' => ['entities_id ASC']
-    ]);
+        ]
+    );
 
     $array = array();
 
-    foreach($result as $data){
+    foreach ($result as $data) {
         array_push($array, $data);
     }
 
@@ -69,7 +72,8 @@ function getEntitiesRights()
  *
  * @return void
  */
-function showJsonData() {
+function showJsonData()
+{
     $getEntitiesRights = getEntitiesRights();
     
     echo json_encode($getEntitiesRights);

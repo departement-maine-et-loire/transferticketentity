@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Département MaineEtLoire, 2024
+# Nickyo0822, 2024
 #
 #
 # Département de Maine et Loire
@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: GLPI Plugin - transferticketentity\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 09:03+0000\n"
-"PO-Revision-Date: 2024-04-17 11:42+0200\n"
-"Last-Translator: Département MaineEtLoire, 2024\n"
-"Language-Team: Portuguese (Portugal) (https://app.transifex.com/departement-"
-"de-maine-et-loire/teams/190752/pt_PT/)\n"
-"Language: pt_PT\n"
+"PO-Revision-Date: 2024-04-17 11:32+0200\n"
+"Last-Translator: Nickyo0822, 2024\n"
+"Language-Team: French (https://app.transifex.com/departement-de-maine-et-"
+"loire/teams/190752/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,185 +26,184 @@ msgstr ""
 
 #: inc/profile.class.php:74 inc/ticket.class.php:48
 msgid "Transfer Ticket Entity"
-msgstr "Transferência de Entidade do Ticket"
+msgstr "Transfert d'entité"
 
 #: inc/profile.class.php:74
 msgid "Change rights"
-msgstr "Mudar permissões"
+msgstr "Modifier les droits"
 
 #: inc/profile.class.php:77
 msgid "Authorized entity transfer"
-msgstr "Permitir a transferência de entidade"
+msgstr "Transfert d'entité autorisé"
 
 #: inc/profile.class.php:89
 msgid "Save"
-msgstr "Gravar"
+msgstr "Sauvegarder"
 
 #: inc/profile.php:50 inc/profile.php:63
 msgid "Item successfully updated"
-msgstr "Item atualizado com sucesso"
+msgstr "Élément modifié"
 
 #: inc/ticket.class.php:210
 msgid "Error, please reload the page."
-msgstr "Erro. Por favor, atualize a página."
+msgstr "Erreur, veuillez recharger la page."
 
 #: inc/ticket.class.php:211
 msgid ""
 "If the problem persists, you can try to empty the cache by doing CTRL + F5."
 msgstr ""
-"Caso o problema persista, pode tentar limpar a cache pressionando as teclas "
+"Si le problème persiste, vous pouvez tenter de vider le cache en faisant "
 "CTRL + F5."
 
 #: inc/ticket.class.php:216
 msgid "Select ticket entity to transfer"
-msgstr "Selecione a entidade para transferir o ticket"
+msgstr "Sélectionnez l'entité vers laquelle migrer le ticket"
 
 #: inc/ticket.class.php:218
 msgid "Choose your entity"
-msgstr "Escolha a sua entidade"
+msgstr "Choisissez votre entité"
 
 #: inc/ticket.class.php:227
 msgid "Select the group to assign"
-msgstr "Selecione o grupo a atribuir"
+msgstr "Sélectionnez le groupe à assigner"
 
 #: inc/ticket.class.php:229
 msgid "Choose your group"
-msgstr "Escolha o grupo"
+msgstr "Choisissez votre groupe"
 
 #: inc/ticket.class.php:250
 msgid "Confirm transfer ?"
-msgstr "Confirmar a transferência?"
+msgstr "Confirmer le transfert ?"
 
 #: inc/ticket.class.php:251
 msgid ""
 "Once the transfer has been completed, the ticket will remain visible only "
 "if you have the required rights."
 msgstr ""
-"Quando a transferência for concluída, o ticket apenas ficará visível caso "
-"tenha as permissões necessárias."
+"Une fois le transfert effectué, le ticket restera visible uniquement si "
+"vous avez les droits requis."
 
 #: inc/ticket.class.php:252
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Annuler"
 
 #: inc/ticket.class.php:253 inc/ticket.class.php:244
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr "Confirmer"
 
 #: front/ticket.form.php:125
 msgid "Please select a valid entity"
-msgstr "Selecione por favor uma entidade válida"
+msgstr "Veuillez sélectionner une entité valide"
 
 #: front/ticket.form.php:135
 msgid "Please select a valid group"
-msgstr "Selecione por favor um grupo válido"
+msgstr "Veuillez sélectionner un groupe valide"
 
 #: front/ticket.form.php:181
 msgid "Escalation to"
-msgstr "Escalar para"
+msgstr "Escalade vers"
 
 #: front/ticket.form.php:181
 msgid "in the group"
-msgstr "no grupo"
+msgstr "dans le groupe"
 
 #: front/ticket.form.php:185
 msgid "Successful transfer for ticket n° : "
-msgstr "Transferência com sucesso para o ticket n° : "
+msgstr "Transfert réussi pour le ticket n° : "
 
 #: front/ticket.form.php:197
 msgid "Transfer canceled"
-msgstr "Transferência cancelada"
+msgstr "Transfert annulé"
 
 #: inc/ticket.class.php:266
 msgid "Unauthorized transfer on closed ticket."
-msgstr "Não é permitido transferir tickets fechados."
+msgstr "Transfert non autorisé sur ticket clos."
 
 #: inc/ticket.class.php:436 front/ticket.form.php:357
 msgid "Please explain your transfer"
-msgstr "Justificação para a transferência"
+msgstr "Veuillez expliquer la raison de votre transfert"
 
 #: front/ticket.form.php:266
 msgid "You must be assigned to the ticket to be able to transfer it"
 msgstr ""
-"Para conseguir transferir o ticket, terá de estar atribuído como técnico"
+"Vous devez être assigné sur le ticket ou être membre du groupe assigné pour "
+"être autorisé à le transférer"
 
 #: inc/ticket.class.php:239
 msgid "No entity available found, transfer impossible."
-msgstr ""
-"Não é possível transferir, porque não foi encontrada nenhuma entidade."
+msgstr "Aucune entité disponible trouvée, transfert impossible."
 
 #: inc/ticket.class.php:305
 msgid "None"
-msgstr "Nenhum"
+msgstr "Aucun"
 
 #: inc/entity.class.php:118
 msgid "Settings Transfer Ticket Entity"
-msgstr "Definições para Transferir Ticket de Entidade"
+msgstr "Paramètres Transfert d'entité"
 
 #: inc/entity.class.php:123
 msgid "Assigned group required"
-msgstr "É obrigatório atribuir a um grupo"
+msgstr "Groupe à assigner obligatoire"
 
 #: inc/entity.class.php:130
 msgid "Justification required"
-msgstr "Obrigatório preencher justificação"
+msgstr "Justification obligatoire"
 
 #: inc/entity.class.php:137
 msgid "Allow Transfer function"
-msgstr "Permitir a funcionalidade de Transferência"
+msgstr "Autoriser la fonction Transfert"
 
 #: inc/ticket.class.php:322
 msgid "No previous entity"
-msgstr "Nenhuma entidade anterior encontrada"
+msgstr "Pas de précédente entité"
 
 #: inc/ticket.class.php:342
 msgid ""
 "No group found with « Assigned to » right while a group is required. "
 "Transfer impossible."
 msgstr ""
-"Nenhum grupo encontrado com permissão \"Atribuído a\", embora um grupo seja "
-"necessário. Transferência impossível."
+"Aucun groupe avec le droit « Assigné à » n'a été trouvé alors qu'un groupe "
+"est requit. Transfert impossible."
 
 #: inc/profile.class.php:45
 msgid "Active"
-msgstr "Ativado"
+msgstr "Actif"
 
 #: inc/profile.class.php:47
 msgid ""
 "Transfer authorized without assignment of technician or associated group"
-msgstr ""
-"Transferência autorizada sem a atribuição de um técnico ou grupo ao ticket"
+msgstr "Transfert autorisé sans affectation du technicien ou groupe associé"
 
 #: inc/entity.class.php:153
 msgid "Keep category after transfer"
-msgstr "Manter a categoria após a transferência"
+msgstr "Catégorie à conserver après le transfert"
 
 #: inc/ticket.class.php:448
 msgid ""
 "Warning, category will be reset if it does not exist in the target entity."
 msgstr ""
-"Aviso: Caso a categoria do ticket não exista na entidade de destino, a "
-"mesma será removida."
+"Attention, la catégorie sera remise à nulle si non existante dans l'entité "
+"cible."
 
 #: inc/ticket.class.php:303
 msgid ""
 "You don't have right to update tickets. Please contact your administrator."
 msgstr ""
-"Não tem permissão para atualizar tickets. Por favor contacte o "
-"administrador."
+"Vous n'avez pas le droit de mettre à jour les tickets. Veuillez contacter "
+"votre administrateur."
 
 #: inc/ticket.class.php:405
 msgid "optional"
-msgstr "opcional"
+msgstr "facultatif"
 
 #: inc/entity.class.php:219
 msgid "Default category"
-msgstr "Categoria por omissão"
+msgstr "Catégorie par défaut"
 
 #: front/ticket.form.php:266
 msgid ""
 "Category will be set to null but its configured as mandatory in GLPIs "
 "template, please contact your administrator."
 msgstr ""
-"A categoria ficará definida como nula, mas está configurada como "
-"obrigatória no modelo do GLPI. Entre em contato com o seu administrador."
+"La catégorie va être remise à null mais est configurée comme obligatoire "
+"dans les templates de GLPI, veuillez contacter votre administrateur."

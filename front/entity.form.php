@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 namespace GlpiPlugin\Transferticketentity;
 use CommonDBTM;
@@ -53,36 +53,54 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
         $this->checkTransferSettings = $this->checkTransferSettings(null);
     }
 
+    /**
+     * Get name of chosen entity
+     * 
+     * @param int $ID chosen entity
+     * 
+     * @return array
+     */
     public function getNameEntity($ID) 
     {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_entities',
             'WHERE' => ['id' => $ID]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             return $data['name'];
         }
 
         return $array;
     }
 
+    /**
+     * Get settings of chosen entity
+     * 
+     * @param int $ID chosen entity
+     * 
+     * @return array
+     */
     public function checkTransferSettings($ID) 
     {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
             'WHERE' => ['entities_id' => $ID]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data);
         }
 
@@ -114,7 +132,8 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
 
             if (!empty($checkTransferSettings)) {
                 foreach ($checkTransferSettings as $transferSettings) {
-                    $DB->delete('glpi_plugin_transferticketentity_entities_settings', 
+                    $DB->delete(
+                        'glpi_plugin_transferticketentity_entities_settings', 
                         [
                            'entities_id' => $transferSettings['entities_id']
                         ]
@@ -122,7 +141,8 @@ class PluginTransferticketentityFormEntity extends CommonDBTM
                 }
             }
 
-            $DB->insert('glpi_plugin_transferticketentity_entities_settings',
+            $DB->insert(
+                'glpi_plugin_transferticketentity_entities_settings',
                 [
                     'entities_id' => $ID,
                     'allow_entity_only_transfer' => $allow_entity_only_transfer,

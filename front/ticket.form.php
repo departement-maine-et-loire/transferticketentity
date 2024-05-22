@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 namespace GlpiPlugin\Transferticketentity;
 use CommonDBTM;
@@ -80,14 +80,18 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
         $technician_profile = $_POST['technician_profile'];
 
-        $result = $DB->request([
-            'FROM' => 'glpi_profilerights',
-            'WHERE' => ['name' => 'plugin_transferticketentity_bypass', 'profiles_id' => $technician_profile]
-        ]);
+        $result = $DB->request(
+            [
+                'FROM' => 'glpi_profilerights',
+                'WHERE' => ['name' => 'plugin_transferticketentity_bypass',
+                    'profiles_id' => $technician_profile
+                ]
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['rights']);
         }
 
@@ -107,14 +111,16 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         $id_user = $_POST['id_user'];
         $groupTech = array();
 
-        $result = $DB->request([
-            'SELECT' => 'groups_id',
-            'FROM' => 'glpi_groups_users',
-            'WHERE' => ['users_id' => $id_user]
-        ]);
+        $result = $DB->request(
+            [
+                'SELECT' => 'groups_id',
+                'FROM' => 'glpi_groups_users',
+                'WHERE' => ['users_id' => $id_user]
+            ]
+        );
 
-        foreach($result as $data){
-            if(!in_array($data, $groupTech)) {
+        foreach ($result as $data) {
+            if (!in_array($data, $groupTech)) {
                 array_push($groupTech, $data['groups_id']);
             }
         }
@@ -122,26 +128,30 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         $checkAssignedTech = array();
         $checkAssignedGroup = array();
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => 'users_id',
             'FROM' => 'glpi_tickets_users',
             'WHERE' => ['tickets_id' => $id_ticket]
-        ]);
+            ]
+        );
 
-        foreach($result as $data){
-            if(!in_array($data, $checkAssignedTech)) {
+        foreach ($result as $data) {
+            if (!in_array($data, $checkAssignedTech)) {
                 array_push($checkAssignedTech, $data['users_id']);
             }
         }
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => 'groups_id',
             'FROM' => 'glpi_groups_tickets',
             'WHERE' => ['tickets_id' => $id_ticket]
-        ]);
+            ]
+        );
 
-        foreach($result as $data){
-            if(!in_array($data, $checkAssignedGroup)) {
+        foreach ($result as $data) {
+            if (!in_array($data, $checkAssignedGroup)) {
                 array_push($checkAssignedGroup, $data['groups_id']);
             }
         }
@@ -152,7 +162,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $var_check++;
         }
 
-        foreach($groupTech as $checkAssign) {
+        foreach ($groupTech as $checkAssign) {
             if (in_array($checkAssign, $checkAssignedGroup)) {
                 $var_check++;
             }
@@ -174,19 +184,24 @@ class PluginTransferticketentityTransfer extends CommonDBTM
     {
         global $DB;
     
-        $result = $DB->request([
-            'SELECT' => ['E.id', 'E.entities_id', 'E.name', 'TES.allow_entity_only_transfer', 'TES.justification_transfer', 'TES.allow_transfer'],
+        $result = $DB->request(
+            [
+            'SELECT' => ['E.id', 'E.entities_id', 'E.name',
+                'TES.allow_entity_only_transfer',
+                'TES.justification_transfer', 'TES.allow_transfer'
+            ],
             'FROM' => 'glpi_entities AS E',
             'LEFT JOIN' => ['glpi_plugin_transferticketentity_entities_settings AS TES' => ['FKEY' => ['E' => 'id',
                                                            'TES' => 'entities_id']]],
             'WHERE' => ['TES.allow_transfer' => 1],
             'GROUPBY' => 'E.id',
             'ORDER' => 'E.entities_id ASC'
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['id']);
         }
 
@@ -204,18 +219,20 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         
         $entity_choice = $_REQUEST['entity_choice'];
     
-        $result = $DB->request([
-            'SELECT' => 'glpi_groups.id',
-            'FROM' => 'glpi_groups',
-            'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
-                                                                'glpi_entities' => 'id']]],
-            'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
-            'ORDER' => 'glpi_entities.id ASC'
-        ]);
+        $result = $DB->request(
+            [
+                'SELECT' => 'glpi_groups.id',
+                'FROM' => 'glpi_groups',
+                'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_groups'     => 'entities_id',
+                                                                    'glpi_entities' => 'id']]],
+                'WHERE' => ['glpi_groups.is_assign' => 1, 'glpi_entities.id' => $entity_choice],
+                'ORDER' => 'glpi_entities.id ASC'
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['id']);
         }
 
@@ -232,15 +249,17 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         global $DB;
         $entity_choice = $_REQUEST['entity_choice'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => 'name',
             'FROM' => 'glpi_entities',
             'WHERE' => ['id' => $entity_choice]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['name']);
         }
 
@@ -258,14 +277,16 @@ class PluginTransferticketentityTransfer extends CommonDBTM
 
         $entity_choice = $_REQUEST['entity_choice'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
             'WHERE' => ['entities_id' => $entity_choice]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             $array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
@@ -288,20 +309,24 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         if (!empty($_REQUEST['group_choice'])) {
             $group_choice = $_REQUEST['group_choice'];
     
-            $result = $DB->request([
+            $result = $DB->request(
+                [
                 'SELECT' => 'name',
                 'FROM' => 'glpi_groups',
                 'WHERE' => ['id' => $group_choice]
-            ]);
+                ]
+            );
     
             $array = array();
     
-            foreach($result as $data){
+            foreach ($result as $data) {
                 array_push($array, $data['name']);
             }
     
             return $array[0];
-        } else return false;
+        } else { 
+            return false;
+        }
     }
 
     /**
@@ -316,11 +341,13 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         $id_ticket = $_POST['id_ticket'];
         $targetEntity = $_REQUEST['entity_choice'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => 'itilcategories_id',
             'FROM' => 'glpi_tickets',
             'WHERE' => ['id' => $id_ticket]
-        ]);
+            ]
+        );
 
         $getTicketCategory = '';
 
@@ -328,10 +355,12 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             $getTicketCategory = $data['itilcategories_id'];
         }
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_entities',
             'WHERE' => ['id' => $targetEntity]
-        ]);
+            ]
+        );
 
         $ancestorsEntities = array();
 
@@ -345,10 +374,12 @@ class PluginTransferticketentityTransfer extends CommonDBTM
             }
         }
         
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_itilcategories',
             'WHERE' => ['id' => $getTicketCategory]
-        ]);
+            ]
+        );
 
         $getEntitiesFromCategoryTicket = '';
         $isRecursiveCategory = '';
@@ -395,7 +426,9 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 $selectedTemplate = $data['tickettemplates_id'];
             }
             
-            if ((!$id && !$selectedTemplate) || ($entity_choice === null && !$selectedTemplate)) {
+            if ((!$id && !$selectedTemplate)  
+                || ($entity_choice === null && !$selectedTemplate)
+            ) {
                 return 0;
             }
         }
@@ -419,14 +452,16 @@ class PluginTransferticketentityTransfer extends CommonDBTM
         $ttm = new $ttm_class();
         $mandatoryFields = $ttm->getMandatoryFields($tickettemplates_id);
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_tickets',
             'WHERE' => ['id' => $id_ticket]
-        ]);
+            ]
+        );
 
         $ticketFields = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($ticketFields, $data);
         }
 
@@ -491,7 +526,9 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 }
             }
 
-            if (empty($group_choice) && $checkEntityRight['allow_entity_only_transfer'] == 1) {
+            if (empty($group_choice) 
+                && $checkEntityRight['allow_entity_only_transfer'] == 1
+            ) {
                 Session::addMessageAfterRedirect(
                     __(
                         "Please select a valid group", 
@@ -504,7 +541,9 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 header('location:' . $theServer);
 
                 return false;
-            } else if (empty($group_choice) && $checkEntityRight['allow_entity_only_transfer'] == 0) {
+            } else if (empty($group_choice) 
+                && $checkEntityRight['allow_entity_only_transfer'] == 0
+            ) {
                 $requiredGroup = false;
             }
 
@@ -514,8 +553,8 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                         "You must be assigned to the ticket to be able to transfer it", 
                         'transferticketentity'
                     ),
-                true,
-                ERROR
+                    true,
+                    ERROR
                 );
 
                 header('location:' . $theServer);
@@ -531,7 +570,9 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 );
     
                 header('location:' . $theServer);
-            } else if (!empty($group_choice) && !in_array($group_choice, $checkGroup)) {
+            } else if (!empty($group_choice) 
+                && !in_array($group_choice, $checkGroup)
+            ) {
                 Session::addMessageAfterRedirect(
                     __(
                         "Please select a valid group", 
@@ -542,8 +583,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 );
     
                 header('location:' . $theServer);
-            }
-            else { 
+            } else { 
                 // Change the entity ticket and set its status to processing (assigned)
                 $ticket = new Ticket();
 
@@ -576,7 +616,9 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 }
 
                 // If category is mandatory with GLPIs template and category will be null
-                if ($ticket_category['itilcategories_id'] == 0 && $checkMandatoryCategory) {
+                if ($ticket_category['itilcategories_id'] == 0 
+                    && $checkMandatoryCategory
+                ) {
                     Session::addMessageAfterRedirect(
                         __(
                             "Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator.", 
@@ -639,12 +681,14 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                 $groupText = "<br> <br> $justification";
 
                 if ($theGroup) {
-                    $groupText = __("in the group", "transferticketentity") . " $theGroup \n <br> <br> $justification";
+                    $groupText = __("in the group", "transferticketentity") . 
+                    " $theGroup \n <br> <br> $justification";
                 }
 
                 // Log the transfer in a task
                 $task = new TicketTask();
-                $task->add([
+                $task->add(
+                    [
                     'tickets_id' => $id_ticket,
                     'is_private' => true,
                     'state'      => Planning::INFO,
@@ -652,7 +696,8 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                         "Escalation to", 
                         "transferticketentity"
                     ) . " $theEntity " . $groupText
-                ]);
+                    ]
+                );
     
                 Session::addMessageAfterRedirect(
                     __(
@@ -663,7 +708,7 @@ class PluginTransferticketentityTransfer extends CommonDBTM
                     INFO
                 );
     
-                $theServer = explode("/ticket.form.php",$theServer);
+                $theServer = explode("/ticket.form.php", $theServer);
                 $theServer = $theServer[0];
                 header('location:' . $theServer . '/central.php');
             }
