@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -46,10 +46,12 @@ class PluginTransferticketentityEntity extends Entity
         $entity = $_REQUEST['id'];
         $allItilCategories = ['null' => 'null'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_entities',
             'WHERE' => ['id' => $entity]
-        ]);
+            ]
+        );
 
         $ancestorsEntities = array();
 
@@ -65,19 +67,23 @@ class PluginTransferticketentityEntity extends Entity
 
         foreach ($ancestorsEntities as $ancestorEntity) {
             if ($ancestorEntity == $entity) {
-                $result = $DB->request([
+                $result = $DB->request(
+                    [
                     'FROM' => 'glpi_itilcategories',
                     'WHERE' => ['entities_id' => $ancestorEntity]
-                ]);
+                    ]
+                );
 
                 foreach ($result as $data) {
                     $allItilCategories[$data['id']] = $data['name'];
                 }
             } else {
-                $result = $DB->request([
+                $result = $DB->request(
+                    [
                     'FROM' => 'glpi_itilcategories',
                     'WHERE' => ['entities_id' => $ancestorEntity, 'is_recursive' => 1]
-                ]);
+                    ]
+                );
 
                 foreach ($result as $data) {
                     $allItilCategories[$data['id']] = $data['name'];
@@ -124,17 +130,27 @@ class PluginTransferticketentityEntity extends Entity
         return true;
     }
 
-    public function checkRights($ID) {
+    /**
+     * Get settings of chosen entity
+     * 
+     * @param int $ID chosen entity
+     * 
+     * @return array
+     */
+    public function checkRights($ID)
+    {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_plugin_transferticketentity_entities_settings',
             'WHERE' => ['entities_id' => $ID]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             $array['allow_entity_only_transfer'] = $data['allow_entity_only_transfer'];
             $array['justification_transfer'] = $data['justification_transfer'];
             $array['allow_transfer'] = $data['allow_transfer'];
@@ -145,6 +161,11 @@ class PluginTransferticketentityEntity extends Entity
         return $array;
     }
 
+    /**
+     * Display javascript
+     * 
+     * @return void
+     */
     public static function addScript() 
     {
         echo Html::script("/plugins/transferticketentity/js/entitySettings.js");
@@ -153,16 +174,18 @@ class PluginTransferticketentityEntity extends Entity
     /**
      * Display the ticket transfer form
      *
+     * @param int $ID chosen entity
+     * 
      * @return void
      */
     public function showFormMcv($ID)
     {
         $checkRights = self::checkRights($ID);
-        $theServer = explode("front/entity.form.php?",$_SERVER["HTTP_REFERER"]);
+        $theServer = explode("front/entity.form.php?", $_SERVER["HTTP_REFERER"]);
         $theServer = $theServer[0];
         $availableCategories = self::availableCategories();
 
-        if(empty($checkRights)) {
+        if (empty($checkRights)) {
             $checkRights['allow_entity_only_transfer'] = 0;
             $checkRights['justification_transfer'] = 0;
             $checkRights['allow_transfer'] = 0;
@@ -173,14 +196,18 @@ class PluginTransferticketentityEntity extends Entity
         echo "<div class='firstbloc'>";
 
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
-            echo "<form class='transferticketentity' method='post' action='".self::getFormURL()."'>";
+            echo "<form class='transferticketentity' method='post' action='" .
+            self::getFormURL()."'>";
         }
 
         echo "<table class='tab_cadre_fixe'>";
             echo "<tbody>";
                 echo "<tr>";
                     echo "<th>";
-                        echo __("Settings Transfer Ticket Entity", "transferticketentity");
+                        echo __(
+                            "Settings Transfer Ticket Entity",
+                            "transferticketentity"
+                        );
                     echo "</th>";
                 echo "</tr>";
                 echo "<tr class='tab_bg_1'>";
@@ -188,7 +215,14 @@ class PluginTransferticketentityEntity extends Entity
                     echo __('Allow Transfer function', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
-                    echo Dropdown::showYesNo('allow_transfer', $checkRights['allow_transfer'], -1, ['display' => false, 'class' => 'allow_transfer']);
+                    echo Dropdown::showYesNo(
+                        'allow_transfer', $checkRights['allow_transfer'],
+                        -1, 
+                        [
+                            'display' => false,
+                            'class' => 'allow_transfer'
+                        ]
+                    );
                     echo "</td>";
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='allow_entity_only_transfer'>";
@@ -196,7 +230,14 @@ class PluginTransferticketentityEntity extends Entity
                     echo __('Assigned group required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
-                    echo Dropdown::showYesNo('allow_entity_only_transfer', $checkRights['allow_entity_only_transfer'], -1, ['display' => false]);
+                    echo Dropdown::showYesNo(
+                        'allow_entity_only_transfer',
+                        $checkRights['allow_entity_only_transfer'],
+                        -1,
+                        [
+                            'display' => false
+                        ]
+                    );
                     echo "</td>";
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='justification_transfer'>";
@@ -204,7 +245,14 @@ class PluginTransferticketentityEntity extends Entity
                     echo __('Justification required', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
-                    echo Dropdown::showYesNo('justification_transfer', $checkRights['justification_transfer'], -1, ['display' => false]);
+                    echo Dropdown::showYesNo(
+                        'justification_transfer',
+                        $checkRights['justification_transfer'],
+                        -1,
+                        [
+                            'display' => false
+                        ]
+                    );
                     echo "</td>";
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='keep_category'>";
@@ -212,7 +260,14 @@ class PluginTransferticketentityEntity extends Entity
                     echo __('Keep category after transfer', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
-                    echo Dropdown::showYesNo('keep_category', $checkRights['keep_category'], -1, ['display' => false]);
+                    echo Dropdown::showYesNo(
+                        'keep_category', 
+                        $checkRights['keep_category'], 
+                        -1, 
+                        [
+                            'display' => false
+                        ]
+                    );
                     echo "</td>";
                 echo "</tr>";
                 echo "<tr class='tab_bg_1' id='itilcategories_id'>";
@@ -220,7 +275,14 @@ class PluginTransferticketentityEntity extends Entity
                     echo __('Default category', 'transferticketentity');
                     echo "&nbsp;";
                     echo "&nbsp;";
-                    Dropdown::showFromArray('itilcategories_id', $availableCategories, ['value' => $checkRights['itilcategories_id'], 'class' => 'itilcategories_id']);
+                    Dropdown::showFromArray(
+                        'itilcategories_id', 
+                        $availableCategories, 
+                        [
+                            'value' => $checkRights['itilcategories_id'], 
+                            'class' => 'itilcategories_id'
+                        ]
+                    );
                     echo "</td>";
                 echo "</tr>";
             echo "</tbody>";

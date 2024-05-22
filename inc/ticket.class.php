@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -66,17 +66,19 @@ class PluginTransferticketentityTicket extends Ticket
 
         $id_ticket = $_REQUEST['id'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => ['glpi_entities.id', 'glpi_entities.name'],
             'FROM' => 'glpi_tickets',
             'LEFT JOIN' => ['glpi_entities' => ['FKEY' => ['glpi_tickets'     => 'entities_id',
                                                            'glpi_entities' => 'id']]],
             'WHERE' => ['glpi_tickets.id' => $id_ticket]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['id'], $data['name']);
         }
 
@@ -94,19 +96,21 @@ class PluginTransferticketentityTicket extends Ticket
 
         $id_ticket = $_REQUEST['id'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => 'id',
             'FROM' => 'glpi_tickets',
             'WHERE' => ['status' => 6]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['id']);
         }
 
-        if(!in_array($id_ticket, $array)) {
+        if (!in_array($id_ticket, $array)) {
             return true;
         } else {
             return false;
@@ -124,14 +128,16 @@ class PluginTransferticketentityTicket extends Ticket
 
         $id_ticket = $_REQUEST['id'];
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_groups_tickets',
             'WHERE' => ['tickets_id' => $id_ticket, 'type' => 2]
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['groups_id']);
         }
 
@@ -150,20 +156,25 @@ class PluginTransferticketentityTicket extends Ticket
         $getTicketEntity = self::getTicketEntity();
         $theEntity = $getTicketEntity[0];
 
-        $result = $DB->request([
-            'SELECT' => ['E.id', 'E.entities_id', 'E.name', 'TES.allow_entity_only_transfer', 'TES.justification_transfer', 'TES.allow_transfer'],
+        $result = $DB->request(
+            [
+            'SELECT' => ['E.id', 'E.entities_id', 'E.name', 
+                'TES.allow_entity_only_transfer', 'TES.justification_transfer', 
+                'TES.allow_transfer'
+            ],
             'FROM' => 'glpi_entities AS E',
             'LEFT JOIN' => ['glpi_plugin_transferticketentity_entities_settings AS TES' => ['FKEY' => ['E' => 'id',
                                                            'TES' => 'entities_id']]],
             'WHERE' => ['NOT' => ['E.id' => $theEntity]],
             'GROUPBY' => 'E.id',
             'ORDER' => 'E.entities_id ASC'
-        ]);
+            ]
+        );
 
         $array = array();
         $temp_array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             $temp_array['id'] = $data['id'];
             $temp_array['entities_id'] = $data['entities_id'];
             $temp_array['name'] = $data['name'];
@@ -185,15 +196,17 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_groups',
             'WHERE' => ['is_assign' => 1],
             'ORDER' => ['entities_id ASC', 'id ASC']
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push(
                 $array, $data['id'], 
                 $data['entities_id'], $data['name']
@@ -223,6 +236,11 @@ class PluginTransferticketentityTicket extends Ticket
         return true;
     }
 
+    /**
+     * Display javascript and css
+     * 
+     * @return void
+     */
     public static function addStyleSheetAndScript() 
     {
         echo Html::css("/plugins/transferticketentity/css/style.css");
@@ -231,6 +249,8 @@ class PluginTransferticketentityTicket extends Ticket
 
     /**
      * Return parent's entity name
+     * 
+     * @param int $id chosen entity
      *
      * @return string
      */
@@ -238,9 +258,11 @@ class PluginTransferticketentityTicket extends Ticket
     {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'FROM' => 'glpi_entities',
-        ]);
+            ]
+        );
 
         foreach ($result as $subArray) {
             if ($subArray['id'] == $id) {
@@ -268,7 +290,10 @@ class PluginTransferticketentityTicket extends Ticket
 
         foreach ($getEntitiesRights as $entity) {
             if ($entity['allow_transfer'] == 1) {
-                array_push($getAllEntities, $entity['entities_id'], $entity['id'], $entity['name']);
+                array_push(
+                    $getAllEntities, $entity['entities_id'], 
+                    $entity['id'], $entity['name']
+                );
             }
         }
 
@@ -294,7 +319,7 @@ class PluginTransferticketentityTicket extends Ticket
             return false;
         }
 
-        $theServer = explode("front/profile.form.php?",$_SERVER["HTTP_REFERER"]);
+        $theServer = explode("front/profile.form.php?", $_SERVER["HTTP_REFERER"]);
         $theServer = $theServer[0];
 
         $id_ticket = $_REQUEST['id'];
@@ -327,23 +352,23 @@ class PluginTransferticketentityTicket extends Ticket
                     <label for='entity_choice'>".__("Select ticket entity to transfer", "transferticketentity")." : </label>
                     <select name='entity_choice' id='entity_choice' style='width: 30%'>
                         <option selected disabled value=''>-- ".__("Choose your entity", "transferticketentity")." --</option>";
-                foreach($getEntitiesRights as $entity) {
-                    if ($entity['allow_transfer']) {
-                        if ($entity['entities_id'] === null) {
-                            echo "<optgroup label='" . __('No previous entity', 'transferticketentity') . "'>";
-                                echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
-                        } else {
-                            $searchParentEntityName = self::searchParentEntityName($entity['entities_id']);
-                            if ($previousEntity != $searchParentEntityName) {
-                                echo "</optgroup>";
-                                echo "<optgroup label='" . $searchParentEntityName . "'>";
-                            }
-    
-                            echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
-                            $previousEntity = $searchParentEntityName;
-                        }
+        foreach ($getEntitiesRights as $entity) {
+            if ($entity['allow_transfer']) {
+                if ($entity['entities_id'] === null) {
+                    echo "<optgroup label='" . __('No previous entity', 'transferticketentity') . "'>";
+                        echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
+                } else {
+                    $searchParentEntityName = self::searchParentEntityName($entity['entities_id']);
+                    if ($previousEntity != $searchParentEntityName) {
+                        echo "</optgroup>";
+                        echo "<optgroup label='" . $searchParentEntityName . "'>";
                     }
+    
+                    echo "<option value='" . $entity['id'] . "'>" . $entity['name'] . "</option>";
+                    $previousEntity = $searchParentEntityName;
                 }
+            }
+        }
                 echo "</optgroup>
                     </select>
                 </div>";
@@ -358,9 +383,9 @@ class PluginTransferticketentityTicket extends Ticket
                         <select name='group_choice' id='group_choice' style='width: 30%'>
                             <option id='no_select' disabled value=''>-- ".__("Choose your group", "transferticketentity")." --</option>
                             <option value='' id='tt_none'> ".__("None", "transferticketentity")." </option>";
-                for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
-                    echo   "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
-                }
+        for ($i = 0; $i < count($getGroupEntities); $i = $i+3) {
+            echo   "<option class='tt_plugin_entity_" . $getGroupEntities[$i+1] . "' value='" . $getGroupEntities[$i] . "'>" . $getGroupEntities[$i+2] . "</option>";
+        }
                 echo"   </select>
 
                         <div id='div_confirmation'>";

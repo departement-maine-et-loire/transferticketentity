@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 /**
  * Install hook
@@ -73,14 +73,17 @@ function plugin_transferticketentity_uninstall()
 {
     global $DB;
 
-    $result = $DB->request([
+    $result = $DB->request(
+        [
         'SELECT' => ['profiles_id'],
         'FROM' => 'glpi_profilerights',
         'WHERE' => ['name' => 'plugin_transferticketentity_use', 'rights' => ALLSTANDARDRIGHT]
-    ]);
+        ]
+    );
 
     foreach ($result as $id_profil) {
-        $DB->delete('glpi_profilerights', 
+        $DB->delete(
+            'glpi_profilerights', 
             [
                 'name' => 'plugin_transferticketentity_use',
                 'profiles_id' => $id_profil

@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
@@ -37,7 +37,13 @@ class PluginTransferticketentityProfile extends Profile
 {
     static $rightname = "profile";
 
-    static function getAllRights() {
+    /**
+     * Rights setting
+     * 
+     * @return array
+     */
+    static function getAllRights()
+    {
         $rights = [
             ['itemtype'  => 'PluginTransferTicketEntityUse',
                   'label'     => __('Authorized entity transfer', 'transferticketentity'),
@@ -52,6 +58,13 @@ class PluginTransferticketentityProfile extends Profile
         return $rights;
     }
 
+    /**
+     * Clean profile when plugin is deleted
+     *
+     * @param int $ID chosen profile
+     * 
+     * @return void
+     */
     function cleanProfiles($ID)
     {
         global $DB;
@@ -89,16 +102,22 @@ class PluginTransferticketentityProfile extends Profile
     {
         global $DB;
 
-        $result = $DB->request([
+        $result = $DB->request(
+            [
             'SELECT' => ['profiles_id'],
             'FROM' => 'glpi_profilerights',
-            'WHERE' => ['name' => 'plugin_transferticketentity_use', 'NOT' => ['rights' => 0]],
+            'WHERE' => ['name' => 'plugin_transferticketentity_use',
+                'NOT' => [
+                    'rights' => 0
+                    ]
+                ],
             'ORDER' => 'name ASC'
-        ]);
+            ]
+        );
 
         $array = array();
 
-        foreach($result as $data){
+        foreach ($result as $data) {
             array_push($array, $data['profiles_id']);
         }
 
@@ -127,8 +146,13 @@ class PluginTransferticketentityProfile extends Profile
     }
 
     /**
-     * @param $profile
-     **/
+     * Add default profile infos
+     *
+     * @param int $profiles_id chosen profile
+     * @param int $rights      rights
+     * 
+     * @return void
+     */
     static function addDefaultProfileInfos($profiles_id, $rights) 
     {
         $profileRight = new ProfileRight();
@@ -137,7 +161,8 @@ class PluginTransferticketentityProfile extends Profile
             if (!countElementsInTable(
                 'glpi_profilerights',
                 ['profiles_id' => $profiles_id, 'name' => $right]
-            )) {
+            )
+            ) {
                 $myright['profiles_id'] = $profiles_id;
                 $myright['name']        = $right;
                 $myright['rights']      = $value;
@@ -150,8 +175,12 @@ class PluginTransferticketentityProfile extends Profile
     }
 
     /**
-     * @param $ID  integer
-    */
+     * Create admin access
+     *
+     * @param int $profiles_id chosen profile
+     * 
+     * @return void
+     */
     static function createFirstAccess($profiles_id)
     {
         include_once Plugin::getPhpDir('transferticketentity')."/inc/profile.class.php";
@@ -164,6 +193,11 @@ class PluginTransferticketentityProfile extends Profile
         }
     }
 
+    /**
+     * Display javascript
+     * 
+     * @return void
+     */
     public static function addScript() 
     {
         echo Html::script("/plugins/transferticketentity/js/profileSettings.js");
@@ -182,7 +216,9 @@ class PluginTransferticketentityProfile extends Profile
 
         if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
             $profile = new Profile();
-            echo "<form method='post' action='".$profile->getFormURL()."' class='transferticketentity'>";
+            echo "<form method='post' action='" .
+                $profile->getFormURL() .
+                "' class='transferticketentity'>";
         }
   
         $profile = new Profile();

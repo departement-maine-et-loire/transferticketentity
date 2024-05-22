@@ -27,7 +27,7 @@
             https://www.gnu.org/licenses/gpl-3.0.html
  @link      https://github.com/departement-maine-et-loire/
  --------------------------------------------------------------------------
-*/
+ */
 
 define('TRANSFERTICKETENTITY_VERSION', '1.1.3');
 
@@ -64,8 +64,8 @@ function plugin_transferticketentity_check_prerequisites()
     $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
 
     if (version_compare($version, '10.0', '<')) {
-       echo "This plugin requires GLPI >= 10.0";
-       return false;
+        echo "This plugin requires GLPI >= 10.0";
+        return false;
     }
 
     return true;
