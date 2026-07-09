@@ -1,0 +1,170 @@
+{#
+# -------------------------------------------------------------------------
+# Transferticketentity plugin for GLPI
+# -------------------------------------------------------------------------
+#
+# LICENSE
+#
+# This file is part of Transferticketentity.
+#
+# Transferticketentity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Transferticketentity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Transferticketentity. If not, see <http://www.gnu.org/licenses/>.
+# -------------------------------------------------------------------------
+# @copyright Copyright (C) 2026-2026 by Transferticketentity plugin team.
+# @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+# @link      https://github.com/InfotelGLPI/Transferticketentity
+# -------------------------------------------------------------------------
+#}
+
+{% import "components/form/fields_macros.html.twig" as fields %}
+{% set field_options = {'label_class': 'col-5', 'input_class': 'col-7', 'full_width': false} %}
+{{ include('components/form/header.html.twig') }}
+
+{% set rand = random() %}
+
+{% if can_edit %}
+    <form name="form" action="{{ action }}" method="post">
+        <div class="card">
+            <div class="card-header">
+                <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id_ticket" value="{{ id_ticket }}">
+                <input type="hidden" name="id_user" value="{{ id_user }}">
+                <input type="hidden" name="entities_id" value="{{ entities_id }}">
+                <h3 class="card-title">
+                    {{ __('Transfer the ticket', 'transferticketentity') }} - {{ entities_name }}
+                </h3>
+            </div>
+
+            <div class="card-body">
+                <div class="card-text">
+                    <p class='alert alert-warning'>
+                        {{ __('Once the transfer has been completed, the ticket will remain visible only if you have the required rights.', 'transferticketentity') }}
+                    </p>
+
+                    {# Entity selector #}
+                    <div class='form-field row align-items-center col-12 col-sm-12 mb-2 tt_entity_choice'>
+                        <label class='col-form-label col-xxl-5 text-xxl-end' for='entity_choice'>
+                            {{ __("Select ticket entity to transfer","transferticketentity") }}
+                        </label>
+
+                        <div class='col-xxl-7 field-container'>
+                            {% do call('Dropdown::showFromArray', [
+                                'entity_choice',
+                                entities,
+                                {
+                                    'multiple' : false,
+                                    'value'    : null,
+                                    'required' : checkMandatoryCategory,
+                                    'rand': rand
+                                }
+                            ]) %}
+
+                            {% do call('Ajax::updateItemOnSelectEvent', [
+                                'dropdown_entity_choice' ~ rand,
+                                'show_entitygroup',
+                                root_plugin ~ '/ajax/showentitygroups.php',
+                                {
+                                    'entity_selection': '__VALUE__',
+                                    'rand': rand
+                                }
+                            ]) %}
+
+                            {% do call('Ajax::updateItemOnSelectEvent', [
+                                'dropdown_entity_choice' ~ rand,
+                                'showmandatoryjustification',
+                                root_plugin ~ '/ajax/showentitymandatoryjustification.php',
+                                {
+                                    'entity_selection': '__VALUE__',
+                                    'rand': rand
+                                }
+                            ]) %}
+
+                            {% do call('Ajax::updateItemOnSelectEvent', [
+                                'dropdown_entity_choice' ~ rand,
+                                'showmandatorygroup',
+                                root_plugin ~ '/ajax/showentitymandatorygroup.php',
+                                {
+                                    'entity_selection': '__VALUE__',
+                                    'rand': rand
+                                }
+                            ]) %}
+                        </div>
+                    </div>
+
+                    {# Group selector #}
+                    <div class='form-field row align-items-center col-12 col-sm-12 mb-2'>
+                        <label class='col-form-label col-xxl-5 text-xxl-end' for='group_choice'>
+                            {{ __("Select the group to assign", "transferticketentity") }}
+                            <span id='showmandatorygroup'></span>
+                        </label>
+                        <div class='col-xxl-7 field-container'>
+                            <span id='show_entitygroup'></span>
+                        </div>
+                    </div>
+
+                    {# Justification #}
+                    <div class='form-field row align-items-start col-12 col-sm-12 mb-2'>
+                        <label class='col-form-label col-xxl-5 text-xxl-end' for='justification'
+                               style='vertical-align: middle;'>
+                            {{ __("Justification", "transferticketentity") }}
+                            <span id='showmandatoryjustification'></span>
+                        </label>
+                        <div class='col-xxl-7 field-container'>
+                            {{ fields.textareaField(
+                                'justification',
+                                null,
+                                null,
+                                {
+                                    'label_class': "",
+                                    'input_class': "col-xxl-11",
+                                    'field_class' : "col-12",
+                                }
+                            ) }}
+                        </div>
+                    </div>
+
+                    {# Add as observer checkbox #}
+                    <div class='form-field row align-items-center col-12 col-sm-12 mb-2'>
+                        <div class='col-xxl-5'></div>
+                        <div class='col-xxl-7 field-container'>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="add_as_observer"
+                                       name="add_as_observer"
+                                       value="1">
+                                <label class="form-check-label fw-bold" for="add_as_observer">
+                                    {{ __('Add myself as observer', 'transferticketentity') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class='alert alert-warning'>
+                        {{ __("Warning, category will be reset if it does not exist in the target entity.","transferticketentity") }}
+                    </p>
+
+                    <div class="hr mt-3 mb-3"></div>
+                    <div class="hstack gap-1">
+                        <div class="pe-5 ms-auto">
+                            <button class="btn btn-primary" type="submit" name="transfertticket" value="1">
+                                <i class="ti ti-device-floppy"></i>
+                                <span>{{ __('Confirm', 'transferticketentity') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}

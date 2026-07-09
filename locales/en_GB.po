@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yannick Comba <y.comba@maine-et-loire.fr>, 2022
+# Yannick Comba, 2022,2023
+# Département de Maine et Loire
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - admincolor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-24 09:03+0000\n"
+"PO-Revision-Date: 2024-04-08 11:12+0200\n"
+"Last-Translator: Yannick Comba, 2022,2023\n"
+"Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: inc/profile.class.php:74 inc/ticket.class.php:48
+
+msgid "Transfer Ticket Entity"
+msgstr "Transfer Ticket Entity"
+
+msgid "Change rights"
+msgstr "Change rights"
+
+msgid "Authorized entity transfer"
+msgstr "Authorized entity transfer"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Item successfully updated"
+msgstr "Item successfully updated"
+
+msgid "Error, please reload the page."
+msgstr "Error, please reload the page."
+
+msgid ""
+"If the problem persists, you can try to empty the cache by doing CTRL + F5."
+msgstr ""
+"If the problem persists, you can try to empty the cache by doing CTRL + F5."
+
+msgid "Select ticket entity to transfer"
+msgstr "Select ticket entity to transfer"
+
+msgid "Choose your entity"
+msgstr "Choose your entity"
+
+msgid "Select the group to assign"
+msgstr "Select the group to assign"
+
+msgid "Choose your group"
+msgstr "Choose your group"
+
+msgid "Confirm transfer ?"
+msgstr "Confirm transfer ?"
+
+msgid ""
+"Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
+msgstr ""
+"Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Confirm"
+msgstr "Confirm"
+
+msgid "Please select a valid entity"
+msgstr "Please select a valid entity"
+
+msgid "Please select a valid group"
+msgstr "Please select a valid group"
+
+msgid "Escalation to"
+msgstr "Escalation to"
+
+msgid "in the group"
+msgstr "in the group"
+
+msgid "Successful transfer for ticket n° : "
+msgstr "Successful transfer for ticket n° : "
+
+msgid "Transfer canceled"
+msgstr "Transfer canceled"
+
+msgid "Unauthorized transfer on closed ticket."
+msgstr "Unauthorized transfer on closed ticket."
+
+msgid "Please explain your transfer"
+msgstr "Please explain your transfer"
+
+msgid "You must be assigned to the ticket to be able to transfer it"
+msgstr "You must be assigned to the ticket to be able to transfer it"
+
+msgid "No entity available found, transfer impossible."
+msgstr "No entity available found, transfer impossible."
+
+msgid "None"
+msgstr "None"
+
+msgid "Settings Transfer Ticket Entity"
+msgstr "Settings Transfer Ticket Entity"
+
+msgid "Assigned group required"
+msgstr "Assigned group required"
+
+msgid "Justification required"
+msgstr "Justification required"
+
+msgid "Allow Transfer function"
+msgstr "Allow Transfer function"
+
+msgid "No previous entity"
+msgstr "No previous entity"
+
+msgid ""
+"No group found with « Assigned to » right while a group is required. Transfer impossible."
+msgstr ""
+"No group found with « Assigned to » right while a group is required. Transfer impossible."
+
+msgid "Active"
+msgstr "Active"
+
+msgid ""
+"Transfer authorized without assignment of technician or associated group"
+msgstr ""
+"Transfer authorized without assignment of technician or associated group"
+
+msgid "Keep category after transfer"
+msgstr "Keep category after transfer"
+
+msgid ""
+"Warning, category will be reset if it does not exist in the target entity."
+msgstr ""
+"Warning, category will be reset if it does not exist in the target entity."
+
+msgid ""
+"You don't have right to update tickets. Please contact your administrator."
+msgstr ""
+"You don't have right to update tickets. Please contact your administrator."
+
+msgid "optional"
+msgstr "optional"
+
+msgid "Default category"
+msgstr "Default category"
+
+msgid ""
+"Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator."
+msgstr ""
+"Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator."
+
+msgid "Transfer to another entity"
+msgstr "Transfer to another entity"
+
+msgid "Mass transfer authorized"
+msgstr "Mass transfer authorized"
+
+msgid "Add myself as observer"
+msgstr "Add myself as observer"
+
+msgid "Choose an entity"
+msgstr "Choose an entity"
+
+msgid "Target entity"
+msgstr "Target entity"
+
+msgid "Group to assign"
+msgstr "Group to assign"
+
+msgid "No group"
+msgstr "No group"
+
+msgid "Transfer"
+msgstr "Transfer"
+
+msgid "You must be assigned to ticket ID %d to transfer it."
+msgstr "You must be assigned to ticket ID %d to transfer it."
+
+msgid "Escalate to"
+msgstr "Escalate to"
+
+msgid "in group"
+msgstr "in group"
+
+msgid "Failed to transfer ticket ID %d"
+msgstr "Failed to transfer ticket ID %d"
+
+msgid "Massive transfer authorized"
+msgstr "Massive transfer authorized"
+

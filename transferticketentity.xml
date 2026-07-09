@@ -1,0 +1,57 @@
+<root>
+      <name>Transfer Ticket Entity</name>
+      <key>transferticketentity</key>
+      <state>stable</state>
+      <logo>https://raw.githubusercontent.com/pluginsGLPI/transferticketentity/master/img/logo.png</logo>
+      <description>
+         <short>
+            <fr>Ce plugin permet aux profils autorisés d'envoyer les tickets à une entité où ils n'ont aucun droit d'accès.</fr>
+            <en>This plugin allows authorized profiles to send tickets to an entity where they have no access rights.</en>
+         </short>
+         <long>
+            <fr>Ce plugin permet, pour les profils autorisés, de transférer des tickets d'une entité à une autre sur laquelle ils n'ont pas les accès. Il s'adresse aux organisations qui ont configurés, dans GLPI, leurs périmètres d'activités par entité (DRH, Comptabilité, SI, ...). L'intérêt étant de pouvoir transférer un ticket entre techniciens "GLPI" d'entités différentes et de continuer à assurer la confidentialité des données entre entités.</fr>
+            <en>This plugin enables authorized profiles to transfer tickets from one entity to another to which they do not have access. It is designed for organizations that have configured their GLPI activity perimeters by entity (HR, Accounting, IS, etc.). The aim is to be able to transfer a ticket between "GLPI" technicians from different entities, and to continue to ensure the confidentiality of data between entities.</en>
+         </long>
+      </description>
+      <homepage>https://github.com/pluginsGLPI/transferticketentity</homepage>
+      <download>https://github.com/pluginsGLPI/transferticketentity/releases</download>
+      <issues>https://github.com/pluginsGLPI/transferticketentity/issues</issues>
+      <readme>https://raw.githubusercontent.com/pluginsGLPI/transferticketentity/master/README.md</readme>
+      <authors>
+         <author>D&#xE9;partement de Maine-et-Loire</author>
+         <author>Y.COMBA</author>
+         <author>I.MELLOUK</author>
+      </authors>
+    <versions>
+        <version>
+            <num>1.2.0</num>
+            <compatibility>~11.0.0</compatibility>
+            <download_url>https://github.com/pluginsGLPI/transferticketentity/releases/download/1.2.0/glpi-transferticketentity-1.2.0.tar.bz2</download_url>
+        </version>
+    </versions>
+      <versions>
+         <version>
+            <num>1.1.3</num>
+            <compatibility>~10.0.0</compatibility>
+         </version>
+      </versions>
+      <langs>
+         <lang>fr_FR</lang>
+         <lang>en_GB</lang>
+         <lang>es_VE</lang>
+         <lang>pt_BR</lang>
+      </langs>
+    <license><![CDATA[GPL v2+]]></license>
+      <tags>
+         <fr>
+            <tag>Ticket</tag>
+         </fr>
+         <en>
+            <tag>Ticket</tag>
+         </en>
+      </tags>
+      <screenshots>
+         <screenshot>https://raw.githubusercontent.com/pluginsGLPI/transferticketentity/master/img/gifs/TransferTicketEntity_EN.gif</screenshot>
+         <screenshot>https://raw.githubusercontent.com/pluginsGLPI/transferticketentity/master/img/gifs/TransferTicketEntity_FR.gif</screenshot>
+      </screenshots>
+</root>

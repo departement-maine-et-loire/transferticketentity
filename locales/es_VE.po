@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yannick Comba <y.comba@maine-et-loire.fr>, 2022
+# Yannick Comba, 2022,2023
+# Département de Maine et Loire
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - admincolor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-24 09:03+0000\n"
+"PO-Revision-Date: 2024-04-16 17:54-0400\n"
+"Last-Translator: \n"
+"Language-Team: English (United Kingdom) (Département de Maine et Loire)\n"
+"Language: es_VE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: inc/profile.class.php:74 inc/ticket.class.php:48
+
+msgid "Transfer Ticket Entity"
+msgstr "Transferir Caso a Entidad"
+
+msgid "Change rights"
+msgstr "Cambiar derechos"
+
+msgid "Authorized entity transfer"
+msgstr "Transferencia de entidad autorizada"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Item successfully updated"
+msgstr "Elemento actualizado exitosamente"
+
+msgid "Error, please reload the page."
+msgstr "Error, por favor recarga la página."
+
+msgid "Select ticket entity to transfer"
+msgstr "Seleccione la entidad del caso para transferir"
+
+msgid "Choose your entity"
+msgstr "Elige tu entidad"
+
+msgid "Select the group to assign"
+msgstr "Seleccione el grupo a asignar"
+
+msgid "Choose your group"
+msgstr "Elige tu grupo"
+
+msgid "Confirm transfer ?"
+msgstr "¿Confirmar transferencia?"
+
+msgid "Cancel"
+msgstr "Anular"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Please select a valid entity"
+msgstr "Por favor seleccione una entidad válida"
+
+msgid "Please select a valid group"
+msgstr "Por favor seleccione un grupo válido"
+
+msgid "Escalation to"
+msgstr "Escalamiento a"
+
+msgid "in the group"
+msgstr "en el grupo"
+
+msgid "Successful transfer for ticket n° : "
+msgstr "Transferencia exitosa para el caso n°: "
+
+msgid "Transfer canceled"
+msgstr "Transferencia cancelada"
+
+msgid "Unauthorized transfer on closed ticket."
+msgstr "Traslado no autorizado en caso cerrado."
+
+msgid "Please explain your transfer"
+msgstr "Por favor explica tu transferencia"
+
+msgid "You must be assigned to the ticket to be able to transfer it"
+msgstr "Debes estar asignado al caso para poder transferirlo"
+
+msgid "No entity available found, transfer impossible."
+msgstr "No se encontró ninguna entidad disponible, transferencia imposible."
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Settings Transfer Ticket Entity"
+msgstr "Configuración de entidad de caso de transferencia"
+
+msgid "Assigned group required"
+msgstr "Se requiere grupo asignado"
+
+msgid "Justification required"
+msgstr "Justificación requerida"
+
+msgid "Allow Transfer function"
+msgstr "Permitir función de transferencia"
+
+msgid "No previous entity"
+msgstr "Ninguna entidad previa"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Keep category after transfer"
+msgstr "Mantener categoría después de la transferencia"
+
+msgid "optional"
+msgstr "opcional"
+
+msgid "Default category"
+msgstr "Categoría predeterminada"
+
+msgid "Transfer to another entity"
+msgstr "Transferir a otra entidad"
+
+msgid "Mass transfer authorized"
+msgstr "Transferencia masiva autorizada"
+
+msgid "Add myself as observer"
+msgstr "Añadirme como observador"
+
+msgid "Choose an entity"
+msgstr "Elige una entidad"
+
+msgid "Target entity"
+msgstr "Entidad de destino"
+
+msgid "Group to assign"
+msgstr "Grupo a asignar"
+
+msgid "No group"
+msgstr "Sin grupo"
+
+msgid "Transfer"
+msgstr "Transferir"
+
+msgid "You must be assigned to ticket ID %d to transfer it."
+msgstr "Debes estar asignado al caso ID %d para poder transferirlo."
+
+msgid "Escalate to"
+msgstr "Escalar a"
+
+msgid "in group"
+msgstr "en el grupo"
+
+msgid "Failed to transfer ticket ID %d"
+msgstr "Error al transferir el caso ID %d"
+
+msgid "Massive transfer authorized"
+msgstr "Transferencia masiva autorizada"
+

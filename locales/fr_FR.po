@@ -1,0 +1,218 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yannick Comba <y.comba@maine-et-loire.fr>, 2022
+# Yannick Comba, 2022,2023
+# Département de Maine et Loire
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI Plugin - Entity Ticket Transfer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-08 16:11+0100\n"
+"PO-Revision-Date: 2026-03-08 16:12+0100\n"
+"Last-Translator: Yannick Comba, 2022,2023\n"
+"Language-Team: French (France) (Département de Maine et Loire)\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+
+#: ajax/showentitygroups.php:59
+msgid ""
+"No group found with « Assigned to » right while a group is required. "
+"Transfer impossible."
+msgstr ""
+"Aucun groupe avec le droit « Assigné à » n'a été trouvé alors qu'un groupe "
+"est requis. Transfert impossible."
+
+#: front/entity.form.php:57 inc/entity.class.php:245
+
+msgid ""
+"The category is mandatory in the ticket template assigned to the entity"
+msgstr ""
+"La catégorie est obligatoire dans le gabarit de ticket affecté à l'entité"
+
+msgid "Please select a valid entity"
+msgstr "Veuillez sélectionner une entité valide"
+
+msgid "Transfer Ticket Entity"
+msgstr "Transfert d'entité"
+
+msgid "Settings Transfer Ticket Entity"
+msgstr "Paramètres Transfert d'entité"
+
+msgid "Allow Transfer function"
+msgstr "Autoriser la fonction Transfert"
+
+msgid "Assigned group required"
+msgstr "Groupe à assigner obligatoire"
+
+msgid "Justification required"
+msgstr "Justification obligatoire"
+
+msgid "Keep category after transfer"
+msgstr "Catégorie à conserver après le transfert"
+
+msgid "Default category"
+msgstr "Catégorie par défaut"
+
+msgid "Authorized entity transfer"
+msgstr "Transfert d'entité autorisé"
+
+msgid "You must be assigned to the ticket to be able to transfer it"
+msgstr ""
+"Vous devez être assigné sur le ticket ou être membre du groupe assigné pour être autorisé à le transférer"
+
+msgid "No entity available found, transfer impossible."
+msgstr "Aucune entité disponible trouvée, transfert impossible."
+
+msgid "Unauthorized transfer on closed ticket."
+msgstr "Transfert non autorisé sur ticket clos."
+
+msgid "Transfer the ticket"
+msgstr "Transférer le ticket"
+
+msgid "Select ticket entity to transfer"
+msgstr "Sélectionnez l'entité vers laquelle migrer le ticket"
+
+msgid "Select the group to assign"
+msgstr "Sélectionnez le groupe à assigner"
+
+msgid "Justification"
+msgstr "Justification"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+msgid "Please explain your transfer"
+msgstr "Veuillez expliquer la raison de votre transfert"
+
+msgid "Please select a valid group"
+msgstr "Veuillez sélectionner un groupe valide"
+
+msgid "in the group"
+msgstr "dans le groupe"
+
+msgid "Escalation to"
+msgstr "Escalade vers"
+
+msgid "Successful transfer for ticket n° : "
+msgstr "Transfert réussi pour le ticket n° : "
+
+msgid "Change rights"
+msgstr "Modifier les droits"
+
+msgid "Save"
+msgstr "Sauvegarder"
+
+msgid "Item successfully updated"
+msgstr "Élément modifié"
+
+msgid "Error, please reload the page."
+msgstr "Erreur, veuillez recharger la page."
+
+msgid ""
+"If the problem persists, you can try to empty the cache by doing CTRL + F5."
+msgstr ""
+"Si le problème persiste, vous pouvez tenter de vider le cache en faisant CTRL + F5."
+
+msgid "Choose your entity"
+msgstr "Choisissez votre entité"
+
+msgid "Choose your group"
+msgstr "Choisissez votre groupe"
+
+msgid "Confirm transfer ?"
+msgstr "Confirmer le transfert ?"
+
+msgid ""
+"Once the transfer has been completed, the ticket will remain visible only if you have the required rights."
+msgstr ""
+"Une fois le transfert effectué, le ticket restera visible uniquement si vous avez les droits requis."
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Transfer canceled"
+msgstr "Transfert annulé"
+
+msgid "You must be assigned to ticket ID %d to transfer it."
+msgstr "Vous devez être assigné au ticket ID %d pour le transférer."
+
+msgid "None"
+msgstr "Aucun"
+
+msgid "No previous entity"
+msgstr "Pas de précédente entité"
+
+
+msgid "Active"
+msgstr "Actif"
+
+msgid ""
+"Transfer authorized without assignment of technician or associated group"
+msgstr "Transfert autorisé sans affectation du technicien ou groupe associé"
+
+msgid ""
+"Warning, category will be reset if it does not exist in the target entity."
+msgstr ""
+"Attention, la catégorie sera remise à nulle si non existante dans l'entité cible."
+
+msgid ""
+"You don't have right to update tickets. Please contact your administrator."
+msgstr ""
+"Vous n'avez pas le droit de mettre à jour les tickets. Veuillez contacter votre administrateur."
+
+msgid "optional"
+msgstr "facultatif"
+
+msgid "Transfer to another entity"
+msgstr "Transférer vers une autre entité"
+
+msgid "Massive transfer authorized"
+msgstr "Transfert en masse autorisé"
+
+msgid "Failed to transfer ticket ID %d"
+msgstr "Failed to transfer ticket ID %d"
+
+msgid ""
+"Category will be set to null but its configured as mandatory in GLPIs template, please contact your administrator."
+msgstr ""
+"La catégorie va être remise à null mais est configurée comme obligatoire dans les templates de GLPI, veuillez contacter votre administrateur."
+
+msgid "Choose an entity"
+msgstr "Choisissez une entité"
+
+msgid "Add myself as observer"
+msgstr "S'ajouter comme observateur"
+
+msgid "Target entity"
+msgstr "Entité cible"
+
+msgid "Group to assign"
+msgstr "Groupe à assigner"
+
+msgid "Unauthorized transfer for closed or resolved tickets."
+msgstr "Transfert non autorisé pour les tickets fermés ou résolus."
+
+msgid "Escalate to"
+msgstr "Escalade vers"
+
+msgid "in group"
+msgstr "dans le groupe"
+
+msgid "Transfer"
+msgstr "Transférer"
+
+msgid "Escalation to %s"
+msgstr "Transféré vers %s"
+
+msgid "No group"
+msgstr "Aucun groupe"
+
+msgid "Mass transfer authorized"
+msgstr "Transfert en masse autorisé"

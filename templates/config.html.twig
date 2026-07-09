@@ -1,0 +1,151 @@
+{#
+# -------------------------------------------------------------------------
+# Transferticketentity plugin for GLPI
+# -------------------------------------------------------------------------
+#
+# LICENSE
+#
+# This file is part of Transferticketentity.
+#
+# Transferticketentity is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Transferticketentity is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Transferticketentity. If not, see <http://www.gnu.org/licenses/>.
+# -------------------------------------------------------------------------
+# @copyright Copyright (C) 2026-2026 by Transferticketentity plugin team.
+# @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+# @link      https://github.com/InfotelGLPI/Transferticketentity
+# -------------------------------------------------------------------------
+#}
+
+{% import "components/form/fields_macros.html.twig" as fields %}
+{% set field_options = {'label_class': 'col-5', 'input_class': 'col-7', 'full_width': false} %}
+{{ include('components/form/header.html.twig') }}
+
+{% if can_edit %}
+    <form name="form" action="{{ action }}" method="post">
+        <div class="card">
+            <div class="card-header">
+                <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" value="{{ id }}">
+                <input type="hidden" name="entities_id" value="{{ entities_id }}">
+                <h3 class="card-title">
+                    {{ __("Settings Transfer Ticket Entity", "transferticketentity") }}
+                </h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    {{ fields.dropdownYesNo(
+                        'allow_transfer',
+                        item.fields['allow_transfer'],
+                        __('Allow Transfer function', 'transferticketentity'),
+                        field_options|merge({
+                            'entity': params['entities_id'],
+                            'on_change' : 'see_params(this.value);'
+                        })
+                    ) }}
+                </div>
+
+                {# Bloc paramètres transfert #}
+                <div id="transfer_params"
+                     class="{% if item.fields['allow_transfer'] != 1 %}d-none{% endif %}">
+                    <div class="row">
+
+                        {{ fields.dropdownYesNo(
+                            'allow_entity_only_transfer',
+                            item.fields['allow_entity_only_transfer'],
+                            __('Assigned group required', 'transferticketentity'),
+                            field_options
+                        ) }}
+
+                        {{ fields.dropdownYesNo(
+                            'justification_transfer',
+                            item.fields['justification_transfer'],
+                            __('Justification required', 'transferticketentity'),
+                            field_options
+                        ) }}
+
+                        {{ fields.dropdownYesNo(
+                            'keep_category',
+                            item.fields['keep_category']|default(1),
+                            __('Keep category after transfer', 'transferticketentity'),
+                            field_options|merge({
+                                'entity': params['entities_id'],
+                                'on_change' : 'see_category(this.value);'
+                            })
+                        ) }}
+
+
+                        {# Bloc catégorie #}
+                        <div id="category_block"
+                             class="form-field row col-6 col-sm-6 mb-2 {% if item.fields['keep_category'] != 0 %}d-none{% endif %}">
+                            <label class="col-form-label col-5 text-xxl-end">
+                                {{ __('Default category', 'transferticketentity') }}
+                                {% if checkMandatoryCategory %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <div class="col-7 field-container">
+                                {% do call('Dropdown::showFromArray', [
+                                    'itilcategories_id',
+                                    availableCategories,
+                                    {
+                                        'label'    : __('Default category', 'transferticketentity'),
+                                        'multiple' : false,
+                                        'value'    : item.fields['itilcategories_id'],
+                                        'required' : checkMandatoryCategory,
+                                    }
+                                ]) %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if checkMandatoryCategory is defined and checkMandatoryCategory == 1 %}
+                    <br><br>
+                    <div class='alert alert-warning'>
+                        <p>
+                            {{ __("The category is mandatory in the ticket template assigned to the entity", "transferticketentity") }}
+                        </p>
+                    </div>
+                {% endif %}
+                <div class="hr mt-3 mb-3"></div>
+                <div class="hstack gap-1">
+                    <div class="pe-5 ms-auto">
+                        <button class="btn btn-primary" type="submit" name="update" value="1">
+                            <i class="ti ti-device-floppy"></i>
+                            <span>{{ _x('button', 'Save') }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        function see_params(value) {
+            const block = document.getElementById("transfer_params");
+            if (value == 1) {
+                block.classList.remove("d-none");
+            } else {
+                block.classList.add("d-none");
+            }
+        }
+
+        function see_category(value) {
+            const block = document.getElementById("category_block");
+            if (value == 0) {
+                block.classList.remove("d-none");
+            } else {
+                block.classList.add("d-none");
+            }
+        }
+    </script>
+{% endif %}
